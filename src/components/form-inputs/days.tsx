@@ -70,13 +70,13 @@ const HolidayDaysPerYear: React.FC = () => {
 };
 
 const DaysInputs: React.FC = () => {
-    return (
-        <>
-        <PerWeekOfWorking />
-        <PerWeekInOffice />
-        <HolidayDaysPerYear />
-        </>
-    );
-}
+  return (
+    <>
+      <PerWeekOfWorking />
+      <PerWeekInOffice />
+      <HolidayDaysPerYear />
+    </>
+  );
+};
 
 export default DaysInputs;

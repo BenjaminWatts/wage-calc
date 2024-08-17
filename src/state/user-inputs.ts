@@ -64,8 +64,17 @@ const userInputs = createSlice({
     updateHolidayDaysPerYear: (state, action: PayloadAction<number>) => {
       state.holidayDaysPerYear = action.payload;
     },
-    updateChildren: (state, action: PayloadAction<Child[]>) => {
-      state.children = action.payload;
+    addChild: (state, { payload }: PayloadAction<Child>) => {
+      state.children.push(payload);
+    },
+    updateChild: (
+      state,
+      { payload }: PayloadAction<{ index: number; child: Child }>
+    ) => {
+      state.children[payload.index] = payload.child;
+    },
+    removeChild: (state, action: PayloadAction<number>) => {
+      state.children.splice(action.payload, 1);
     },
     updatePartnerAnnualIncome: (state, action: PayloadAction<number>) => {
       state.partnerAnnualIncome = action.payload;
@@ -87,6 +96,15 @@ const userInputs = createSlice({
     },
     updateDailyDogWalkerCost: (state, action: PayloadAction<number>) => {
       state.dailyDogWalkerCost = action.payload;
+    },
+    updateDailyBreakfastCoffeeCost: (state, action: PayloadAction<number>) => {
+      state.dailyBreakfastCoffeeCost = action.payload;
+    },
+    updateDailyLunchCost: (state, action: PayloadAction<number>) => {
+      state.dailyLunchCost = action.payload;
+    },
+    updateDryCleaningCostPerDay: (state, action: PayloadAction<number>) => {
+      state.dryCleaningCostPerDay = action.payload;
     },
     updateDrivingDistancePerCommuteMiles: (
       state,

@@ -5,30 +5,37 @@ type Child = {
 };
 
 type UserInputs = {
+  // salary inputs
   annualSalary: number;
-  daysPerWeekOfWorking: number;
-  hoursOfWorkPerDay: number;
-  employerPensionContributionPc?: number;
-  employeePensionContributionPc?: number;
-  daysPerWeekInOffice: number;
-  holidayDaysPerYear: number;
-  children: Child[];
   partnerAnnualIncome?: number;
+  //days inputs
+  daysPerWeekOfWorking: number;
+  holidayDaysPerYear: number;
+  daysPerWeekInOffice: number;
+  // hours inputs
+  hoursOfWorkPerDay: number;
+  // children and childcare inputs
+  children: Child[];
   hourlyTermtimeChildcareCost: number;
   wraparoundChildcareCost?: number;
   hourlyHolidayChildcareCost?: number;
-  dailyDogWalkerCost?: number;
-  drivingDistancePerCommuteMiles?: number;
+  // transport inputs
+  drivingDistancePerCommuteMiles: number;
   carFuelType?: "petrol" | "diesel" | "electric";
-  commuteDoorToDoorMinutes?: number;
-  dailyParkingCost?: number;
-  dailyTrainBusTicketCost?: number;
+  commuteDoorToDoorMinutes: number;
+  dailyParkingCost: number;
+  dailyTrainBusTicketCost: number;
   flexiSeasonTicketCost?: number;
   seasonTicketCost?: number;
+  // food/clothing/pet inputs
   dailyBreakfastCoffeeCost?: number;
   dailyLunchCost?: number;
   dryCleaningCostPerDay?: number;
   outfitCost?: number; // the cost of a daily outfit for work
+  dailyDogWalkerCost?: number;
+  // pension inputs
+  employerPensionContributionPc?: number;
+  employeePensionContributionPc?: number;
 };
 
 type MainOutput = {
