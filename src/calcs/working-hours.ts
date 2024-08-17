@@ -1,4 +1,3 @@
-
 /**
  * Calculate the total working hours per year.
  * @param ui The user inputs

@@ -34,7 +34,7 @@ const child = (
   child: Child,
   hoursPerWeek: number,
   holidayWeeks: number,
-  parentEligible: boolean
+  parentEligible: boolean,
 ): number => {
   let total = 0;
 
@@ -117,4 +117,4 @@ const childcare = (ui: UserInputs) => {
   return total;
 };
 
-export default childcare
+export default childcare;

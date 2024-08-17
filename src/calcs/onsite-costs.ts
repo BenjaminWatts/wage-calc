@@ -31,7 +31,7 @@ const calcSeasonTicketCost = (uI: UserInputs) => {
 const calcFlexiSeasonTicketCost = (
   uI: UserInputs,
   seasonTicketCost: number,
-  onsiteDays: number
+  onsiteDays: number,
 ) => {
   const flexiSeasonTicketCost =
     uI.flexiSeasonTicketCost ||
@@ -53,7 +53,7 @@ const calcFlexiSeasonTicketCost = (
  */
 const annualPublicTransportCosts = (
   uI: UserInputs,
-  onsiteDays: number
+  onsiteDays: number,
 ): number => {
   const options: number[] = [];
 
@@ -80,7 +80,7 @@ const annualDrivingCosts = (uI: UserInputs, onsiteDays: number): number => {
 
 const annualMealsDrycleaningDogCosts = (
   uI: UserInputs,
-  onsiteDays: number
+  onsiteDays: number,
 ): number => {
   let total: number = 0;
   if (uI.dailyBreakfastCoffeeCost) {

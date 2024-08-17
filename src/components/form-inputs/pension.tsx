@@ -1,9 +1,9 @@
 // inputs to take percentage values for pension contributions from both employer and employee
-import React from "react";
-import Slider from "@react-native-community/slider";
-import { RootState, useAppDispatch } from "@/src/state/store";
-import * as s from "@/src/state/user-inputs";
-import { useSelector } from "react-redux";
+import React from 'react';
+import Slider from '@react-native-community/slider';
+import { RootState, useAppDispatch } from '@/src/state/store';
+import * as s from '@/src/state/user-inputs';
+import { useSelector } from 'react-redux';
 
 interface PensionInputProps {
   label: string;
@@ -25,7 +25,7 @@ const PensionInput: React.FC<PensionInputProps> = (p) => (
 const EmployerPensionContributionInput: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector((r: RootState) =>
-    s.selectEmployerPensionContributionPc(r)
+    s.selectEmployerPensionContributionPc(r),
   );
 
   return (
@@ -42,7 +42,7 @@ const EmployerPensionContributionInput: React.FC = () => {
 const EmployeePensionContributionInput: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector((r: RootState) =>
-    s.selectEmployeePensionContributionPc(r)
+    s.selectEmployeePensionContributionPc(r),
   );
   return (
     <PensionInput

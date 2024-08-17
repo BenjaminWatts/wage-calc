@@ -1,13 +1,13 @@
 // inputs to CRUD children
 
-import { RootState, useAppDispatch } from "@/src/state/store";
-import React from "react";
-import { Button, List } from "react-native-paper";
-import * as s from "@/src/state/user-inputs";
-import { useSelector } from "react-redux";
-import { useChild } from "@/src/nav";
-import Slider from "@react-native-community/slider";
-import { Text } from "react-native-paper";
+import { RootState, useAppDispatch } from '@/src/state/store';
+import React from 'react';
+import { Button, List } from 'react-native-paper';
+import * as s from '@/src/state/user-inputs';
+import { useSelector } from 'react-redux';
+import { useChild } from '@/src/nav';
+import Slider from '@react-native-community/slider';
+import { Text } from 'react-native-paper';
 
 const DeleteChildButton: React.FC<{
   index: number;
@@ -34,13 +34,14 @@ const CreateChildButton: React.FC = () => {
   const dispatch = useAppDispatch();
   const defaultChild: Child = { years: 0, months: 0 };
   const existingCount = useSelector(
-    (r: RootState) => r.userInputs.children.length
+    (r: RootState) => r.userInputs.children.length,
   );
   const useChildHook = useChild(existingCount);
   return (
     <Button
-      icon={"plus"}
-      onPress={() => {1
+      icon={'plus'}
+      onPress={() => {
+        1;
         dispatch(s.a.addChild(defaultChild));
         useChildHook();
       }}

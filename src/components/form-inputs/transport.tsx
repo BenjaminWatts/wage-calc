@@ -1,7 +1,7 @@
-import { RootState, useAppDispatch } from "@/src/state/store";
-import React from "react";
-import { TextInput } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from '@/src/state/store';
+import React from 'react';
+import { TextInput } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 // inputs for transport including drivingDistancePerCommuteMiles, carFuelType, commuteDoorToDoorMinutes, dailyParkingCost, dailyTrainBusTicketCost, flexiSeasonTicketCost, seasonTicketCost
 
@@ -21,7 +21,7 @@ const NumericInput = ({
   return (
     <TextInput
       label={label}
-      value={value ? value.toString() : ""}
+      value={value ? value.toString() : ''}
       onChangeText={(text) => {
         const number = parseFloat(text);
         if (!isNaN(number)) {
@@ -36,7 +36,7 @@ const NumericInput = ({
 const DrivingDistancePerCommuteMiles: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector(
-    (state: RootState) => state.userInputs.drivingDistancePerCommuteMiles
+    (state: RootState) => state.userInputs.drivingDistancePerCommuteMiles,
   );
   return (
     <NumericInput
@@ -45,7 +45,7 @@ const DrivingDistancePerCommuteMiles: React.FC = () => {
       value={value}
       onChange={(value) =>
         dispatch({
-          type: "userInputs/setDrivingDistancePerCommuteMiles",
+          type: 'userInputs/setDrivingDistancePerCommuteMiles',
           payload: value,
         })
       }
@@ -56,7 +56,7 @@ const DrivingDistancePerCommuteMiles: React.FC = () => {
 const CommuteDoorToDoorMinutes: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector(
-    (state: RootState) => state.userInputs.commuteDoorToDoorMinutes
+    (state: RootState) => state.userInputs.commuteDoorToDoorMinutes,
   );
   return (
     <NumericInput
@@ -65,7 +65,7 @@ const CommuteDoorToDoorMinutes: React.FC = () => {
       value={value}
       onChange={(value) =>
         dispatch({
-          type: "userInputs/setCommuteDoorToDoorMinutes",
+          type: 'userInputs/setCommuteDoorToDoorMinutes',
           payload: value,
         })
       }
@@ -77,7 +77,7 @@ const CommuteDoorToDoorMinutes: React.FC = () => {
 const DailyParkingCost: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector(
-    (state: RootState) => state.userInputs.dailyParkingCost
+    (state: RootState) => state.userInputs.dailyParkingCost,
   );
   return (
     <NumericInput
@@ -86,7 +86,7 @@ const DailyParkingCost: React.FC = () => {
       value={value}
       onChange={(value) =>
         dispatch({
-          type: "userInputs/setDailyParkingCost",
+          type: 'userInputs/setDailyParkingCost',
           payload: value,
         })
       }
@@ -98,7 +98,7 @@ const DailyParkingCost: React.FC = () => {
 const DailyTrainBusTicketCost: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector(
-    (state: RootState) => state.userInputs.dailyTrainBusTicketCost
+    (state: RootState) => state.userInputs.dailyTrainBusTicketCost,
   );
   return (
     <NumericInput
@@ -107,7 +107,7 @@ const DailyTrainBusTicketCost: React.FC = () => {
       value={value}
       onChange={(value) =>
         dispatch({
-          type: "userInputs/setDailyTrainBusTicketCost",
+          type: 'userInputs/setDailyTrainBusTicketCost',
           payload: value,
         })
       }
@@ -119,7 +119,7 @@ const DailyTrainBusTicketCost: React.FC = () => {
 const FlexiSeasonTicketCost: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector(
-    (state: RootState) => state.userInputs.flexiSeasonTicketCost
+    (state: RootState) => state.userInputs.flexiSeasonTicketCost,
   );
   return (
     <NumericInput
@@ -128,7 +128,7 @@ const FlexiSeasonTicketCost: React.FC = () => {
       value={value}
       onChange={(value) =>
         dispatch({
-          type: "userInputs/setFlexiSeasonTicketCost",
+          type: 'userInputs/setFlexiSeasonTicketCost',
           payload: value,
         })
       }
@@ -140,7 +140,7 @@ const FlexiSeasonTicketCost: React.FC = () => {
 const SeasonTicketCost: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector(
-    (state: RootState) => state.userInputs.seasonTicketCost
+    (state: RootState) => state.userInputs.seasonTicketCost,
   );
   return (
     <NumericInput
@@ -149,7 +149,7 @@ const SeasonTicketCost: React.FC = () => {
       value={value}
       onChange={(value) =>
         dispatch({
-          type: "userInputs/setSeasonTicketCost",
+          type: 'userInputs/setSeasonTicketCost',
           payload: value,
         })
       }

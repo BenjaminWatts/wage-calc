@@ -26,8 +26,8 @@ export const calculateChildBenefitCharge = (ui: UserInputs): number => {
   const highestIncome = Math.max(ui.annualSalary, ui.partnerAnnualIncome || 0);
   const chargeFraction = calculateChargeFraction(highestIncome);
   const count = ui.children.length;
-  const charge = CHILD_BENEFIT_PER_CHILD * chargeFraction * count
+  const charge = CHILD_BENEFIT_PER_CHILD * chargeFraction * count;
   return charge;
 };
 
-export default calculateChildBenefitCharge
+export default calculateChildBenefitCharge;

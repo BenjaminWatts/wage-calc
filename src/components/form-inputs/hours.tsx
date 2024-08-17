@@ -1,9 +1,9 @@
 // inputs for hours of work per day
-import React from "react";
-import * as s from "@/src/state/user-inputs";
-import Slider from "@react-native-community/slider";
-import { RootState, useAppDispatch } from "@/src/state/store";
-import { useSelector } from "react-redux";
+import React from 'react';
+import * as s from '@/src/state/user-inputs';
+import Slider from '@react-native-community/slider';
+import { RootState, useAppDispatch } from '@/src/state/store';
+import { useSelector } from 'react-redux';
 
 interface HoursInputProps {
   label: string;

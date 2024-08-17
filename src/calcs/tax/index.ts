@@ -1,4 +1,4 @@
-import childBenefit from "./child-benefit";
+import childBenefit from './child-benefit';
 
 // tax thresholds
 const BASIC_RATE = 37500;

@@ -1,8 +1,8 @@
 // inputs to define of days worked, from home etc
-import Slider from "@react-native-community/slider";
-import * as s from "../../state/user-inputs";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "@/src/state/store";
+import Slider from '@react-native-community/slider';
+import * as s from '../../state/user-inputs';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '@/src/state/store';
 
 interface DayInputComponentProps {
   label: string;

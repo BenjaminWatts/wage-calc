@@ -1,8 +1,8 @@
-import childcare from "./child-care";
-import * as days from "./days";
-import tax from "./tax";
-import workingCosts from "./onsite-costs";
-import workingHours from "./working-hours";
+import childcare from './child-care';
+import * as days from './days';
+import tax from './tax';
+import workingCosts from './onsite-costs';
+import workingHours from './working-hours';
 
 interface Results {
   takeHomePay: number;

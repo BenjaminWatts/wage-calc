@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from './store';
 
 interface UserInputsState extends UserInputs {}
 
@@ -26,7 +26,7 @@ const defaults: UserInputsState = {
   hourlyHolidayChildcareCost: AVERAGE_CHILDCARE_COST_HOUR,
   dailyDogWalkerCost: 10,
   drivingDistancePerCommuteMiles: 10,
-  carFuelType: "petrol",
+  carFuelType: 'petrol',
   commuteDoorToDoorMinutes: 30,
   dailyParkingCost: 5,
   dailyTrainBusTicketCost: 5,
@@ -34,7 +34,7 @@ const defaults: UserInputsState = {
 };
 
 const userInputs = createSlice({
-  name: "userInputs",
+  name: 'userInputs',
   initialState: defaults,
   reducers: {
     updateAnnualSalary: (state, action: PayloadAction<number>) => {
@@ -48,13 +48,13 @@ const userInputs = createSlice({
     },
     updateEmployerPensionContributionPc: (
       state,
-      action: PayloadAction<number>
+      action: PayloadAction<number>,
     ) => {
       state.employerPensionContributionPc = action.payload;
     },
     updateEmployeePensionContributionPc: (
       state,
-      action: PayloadAction<number>
+      action: PayloadAction<number>,
     ) => {
       state.employeePensionContributionPc = action.payload;
     },
@@ -69,7 +69,7 @@ const userInputs = createSlice({
     },
     updateChild: (
       state,
-      { payload }: PayloadAction<{ index: number; child: Child }>
+      { payload }: PayloadAction<{ index: number; child: Child }>,
     ) => {
       state.children[payload.index] = payload.child;
     },
@@ -81,7 +81,7 @@ const userInputs = createSlice({
     },
     updateHourlyTermtimeChildcareCost: (
       state,
-      action: PayloadAction<number>
+      action: PayloadAction<number>,
     ) => {
       state.hourlyTermtimeChildcareCost = action.payload;
     },
@@ -90,7 +90,7 @@ const userInputs = createSlice({
     },
     updateHourlyHolidayChildcareCost: (
       state,
-      action: PayloadAction<number>
+      action: PayloadAction<number>,
     ) => {
       state.hourlyHolidayChildcareCost = action.payload;
     },
@@ -108,13 +108,13 @@ const userInputs = createSlice({
     },
     updateDrivingDistancePerCommuteMiles: (
       state,
-      action: PayloadAction<number>
+      action: PayloadAction<number>,
     ) => {
       state.drivingDistancePerCommuteMiles = action.payload;
     },
     updateCarFuelType: (
       state,
-      action: PayloadAction<"petrol" | "diesel" | "electric">
+      action: PayloadAction<'petrol' | 'diesel' | 'electric'>,
     ) => {
       state.carFuelType = action.payload;
     },
