@@ -5,6 +5,7 @@ type Child = {
 };
 
 type UserInputs = {
+  currentAge: number;
   // salary inputs
   annualSalary: number;
   partnerAnnualIncome?: number;
@@ -21,7 +22,7 @@ type UserInputs = {
   hourlyHolidayChildcareCost?: number;
   // transport inputs
   drivingDistancePerCommuteMiles: number;
-  carFuelType?: "petrol" | "diesel" | "electric";
+  carFuelType?: 'petrol' | 'diesel' | 'electric';
   commuteDoorToDoorMinutes: number;
   dailyParkingCost: number;
   dailyTrainBusTicketCost: number;
@@ -34,8 +35,9 @@ type UserInputs = {
   outfitCost?: number; // the cost of a daily outfit for work
   dailyDogWalkerCost?: number;
   // pension inputs
-  employerPensionContributionPc?: number;
-  employeePensionContributionPc?: number;
+  employerPensionContributionPc: number;
+  employeePensionContributionPc: number;
+  employerSacrificingPension: boolean;
 };
 
 type MainOutput = {

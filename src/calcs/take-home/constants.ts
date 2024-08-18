@@ -1,0 +1,2 @@
+export const TERM_WEEKS_PER_YEAR = 39;
+export const SCHOOL_WORKING_DAYS = TERM_WEEKS_PER_YEAR * 5;
