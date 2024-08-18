@@ -1,16 +1,12 @@
 import * as o from './onsite-costs';
 
-describe('calcSeasonTicketCost', () => {
-  it('should return the provided season ticket cost', () => {
-    expect(
-      o.estimateSeasonTicketCost({
-        dailyTrainBusTicketCost: 10,
-      }),
-    ).toBe(100);
+describe('estimateSeasonTicketCost', () => {
+  it('should return 0 if no dailyTrainBusTicketCost is provided', () => {
+    expect(o.estimateSeasonTicketCost({ dailyTrainBusTicketCost: 0 })).toBe(0);
   });
-  it('should return the calculated season ticket cost', () => {
+  it('should discount daily tickets by 25%', () => {
     expect(o.estimateSeasonTicketCost({ dailyTrainBusTicketCost: 10 })).toBe(
-      1950,
+      10 * 52 * 5 * 0.75,
     );
   });
 });

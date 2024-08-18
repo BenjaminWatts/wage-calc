@@ -76,15 +76,6 @@ describe('calculateHolidayDaysPerYear', () => {
   });
 });
 
-describe('calcHolidayWeeks', () => {
-  it('fulltime', () => {
-    expect(c.calcHolidayWeeks(20, 5)).toBe(4);
-  });
-  it('pro rata', () => {
-    expect(c.calcHolidayWeeks(20, 1)).toBe(0.8);
-  });
-});
-
 describe('calcParentEligible', () => {
   it('returns true if parent is eligible', () => {
     expect(c.calcParentEligible(10000)).toBe(true);

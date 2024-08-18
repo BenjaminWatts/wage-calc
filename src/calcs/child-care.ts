@@ -65,7 +65,7 @@ export const child = (
   },
   child: Child,
   hoursPerWeek: number,
-  holidayWeeks: number,
+  schoolHolidayExcessWeeks: number,
   parentEligible: boolean,
 ): number => {
   let total = 0;
@@ -84,7 +84,7 @@ export const child = (
     total += hourlyHolidayChildcareCost(
       ui.hourlyHolidayChildcareCost,
       ui.daysPerWeekOfWorking,
-      holidayWeeks,
+      schoolHolidayExcessWeeks,
     );
   }
 
@@ -108,8 +108,6 @@ export const calcHoursPerWeek = (
   daysPerWeekOfWorking: number,
 ) => hoursOfWorkPerDay * daysPerWeekOfWorking;
 
-const PUBLIC_HOLIDAYS = 8;
-
 export const fteFraction = (daysPerWeekOfWorking: number) => {
   return daysPerWeekOfWorking / 5;
 };
@@ -118,25 +116,6 @@ export const calculateHolidayDaysPerYear = (
   holidayDaysPerYear: number,
   daysPerWeekOfWorking: number,
 ) => (holidayDaysPerYear || 25) * fteFraction(daysPerWeekOfWorking);
-
-/**
- * Calculate the number of weeks of the year when childcare is required
- * Subtract out public and assume the parent takes all available holiday during school holidays
- */
-export const calcHolidayWeeks = (
-  holidayDaysPerYear: number,
-  daysPerWeekOfWorking: number,
-) => {
-  let totalDays = TERM_WEEKS_PER_YEAR * 5;
-  totalDays -= PUBLIC_HOLIDAYS;
-  totalDays -= calculateHolidayDaysPerYear(
-    holidayDaysPerYear,
-    daysPerWeekOfWorking,
-  );
-  totalDays = totalDays * fteFraction(daysPerWeekOfWorking);
-  const totalWeeks = totalDays / 5;
-  return totalWeeks;
-};
 
 const MAX_INCOME = 100000;
 
@@ -170,14 +149,10 @@ interface ChildUiOptions {
 /**
  * Calculate the total cost of childcare for all children
  */
-const childcare = (ui: ChildUiOptions) => {
+const childcare = (ui: ChildUiOptions, schoolHolidayExcessWeeks: number) => {
   let total = 0;
   const hoursPerWeek = calcHoursPerWeek(
     ui.hoursOfWorkPerDay,
-    ui.daysPerWeekOfWorking,
-  );
-  const holidayWeeks = calcHolidayWeeks(
-    ui.holidayDaysPerYear,
     ui.daysPerWeekOfWorking,
   );
   const parentEligible = calcParentEligible(
@@ -185,7 +160,13 @@ const childcare = (ui: ChildUiOptions) => {
     ui.partnerAnnualIncome,
   );
   for (const c of ui.children) {
-    total += child(ui, c, hoursPerWeek, holidayWeeks, parentEligible);
+    total += child(
+      ui,
+      c,
+      hoursPerWeek,
+      schoolHolidayExcessWeeks,
+      parentEligible,
+    );
   }
   return total;
 };

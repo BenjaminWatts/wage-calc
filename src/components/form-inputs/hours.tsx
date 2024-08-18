@@ -14,14 +14,16 @@ interface HoursInputProps {
 const HoursWorkPerDayInput: React.FC<HoursInputProps> = (p) => {
   const dispatch = useAppDispatch();
   const value = useSelector((r: RootState) => s.selectHoursOfWorkPerDay(r));
+  const onValueChange = (value: number) =>
+    dispatch(s.a.updateHoursOfWorkPerDay(value));
   return (
     <Slider
       {...p}
       step={1}
       maximumValue={24}
       minimumValue={0}
-      onValueChange={(x) => p.onChange(x)}
-      value={p.value}
+      onValueChange={onValueChange}
+      value={value}
     />
   );
 };
