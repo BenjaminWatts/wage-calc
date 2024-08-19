@@ -23,10 +23,11 @@ export const hourlyHolidayChildcareCost = (
   holidayWeeks: number,
 ) => hourlyHolidayChildcareCost * daysPerWeekOfWorking * holidayWeeks;
 
-const wraparoundChildcareCost = (
-  wraparoundChildcareCost: number,
+const inOfficeIncrementalChildcareCost = (
+  inOfficeIncrementalChildcareCost: number,
   daysPerWeekInOffice: number,
-) => wraparoundChildcareCost * daysPerWeekInOffice * TERM_WEEKS_PER_YEAR;
+) =>
+  inOfficeIncrementalChildcareCost * daysPerWeekInOffice * TERM_WEEKS_PER_YEAR;
 
 const INCOME_TAX_REBATE = 0.25;
 
@@ -59,7 +60,7 @@ export const child = (
   ui: {
     hourlyTermtimeChildcareCost: number;
     hourlyHolidayChildcareCost: number;
-    wraparoundChildcareCost: number;
+    inOfficeIncrementalChildcareCost: number;
     daysPerWeekInOffice: number;
     daysPerWeekOfWorking: number;
   },
@@ -88,9 +89,9 @@ export const child = (
     );
   }
 
-  if (ui.wraparoundChildcareCost && ui.daysPerWeekInOffice) {
-    total += wraparoundChildcareCost(
-      ui.wraparoundChildcareCost,
+  if (ui.inOfficeIncrementalChildcareCost && ui.daysPerWeekInOffice) {
+    total += inOfficeIncrementalChildcareCost(
+      ui.inOfficeIncrementalChildcareCost,
       ui.daysPerWeekInOffice,
     );
   }
@@ -137,7 +138,7 @@ interface ChildUiOptions {
   children: Child[];
   hourlyTermtimeChildcareCost: number;
   hourlyHolidayChildcareCost: number;
-  wraparoundChildcareCost: number;
+  inOfficeIncrementalChildcareCost: number;
   daysPerWeekInOffice: number;
   hoursOfWorkPerDay: number;
   daysPerWeekOfWorking: number;

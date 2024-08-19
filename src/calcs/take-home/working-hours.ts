@@ -41,6 +41,7 @@ export const workingHours = (
     commuteDoorToDoorMinutes?: number;
   },
   workingDays: number,
-) => annualWorkingHours(ui, workingDays) + annualCommuteHours(ui, workingDays);
+  onsiteDays: number,
+) => annualWorkingHours(ui, workingDays) + annualCommuteHours(ui, onsiteDays);
 
 export default workingHours;

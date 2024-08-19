@@ -4,34 +4,44 @@ import tax from './tax';
 import workingCosts from './onsite-costs';
 import workingHours from './working-hours';
 
-interface Results {
-  takeHomePay: number;
-  taxTotal: number;
-  childcareTotal: number;
-  workingAndCommutingHours: number;
-  netHourlyPay: number;
-  // teacherEquivalentSalary: number
-}
+const calcTakeHomePay = (
+  annualSalary: number,
+  taxTotal: number,
+  onsiteCosts: number,
+  childcareTotal: number,
+): number => annualSalary - taxTotal - onsiteCosts - childcareTotal;
+
+const calcNetHourlyPay = (takeHomePay: number, hours: number): number =>
+  takeHomePay / hours;
 
 /**
- * Calculate the hourly pay based on the user inputs
+ * Calculate aggregate take home pay for the year
+ * @param ui - the user inputs
+ * @returns the results of the calculation
  */
-const calc = (ui: UserInputs): Results => {
+const calcTakeHome = (ui: UserInputs): CalculationResult => {
   const workingDays = days.workingDays(ui);
-  const hours = workingHours(ui, workingDays);
-  const taxTotal = tax(ui);
-  const childcareTotal = childcare(ui);
   const onsiteDays = days.onsiteDays(ui, workingDays);
+  const hours = workingHours(ui, workingDays, onsiteDays);
+  const schoolHolidayExcessWeeks = days.schoolHolidayExcess(workingDays);
+  const childcareTotal = childcare(ui, schoolHolidayExcessWeeks);
   const onsiteCosts = workingCosts(ui, onsiteDays);
-  // calcs
-  const takeHomePay = ui.annualSalary - taxTotal - onsiteCosts - childcareTotal;
-  const netHourlyPay = takeHomePay / hours;
+  const taxTotal = tax(ui);
+
+  const takeHomePay = calcTakeHomePay(
+    ui.annualSalary,
+    taxTotal.total,
+    onsiteCosts,
+    childcareTotal,
+  );
 
   return {
-    takeHomePay,
-    taxTotal,
+    takeHomeTotal: takeHomePay,
+    tax: taxTotal,
     childcareTotal,
     workingAndCommutingHours: hours,
-    netHourlyPay,
+    netHourlyPay: calcNetHourlyPay(takeHomePay, hours),
   };
 };
+
+export default calcTakeHome;

@@ -22,7 +22,7 @@ const defaults: UserInputsState = {
     { years: 2, months: 0 },
   ],
   hourlyTermtimeChildcareCost: AVERAGE_CHILDCARE_COST_HOUR,
-  wraparoundChildcareCost: AVERAGE_CHILDCARE_COST_HOUR,
+  inOfficeIncrementalChildcareCost: AVERAGE_CHILDCARE_COST_HOUR,
   hourlyHolidayChildcareCost: AVERAGE_CHILDCARE_COST_HOUR,
   dailyDogWalkerCost: 10,
   drivingDistancePerCommuteMiles: 10,
@@ -86,7 +86,7 @@ const userInputs = createSlice({
       state.hourlyTermtimeChildcareCost = action.payload;
     },
     updateWraparoundChildcareCost: (state, action: PayloadAction<number>) => {
-      state.wraparoundChildcareCost = action.payload;
+      state.inOfficeIncrementalChildcareCost = action.payload;
     },
     updateHourlyHolidayChildcareCost: (
       state,
@@ -155,7 +155,7 @@ export const selectPartnerAnnualIncome = (state: RootState) =>
 export const selectHourlyTermtimeChildcareCost = (state: RootState) =>
   state.userInputs.hourlyTermtimeChildcareCost;
 export const selectWraparoundChildcareCost = (state: RootState) =>
-  state.userInputs.wraparoundChildcareCost;
+  state.userInputs.inOfficeIncrementalChildcareCost;
 export const selectHourlyHolidayChildcareCost = (state: RootState) =>
   state.userInputs.hourlyHolidayChildcareCost;
 export const selectDailyDogWalkerCost = (state: RootState) =>

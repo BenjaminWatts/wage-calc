@@ -18,11 +18,11 @@ type UserInputs = {
   // children and childcare inputs
   children: Child[];
   hourlyTermtimeChildcareCost: number;
-  wraparoundChildcareCost?: number;
-  hourlyHolidayChildcareCost?: number;
+  inOfficeIncrementalChildcareCost: number;
+  hourlyHolidayChildcareCost: number;
   // transport inputs
   drivingDistancePerCommuteMiles: number;
-  carFuelType?: 'petrol' | 'diesel' | 'electric';
+  carFuelType: 'petrol' | 'diesel' | 'electric';
   commuteDoorToDoorMinutes: number;
   dailyParkingCost: number;
   dailyTrainBusTicketCost: number;
@@ -45,3 +45,18 @@ type MainOutput = {
   payriseRequired: number;
   teacherSalaryRequired: number;
 };
+
+interface TaxCalculationResult {
+  total: number;
+  marginalRate: number;
+}
+
+interface CalculationResult {
+  tax: TaxCalculationResult;
+
+  childcareTotal: number;
+  takeHomeTotal: number;
+
+  workingAndCommutingHours: number;
+  netHourlyPay: number;
+}
