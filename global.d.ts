@@ -59,6 +59,8 @@ interface ScenarioResult {
 
   workingAndCommutingHours: number;
   netHourlyPay: number;
+
+  onsiteCosts: number;
 }
 
 interface HybridSplitResult {

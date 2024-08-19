@@ -4,8 +4,8 @@ export const round = (value: number, decimalPlaces: number) =>
   Math.round(value * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
 
 export const financial = {
-  annual: (value: number) => `£${round(value, 0)}`,
-  hourly: (value: number) => `£${round(value, 2)}/hour`,
+  annual: (value: number) => `£${round(value, 0).toLocaleString()}`,
+  hourly: (value: number) => `£${round(value, 2).toLocaleString()}/hour`,
 };
 
 /**
@@ -14,6 +14,6 @@ export const financial = {
 export const percentage = (value: number) => `${Math.round(value * 100)}%`;
 
 export const hours = {
-  annual: (value: number) => round(value, 0),
-  daily: (value: number) => round(value, 1),
+  annual: (value: number) => round(value, 0).toLocaleString(),
+  daily: (value: number) => round(value, 1).toLocaleString(),
 };

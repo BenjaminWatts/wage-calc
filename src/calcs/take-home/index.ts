@@ -39,6 +39,7 @@ const calcTakeHome = (ui: UserInputs): ScenarioResult => {
     takeHomeTotal: takeHomePay,
     tax: taxTotal,
     childcareTotal,
+    onsiteCosts,
     workingAndCommutingHours: hours,
     netHourlyPay: calcNetHourlyPay(takeHomePay, hours),
   };

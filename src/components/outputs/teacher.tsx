@@ -15,7 +15,7 @@ const TeacherOutput: React.FC = () => {
   return (
     <Card>
       <Card.Content>
-        <Title>Consider a Teacher Job</Title>
+        {/* <Title>Consider a Teacher Job</Title> */}
         <Paragraph>
           With a teacher salary of {r.financial.annual(teacherSalary)}, you
           could still earn as much in the long term a similar income to now{' '}

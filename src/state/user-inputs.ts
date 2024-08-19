@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
+import { workingDays } from '../calcs/take-home/days';
 
 interface UserInputsState extends UserInputs {}
 
@@ -47,6 +48,17 @@ const userInputs = createSlice({
     },
     updateDaysPerWeekOfWorking: (state, action: PayloadAction<number>) => {
       state.daysPerWeekOfWorking = action.payload;
+      state.daysPerWeekInOffice = Math.min(
+        state.daysPerWeekInOffice,
+        action.payload,
+      );
+      state.holidayDaysPerYear = Math.min(
+        state.holidayDaysPerYear,
+        workingDays({
+          daysPerWeekOfWorking: action.payload,
+          holidayDaysPerYear: state.holidayDaysPerYear,
+        }),
+      );
     },
     updateHoursOfWorkPerDay: (state, action: PayloadAction<number>) => {
       state.hoursOfWorkPerDay = action.payload;

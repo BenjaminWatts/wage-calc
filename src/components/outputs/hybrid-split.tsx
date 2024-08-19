@@ -19,7 +19,7 @@ const HybridSplitOutput: React.FC = () => {
   return (
     <Card>
       <Card.Content>
-        <Title>Impact of In-Office Days</Title>
+        {/* <Title>Impact of In-Office Days</Title> */}
         <Paragraph>
           You currently spent {currentInofficeDays} days in the office.
         </Paragraph>

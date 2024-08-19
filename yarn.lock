@@ -7300,6 +7300,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-awesome-slider@1:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-awesome-slider/-/react-native-awesome-slider-1.4.0.tgz#866fb44c6b379cb1c511e258724dfeca124d4367"
+  integrity sha512-asK/bUaY0NEr0qKcG1zm4azyZcE3i/4UXmra3/CWvLJtkBgRirpNxJI3K1bi2D51o3RF5G3SrL5hap+zi/Bslg==
+
 react-native-gesture-handler@~2.16.1:
   version "2.16.2"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.16.2.tgz#032bd2a07334292d7f6cff1dc9d1ec928f72e26d"

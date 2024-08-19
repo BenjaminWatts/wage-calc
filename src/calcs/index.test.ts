@@ -41,6 +41,6 @@ const simpleFamily: UserInputs = {
 describe('basic family', () => {
   it('can calculate output without errors', () => {
     const result = c(simpleFamily);
-    console.log(JSON.stringify(result, null, 2));
+    // console.log(JSON.stringify(result, null, 2));
   });
 });
