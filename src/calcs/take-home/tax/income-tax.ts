@@ -42,13 +42,12 @@ export const calculateAdditionalRateTax = (annualSalary: number): number => {
  */
 export const calculateAnnualIncomeTax = (annualSalary: number): number => {
   const personalAllowance = calculateAdjustedPersonalAllowance(annualSalary);
-  // const taxableIncome = Math.max(annualSalary - personalAllowance, 0);
+
+  if (annualSalary <= personalAllowance) return 0;
 
   const basicRate = calculateBasicRateTax(annualSalary, personalAllowance);
   const higherRate = calculateHigherRateTax(annualSalary, personalAllowance);
   const additionalRate = calculateAdditionalRateTax(annualSalary);
-
-  console.log({ basicRate, higherRate, additionalRate });
 
   return basicRate + higherRate + additionalRate;
 };

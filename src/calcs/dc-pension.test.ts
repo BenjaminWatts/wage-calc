@@ -42,8 +42,8 @@ describe('estimateEmployeeIncomeTaxSavings', () => {
   it('if salary is above the higher rate threshold, saving is 40%', () => {
     expect(d.estimateEmployeeIncomeTaxSavings(60000, 100)).toBe(100 * 0.4);
   });
-  it('if salary is in the band  when personal allowance is being tapered, saving is 65%', () => {
-    expect(d.estimateEmployeeIncomeTaxSavings(100000, 100)).toBe(100 * 0.65);
+  it('if salary is in the band  when personal allowance is being tapered, saving is 60%', () => {
+    expect(d.estimateEmployeeIncomeTaxSavings(110000, 100)).toBe(100 * 0.6);
   });
   it('if salary is well above the additional rate threshold, saving is 45%', () => {
     expect(d.estimateEmployeeIncomeTaxSavings(250000, 100)).toBe(100 * 0.45);
