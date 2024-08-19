@@ -8,7 +8,7 @@ import calculateTeacherEquivalent from './teacher-equivalent';
  * 2. Evaluates how the take-home pay varies with the number of days per week in the office
  * 3. If the user has children, estimates the teacher equivalent salary
  */
-const calculate = (uI: UserInputs) => {
+const calculate = (uI: UserInputs): CalculationResult => {
   const takeHome = calcTakeHome(uI);
   return {
     takeHome,

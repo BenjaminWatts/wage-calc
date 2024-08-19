@@ -44,6 +44,5 @@ The main output will be:
 
 Current bugs
 
-1. workingAndCommutingHours is not varying for different hybrid splits. May also impact netHourlyPay
-2. Adjusted slary for nethybrid doesn't seem to be varying
+2. Adjusted salary for nethybrid doesn't seem to be varying
 3. Teacher salary seems high - maybe salary solver is ending too early.

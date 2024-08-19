@@ -5,7 +5,7 @@ const IN_OFFICE_DAYS = [0, 1, 2, 3, 4, 5];
 
 interface AdjustedOfficeResult {
   ui: UserInputs;
-  result: CalculationResult;
+  result: ScenarioResult;
 }
 
 const adjustInOfficeDays = (
@@ -31,12 +31,12 @@ const adjustInOfficeDays = (
  */
 const adjustSalaries = (
   results: AdjustedOfficeResult[],
-  currentTakeHome: number,
   requiredTakeHome: number,
 ) =>
   results.map(({ result, ui }) =>
-    salarySolver(ui, currentTakeHome, requiredTakeHome),
+    salarySolver(ui, result.takeHomeTotal, requiredTakeHome),
   );
+
 /**
     Evaluates how the take-home pay varies with the number of days per week in the office
     * @param baseCase The base case user inputs
@@ -44,18 +44,14 @@ const adjustSalaries = (
 */
 export const calculateHybridSplit = (
   baseCase: UserInputs,
-  baseTakeHome: CalculationResult,
+  baseTakeHome: ScenarioResult,
 ) => {
   // Calculate the take-home pay assuming that the employer makes no adjustments to the salary
   const notAdjusted = IN_OFFICE_DAYS.map((days) =>
     adjustInOfficeDays(baseCase, days),
   );
   // now with the base case of the current number of days in the office, calculate the +/- change salary to preserve take-home pay
-  const adjusted = adjustSalaries(
-    notAdjusted,
-    baseTakeHome.takeHomeTotal,
-    baseTakeHome.takeHomeTotal,
-  );
+  const adjusted = adjustSalaries(notAdjusted, baseTakeHome.takeHomeTotal);
 
   return {
     notAdjusted: notAdjusted.map((x) => x.result),

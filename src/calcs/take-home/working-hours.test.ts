@@ -52,6 +52,7 @@ describe('annualWorkingHours', () => {
 describe('workingHours', () => {
   it('should return the sum of annualWorkingHours and annualCommuteHours', () => {
     const hoursOfWorkPerDay = 7;
+    const workingDays = 250;
     const onsiteDays = 100;
     const commuteDoorToDoorMinutes = 30;
     expect(
@@ -60,11 +61,9 @@ describe('workingHours', () => {
           hoursOfWorkPerDay,
           commuteDoorToDoorMinutes,
         },
+        workingDays,
         onsiteDays,
       ),
-    ).toBe(
-      onsiteDays * hoursOfWorkPerDay +
-        (onsiteDays * commuteDoorToDoorMinutes) / 60,
-    );
+    ).toBe(1800);
   });
 });

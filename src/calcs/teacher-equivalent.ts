@@ -77,7 +77,7 @@ const toTeacher = (nonTeacher: UserInputs): UserInputs => {
  */
 const calculateTeacherEquivalent = (
   nonTeacher: UserInputs,
-  currentTakeHome: CalculationResult,
+  currentTakeHome: ScenarioResult,
 ) => {
   const asTeacher = toTeacher(nonTeacher);
   const initialTeacherTakeHome = calcTakeHome(asTeacher);

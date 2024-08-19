@@ -51,7 +51,7 @@ interface TaxCalculationResult {
   marginalRate: number;
 }
 
-interface CalculationResult {
+interface ScenarioResult {
   tax: TaxCalculationResult;
 
   childcareTotal: number;
@@ -59,4 +59,15 @@ interface CalculationResult {
 
   workingAndCommutingHours: number;
   netHourlyPay: number;
+}
+
+interface HybridSplitResult {
+  notAdjusted: ScenarioResult[];
+  adjusted: number[];
+}
+
+interface CalculationResult {
+  takeHome: ScenarioResult;
+  hybridSplits: HybridSplitResult;
+  teacher: number;
 }

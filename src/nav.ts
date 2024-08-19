@@ -1,15 +1,15 @@
 import { useRouter, useGlobalSearchParams } from 'expo-router';
 
-const useUrl = (url: string) => {
+export const useUrl = (url: string) => {
   const nav = useRouter();
-  return () => nav.navigate(url);
+  return () => nav.navigate(url as any);
 };
 
-const home = 'home';
+export const home = 'home';
 
-const inputs = 'inputs';
+// const inputs = 'inputs';
 
-const children = 'inputs/children';
+export const children = 'inputs/children';
 
 export const useChildren = () => useUrl(children);
 
@@ -22,26 +22,26 @@ export const useChildIndex = () => {
   return parseInt(Array.isArray(index) ? index[0] : index);
 };
 
-const days = 'inputs/days';
+export const days = 'inputs/days';
 
 export const useDays = () => useUrl(days);
 
-const hours = 'inputs/hours';
+export const hours = 'inputs/hours';
 
 export const useHours = () => useUrl(hours);
 
-const others = 'inputs/others';
+export const others = 'inputs/others';
 
 export const useOthers = () => useUrl(others);
 
-const pension = 'inputs/pension';
+export const pension = 'inputs/pension';
 
 export const usePension = () => useUrl(pension);
 
-const salary = 'inputs/salary';
+export const salary = 'inputs/salary';
 
 export const useSalary = () => useUrl(salary);
 
-const transport = 'inputs/transport';
+export const transport = 'inputs/transport';
 
 export const useTransport = () => useUrl(transport);

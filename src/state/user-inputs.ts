@@ -9,12 +9,14 @@ const AVERAGE_INCOME = 30000;
 const AVERAGE_CHILDCARE_COST_HOUR = 6.53;
 
 const defaults: UserInputsState = {
+  currentAge: 35,
   annualSalary: AVERAGE_INCOME,
   partnerAnnualIncome: AVERAGE_INCOME,
   daysPerWeekOfWorking: 5,
   hoursOfWorkPerDay: 8,
   employerPensionContributionPc: 3,
   employeePensionContributionPc: 0,
+  employerSacrificingPension: true,
   daysPerWeekInOffice: 5,
   holidayDaysPerYear: 25,
   children: [
@@ -37,6 +39,9 @@ const userInputs = createSlice({
   name: 'userInputs',
   initialState: defaults,
   reducers: {
+    updateCurrentAge: (state, action: PayloadAction<number>) => {
+      state.currentAge = action.payload;
+    },
     updateAnnualSalary: (state, action: PayloadAction<number>) => {
       state.annualSalary = action.payload;
     },
@@ -85,7 +90,10 @@ const userInputs = createSlice({
     ) => {
       state.hourlyTermtimeChildcareCost = action.payload;
     },
-    updateWraparoundChildcareCost: (state, action: PayloadAction<number>) => {
+    updateInOfficeIncrementalChildcareCost: (
+      state,
+      action: PayloadAction<number>,
+    ) => {
       state.inOfficeIncrementalChildcareCost = action.payload;
     },
     updateHourlyHolidayChildcareCost: (
@@ -135,6 +143,8 @@ const userInputs = createSlice({
 
 export const a = userInputs.actions;
 
+export const selectCurrentAge = (state: RootState) =>
+  state.userInputs.currentAge;
 export const selectAnnualSalary = (state: RootState) =>
   state.userInputs.annualSalary;
 export const selectDaysPerWeekOfWorking = (state: RootState) =>
@@ -154,7 +164,7 @@ export const selectPartnerAnnualIncome = (state: RootState) =>
   state.userInputs.partnerAnnualIncome;
 export const selectHourlyTermtimeChildcareCost = (state: RootState) =>
   state.userInputs.hourlyTermtimeChildcareCost;
-export const selectWraparoundChildcareCost = (state: RootState) =>
+export const selectInOfficeIncrementalChildcareCost = (state: RootState) =>
   state.userInputs.inOfficeIncrementalChildcareCost;
 export const selectHourlyHolidayChildcareCost = (state: RootState) =>
   state.userInputs.hourlyHolidayChildcareCost;

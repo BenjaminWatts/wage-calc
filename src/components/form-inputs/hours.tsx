@@ -11,7 +11,7 @@ interface HoursInputProps {
   onChange: (value: number) => void;
 }
 
-const HoursWorkPerDayInput: React.FC<HoursInputProps> = (p) => {
+const HoursWorkPerDayInput: React.FC = (p) => {
   const dispatch = useAppDispatch();
   const value = useSelector((r: RootState) => s.selectHoursOfWorkPerDay(r));
   const onValueChange = (value: number) =>

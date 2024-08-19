@@ -32,12 +32,14 @@ const HourlyTermtimeChildcareCost: React.FC = () => {
   return <CostInput onChange={onChange} value={value} />;
 };
 
-const WraparoundChildcareCost: React.FC = () => {
+// create an input for inOfficeIncrementalChildcareCost
+
+const InOfficeIncrementalChildcareCost: React.FC = () => {
   const dispatch = useAppDispatch();
   const onChange = (x: number) =>
-    dispatch(s.a.updateWraparoundChildcareCost(x));
+    dispatch(s.a.updateInOfficeIncrementalChildcareCost(x));
   const value = useSelector((r: RootState) =>
-    s.selectWraparoundChildcareCost(r),
+    s.selectInOfficeIncrementalChildcareCost(r),
   );
   return <CostInput onChange={onChange} value={value || 0} />;
 };
@@ -56,8 +58,10 @@ const ChildcareCostInputs: React.FC = () => {
   return (
     <>
       <HourlyTermtimeChildcareCost />
-      <WraparoundChildcareCost />
+      <InOfficeIncrementalChildcareCost />
       <HourlyHolidayChildcareCost />
     </>
   );
 };
+
+export default ChildcareCostInputs;

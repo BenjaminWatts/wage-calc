@@ -19,7 +19,7 @@ const calcNetHourlyPay = (takeHomePay: number, hours: number): number =>
  * @param ui - the user inputs
  * @returns the results of the calculation
  */
-const calcTakeHome = (ui: UserInputs): CalculationResult => {
+const calcTakeHome = (ui: UserInputs): ScenarioResult => {
   const workingDays = days.workingDays(ui);
   const onsiteDays = days.onsiteDays(ui, workingDays);
   const hours = workingHours(ui, workingDays, onsiteDays);

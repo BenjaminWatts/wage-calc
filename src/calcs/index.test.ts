@@ -4,7 +4,7 @@ import c from './index';
 
 const simpleFamily: UserInputs = {
   currentAge: 35,
-  annualSalary: 75000,
+  annualSalary: 95000,
   partnerAnnualIncome: 55000,
   daysPerWeekInOffice: 3,
   daysPerWeekOfWorking: 5,
@@ -26,7 +26,7 @@ const simpleFamily: UserInputs = {
   drivingDistancePerCommuteMiles: 10,
   carFuelType: 'petrol',
   commuteDoorToDoorMinutes: 60,
-  dailyParkingCost: 5,
+  dailyParkingCost: 10,
   dailyTrainBusTicketCost: 25,
   dailyBreakfastCoffeeCost: 7,
   dailyLunchCost: 10,
@@ -41,7 +41,6 @@ const simpleFamily: UserInputs = {
 describe('basic family', () => {
   it('can calculate output without errors', () => {
     const result = c(simpleFamily);
-    // prettify and print the result to the console
     console.log(JSON.stringify(result, null, 2));
   });
 });
