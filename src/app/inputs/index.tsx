@@ -13,56 +13,51 @@ const LinkedButtonComponent: React.FC<LinkedButtonProps> = (p) => {
   const onPress = n.useUrl(p.href);
   return (
     <List.Item
+      style={{ paddingLeft: 20 }}
       title={p.label}
       onPress={onPress}
       left={(props) => <Icon {...props} source={p.icon} size={20} />}
+      // right chevron
+      right={(props) => <Icon {...props} source="chevron-right" size={20} />}
     />
   );
 };
 
 const BUTTONS: LinkedButtonProps[] = [
   {
+    label: `Salary and Pension`,
+    href: n.salary,
+    icon: 'cash',
+  },
+  {
+    label: `Working Schedule`,
+    href: n.workingSchedule,
+    icon: 'clock',
+  },
+  // {
+  //   label: `Working Days`,
+  //   href: n.days,
+  //   icon: 'calendar',
+  // },
+  {
     label: 'Children',
     href: n.children,
     icon: 'human-male-child',
   },
   {
-    label: `Working Days`,
-    href: n.days,
-    icon: 'calendar',
-  },
-  {
-    label: `Working Hours`,
-    href: n.hours,
-    icon: 'clock',
-  },
-  {
-    label: `Others`,
-    href: n.others,
-    icon: 'food',
-  },
-  {
-    label: `Pension`,
-    href: n.pension,
-    icon: 'piggy-bank',
-  },
-  {
-    label: `Salary`,
-    href: n.salary,
-    icon: 'cash',
-  },
-  {
-    label: `Transport`,
+    label: `Commuting Expenses`,
     href: n.transport,
     icon: 'train',
   },
 ];
 
 export const InputsButtons: React.FC = () => (
-  <Card>
+  <>
     <Card.Title
-      title="Inputs"
-      left={(p) => <Icon {...p} source="cog" size={20} />}
+      title="User inputs"
+      subtitle="
+      Tell us about your work and lifestyle/family to get a personalised wage calculation.
+    "
     />
     {BUTTONS.map(({ label, href, icon }) => (
       <LinkedButtonComponent
@@ -72,7 +67,7 @@ export const InputsButtons: React.FC = () => (
         icon={icon}
       />
     ))}
-  </Card>
+  </>
 );
 
 export default InputsButtons;

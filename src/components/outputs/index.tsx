@@ -1,38 +1,76 @@
 import React from 'react';
-import { Card, Icon, List } from 'react-native-paper';
-import HybridSplit from './hybrid-split';
+import { Icon, List } from 'react-native-paper';
+import { HybridSplitOutput } from './hybrid-split';
 import TeacherOutput from './teacher';
 import SummaryOutputs from './summary';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 const iconSize = 32;
 
-const Outputs: React.FC = () => (
-  <Card>
-    <Card.Title
-      title="Outputs"
-      left={(p) => <Icon {...p} source="calculator" />}
-    />
+const Spacer: React.FC = () => <View style={{ height: 15 }} />;
+
+const OutputExpandableAccordion: React.FC<{
+  title: string;
+  iconSource: string;
+  initialExpanded: boolean;
+  children: React.ReactNode;
+}> = ({ title, iconSource, initialExpanded, children }) => {
+  const [expanded, setExpanded] = React.useState(initialExpanded);
+  return (
     <List.Accordion
+      title={title}
+      left={(p) => <Icon {...p} source={iconSource} size={iconSize} />}
+      onPress={() => setExpanded(!expanded)}
+      expanded={expanded}
+    >
+      {children}
+    </List.Accordion>
+  );
+};
+
+const Outputs: React.FC = () => (
+  <ScrollView
+    contentContainerStyle={{
+      padding: 5,
+      gap: 15,
+    }}
+  >
+    <OutputExpandableAccordion
       title="Your Current Income"
-      left={(p) => <Icon {...p} source="currency-gbp" size={iconSize} />}
+      iconSource="currency-gbp"
+      initialExpanded={true}
     >
       <SummaryOutputs />
-    </List.Accordion>
-    <List.Accordion
-      title="Home vs Office"
-      left={(p) => <Icon {...p} source="home" size={iconSize} />}
+    </OutputExpandableAccordion>
+
+    <OutputExpandableAccordion
+      title="Ask for a payrise or fewer days in the office?"
+      iconSource="car"
+      initialExpanded={false}
     >
-      <HybridSplit />
-    </List.Accordion>
-    <List.Accordion
-      title="Become a teacher"
-      left={(p) => <Icon {...p} source="school" size={iconSize} />}
+      <HybridSplitOutput />
+    </OutputExpandableAccordion>
+
+    {/* <Spacer />
+    <OutputExpandableAccordion
+      title="Impact of commuting on your hourly take home pay"
+      iconSource="car"
+      initialExpanded={false}
+    >
+      <CommutingImpactHourlyWages />
+    </OutputExpandableAccordion> */}
+
+    <OutputExpandableAccordion
+      title="Is it worth becoming a teacher?"
+      iconSource="school"
+      initialExpanded={false}
     >
       <TeacherOutput />
-    </List.Accordion>
-  </Card>
+    </OutputExpandableAccordion>
+    <Spacer />
+  </ScrollView>
 );
+
 const styles = StyleSheet.create({
   view: {
     display: 'flex',

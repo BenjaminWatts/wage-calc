@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { workingDays } from '../calcs/take-home/days';
+import { minimumAnnualLeave, workingDays } from '../calcs/take-home/days';
 
 interface UserInputsState extends UserInputs {}
 
@@ -12,7 +12,7 @@ const AVERAGE_CHILDCARE_COST_HOUR = 6.53;
 const defaults: UserInputsState = {
   currentAge: 35,
   annualSalary: AVERAGE_INCOME,
-  partnerAnnualIncome: AVERAGE_INCOME,
+  partnerAnnualIncome: 0,
   daysPerWeekOfWorking: 5,
   hoursOfWorkPerDay: 8,
   employerPensionContributionPc: 3,
@@ -31,9 +31,9 @@ const defaults: UserInputsState = {
   drivingDistancePerCommuteMiles: 10,
   carFuelType: 'petrol',
   commuteDoorToDoorMinutes: 30,
-  dailyParkingCost: 5,
+  dailyParkingCost: 0,
   dailyTrainBusTicketCost: 5,
-  flexiSeasonTicketCost: 5,
+  flexiSeasonTicketCost: 0,
 };
 
 const userInputs = createSlice({
@@ -52,12 +52,17 @@ const userInputs = createSlice({
         state.daysPerWeekInOffice,
         action.payload,
       );
-      state.holidayDaysPerYear = Math.min(
-        state.holidayDaysPerYear,
-        workingDays({
-          daysPerWeekOfWorking: action.payload,
-          holidayDaysPerYear: state.holidayDaysPerYear,
-        }),
+      state.holidayDaysPerYear = Math.ceil(
+        Math.max(
+          Math.min(
+            state.holidayDaysPerYear,
+            workingDays({
+              daysPerWeekOfWorking: action.payload,
+              holidayDaysPerYear: state.holidayDaysPerYear,
+            }),
+          ),
+          minimumAnnualLeave(action.payload),
+        ),
       );
     },
     updateHoursOfWorkPerDay: (state, action: PayloadAction<number>) => {
@@ -65,9 +70,9 @@ const userInputs = createSlice({
     },
     updateEmployerPensionContributionPc: (
       state,
-      action: PayloadAction<number>,
+      { payload }: PayloadAction<number>,
     ) => {
-      state.employerPensionContributionPc = action.payload;
+      state.employerPensionContributionPc = payload;
     },
     updateEmployeePensionContributionPc: (
       state,
@@ -76,10 +81,10 @@ const userInputs = createSlice({
       state.employeePensionContributionPc = action.payload;
     },
     updateDaysPerWeekInOffice: (state, action: PayloadAction<number>) => {
-      state.daysPerWeekInOffice = action.payload;
+      state.daysPerWeekInOffice = Math.round(action.payload);
     },
     updateHolidayDaysPerYear: (state, action: PayloadAction<number>) => {
-      state.holidayDaysPerYear = action.payload;
+      state.holidayDaysPerYear = Math.round(action.payload);
     },
     addChild: (state, { payload }: PayloadAction<Child>) => {
       state.children.push(payload);

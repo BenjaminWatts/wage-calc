@@ -1,7 +1,9 @@
 import { RootState, useAppDispatch } from '@/src/state/store';
 import React from 'react';
-import { TextInput } from 'react-native-paper';
+import { List, Paragraph, TextInput, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
+import * as s from '@/src/state/user-inputs';
+import { View, StyleSheet, ScrollView } from 'react-native';
 
 // inputs for transport including drivingDistancePerCommuteMiles, carFuelType, commuteDoorToDoorMinutes, dailyParkingCost, dailyTrainBusTicketCost, flexiSeasonTicketCost, seasonTicketCost
 
@@ -18,16 +20,15 @@ const NumericInput = ({
   value,
   onChange,
 }: NumericInputProps) => {
+  const [currentValue, setCurrentValue] = React.useState(
+    value && value.toString(),
+  );
   return (
     <TextInput
       label={label}
-      value={value ? value.toString() : ''}
-      onChangeText={(text) => {
-        const number = parseFloat(text);
-        if (!isNaN(number)) {
-          onChange(number);
-        }
-      }}
+      value={currentValue || ''}
+      onBlur={(e) => onChange(parseFloat(e.nativeEvent.text))}
+      onChangeText={setCurrentValue}
       keyboardType="numeric"
     />
   );
@@ -41,15 +42,129 @@ const DrivingDistancePerCommuteMiles: React.FC = () => {
   return (
     <NumericInput
       minimumValue={0}
-      label="Driving distance per commute (miles)"
+      label="Distance (miles)"
+      value={value}
+      onChange={(value) =>
+        dispatch(s.a.updateDrivingDistancePerCommuteMiles(value))
+      }
+    />
+  );
+};
+
+//dailyParkingCost
+const DailyParkingCost: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.userInputs.dailyParkingCost,
+  );
+  return (
+    <NumericInput
+      minimumValue={0}
+      label="£ Daily parking"
+      value={value}
+      onChange={(value) => dispatch(s.a.updateDailyParkingCost(value))}
+    />
+  );
+};
+
+const DrivingCosts: React.FC = () => {
+  const [expanded, setExpanded] = React.useState(true);
+  return (
+    <List.Accordion
+      title="Driving Costs"
+      expanded={expanded}
+      onPress={() => setExpanded(!expanded)}
+      left={(props) => <List.Icon {...props} icon="car" />}
+    >
+      <Paragraph>
+        If driving is part of your commute, please enter the costs associated.
+        If not, please leave these fields blank.
+      </Paragraph>
+      <DrivingDistancePerCommuteMiles />
+      <DailyParkingCost />
+    </List.Accordion>
+  );
+};
+
+//dailyTrainBusTicketCost
+const DailyTrainBusTicketCost: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.userInputs.dailyTrainBusTicketCost,
+  );
+  return (
+    <NumericInput
+      minimumValue={0}
+      label="£ Daily"
+      value={value}
+      onChange={(value) => dispatch(s.a.updateDailyTrainBusTicketCost(value))}
+    />
+  );
+};
+
+//flexiSeasonTicketCost
+const FlexiSeasonTicketCost: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.userInputs.flexiSeasonTicketCost,
+  );
+  return (
+    <NumericInput
+      minimumValue={0}
+      label="£ Annual Flexi season ticket"
+      value={value || 0}
+      onChange={(value) => dispatch(s.a.updateFlexiSeasonTicketCost(value))}
+    />
+  );
+};
+
+//seasonTicketCost
+const SeasonTicketCost: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.userInputs.seasonTicketCost,
+  );
+  return (
+    <NumericInput
+      minimumValue={0}
+      label="£ Annual Season ticket"
       value={value}
       onChange={(value) =>
         dispatch({
-          type: 'userInputs/setDrivingDistancePerCommuteMiles',
+          type: 'userInputs/setSeasonTicketCost',
           payload: value,
         })
       }
     />
+  );
+};
+
+const PublicTransportCosts: React.FC = () => {
+  const [expanded, setExpanded] = React.useState(true);
+  return (
+    <List.Accordion
+      expanded={expanded}
+      onPress={() => setExpanded(!expanded)}
+      left={(p) => <List.Icon {...p} icon="bus" />}
+      title="Public Transport Costs"
+      id="public-transport-costs"
+    >
+      <Paragraph>
+        Please enter the cost of commuting by public transport. If public
+        transport is only part of the commute, then enter driving costs
+        separately above.
+      </Paragraph>
+      <DailyTrainBusTicketCost />
+      <Paragraph>
+        If you want to consider how the cost of commuting per day varies with
+        the number of days you work in the office, please enter the cost of
+        either annual flexi season ticket and an annual season ticket. If you
+        don't enter these, we will estimate what they cost for your route, based
+        on the daily cost.
+      </Paragraph>
+      <FlexiSeasonTicketCost />
+      <SeasonTicketCost />
+    </List.Accordion>
   );
 };
 
@@ -73,101 +188,36 @@ const CommuteDoorToDoorMinutes: React.FC = () => {
   );
 };
 
-//dailyParkingCost
-const DailyParkingCost: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const value = useSelector(
-    (state: RootState) => state.userInputs.dailyParkingCost,
-  );
+const TimeInputs: React.FC = () => {
+  const [expanded, setExpanded] = React.useState(true);
   return (
-    <NumericInput
-      minimumValue={0}
-      label="Daily parking cost"
-      value={value}
-      onChange={(value) =>
-        dispatch({
-          type: 'userInputs/setDailyParkingCost',
-          payload: value,
-        })
-      }
-    />
-  );
-};
-
-//dailyTrainBusTicketCost
-const DailyTrainBusTicketCost: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const value = useSelector(
-    (state: RootState) => state.userInputs.dailyTrainBusTicketCost,
-  );
-  return (
-    <NumericInput
-      minimumValue={0}
-      label="Daily train/bus ticket cost"
-      value={value}
-      onChange={(value) =>
-        dispatch({
-          type: 'userInputs/setDailyTrainBusTicketCost',
-          payload: value,
-        })
-      }
-    />
-  );
-};
-
-//flexiSeasonTicketCost
-const FlexiSeasonTicketCost: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const value = useSelector(
-    (state: RootState) => state.userInputs.flexiSeasonTicketCost,
-  );
-  return (
-    <NumericInput
-      minimumValue={0}
-      label="Flexi season ticket cost"
-      value={value}
-      onChange={(value) =>
-        dispatch({
-          type: 'userInputs/setFlexiSeasonTicketCost',
-          payload: value,
-        })
-      }
-    />
-  );
-};
-
-//seasonTicketCost
-const SeasonTicketCost: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const value = useSelector(
-    (state: RootState) => state.userInputs.seasonTicketCost,
-  );
-  return (
-    <NumericInput
-      minimumValue={0}
-      label="Season ticket cost"
-      value={value}
-      onChange={(value) =>
-        dispatch({
-          type: 'userInputs/setSeasonTicketCost',
-          payload: value,
-        })
-      }
-    />
+    <List.Accordion
+      title="Time Inputs"
+      expanded={expanded}
+      onPress={() => setExpanded(!expanded)}
+      left={(props) => <List.Icon {...props} icon="clock" />}
+    >
+      <Paragraph>
+        In order to more accurately calculate how much you earn per hour,
+        including the time you spend commuting, we need to know how long your
+        commute is. on days that you work in the office.
+      </Paragraph>
+      <CommuteDoorToDoorMinutes />
+    </List.Accordion>
   );
 };
 
 const TransportInputs: React.FC = () => {
   return (
-    <>
-      <DrivingDistancePerCommuteMiles />
-      <CommuteDoorToDoorMinutes />
-      <DailyParkingCost />
-      <DailyTrainBusTicketCost />
-      <FlexiSeasonTicketCost />
-      <SeasonTicketCost />
-    </>
+    <ScrollView contentContainerStyle={styles.container}>
+      <DrivingCosts />
+      <PublicTransportCosts />
+      <TimeInputs />
+    </ScrollView>
   );
 };
+const styles = StyleSheet.create({
+  container: { gap: 10 },
+});
 
 export default TransportInputs;

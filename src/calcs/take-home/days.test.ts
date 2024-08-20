@@ -3,14 +3,14 @@ import * as d from './days';
 describe('annualLeave', () => {
   it('should return the default number of annual leave days if nothing provided', () => {
     expect(
-      d.annualLeave({
+      d.minimumAnnualLeave({
         holidayDaysPerYear: undefined,
       }),
     ).toBe(25);
   });
   it('should return the provided number of annual leave days', () => {
     expect(
-      d.annualLeave({
+      d.minimumAnnualLeave({
         holidayDaysPerYear: 30,
       }),
     ).toBe(30);

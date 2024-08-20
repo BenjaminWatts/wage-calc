@@ -1,11 +1,23 @@
-import { useRouter, useGlobalSearchParams } from 'expo-router';
+import { useRouter, useGlobalSearchParams, useNavigation } from 'expo-router';
+import React from 'react';
 
-export const useUrl = (url: string) => {
-  const nav = useRouter();
-  return () => nav.navigate(url as any);
+export const PageHeader: React.FC<{
+  title: string;
+  back?: string;
+}> = ({ title }) => {
+  const navigation = useNavigation();
+  React.useEffect(() => {
+    navigation.setOptions({
+      title,
+    });
+  }, [title]);
+  return null;
 };
 
-export const home = 'home';
+export const useUrl = (path: string) => {
+  const nav = useRouter();
+  return () => nav.push(path as any);
+};
 
 // const inputs = 'inputs';
 
@@ -26,17 +38,13 @@ export const days = 'inputs/days';
 
 export const useDays = () => useUrl(days);
 
-export const hours = 'inputs/hours';
+export const workingSchedule = 'inputs/working-schedule';
 
-export const useHours = () => useUrl(hours);
+export const useWorkingSchedule = () => useUrl(workingSchedule);
 
 export const others = 'inputs/others';
 
 export const useOthers = () => useUrl(others);
-
-export const pension = 'inputs/pension';
-
-export const usePension = () => useUrl(pension);
 
 export const salary = 'inputs/salary';
 

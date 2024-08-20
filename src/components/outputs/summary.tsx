@@ -26,7 +26,7 @@ const SummaryOutputs: React.FC = () => {
           Your total working hours, including commute, are{' '}
           {r.hours.annual(takeHome.workingAndCommutingHours)} hours. This means
           that, for each hour you get take home pay of approximately{' '}
-          {r.financial.hourly(takeHome.takeHomeTotal)}
+          {r.financial.hourly(takeHome.netHourlyPay)}
         </Paragraph>
       </Card.Content>
     </Card>

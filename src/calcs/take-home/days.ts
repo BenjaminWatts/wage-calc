@@ -9,10 +9,8 @@ const UK_STATUTORY_HOLIDAY_COUNT = 28;
  * Calculate the annual leave days
  * @param ui The user inputs
  */
-export const annualLeave = (ui: { holidayDaysPerYear?: number }): number => {
-  const total = ui.holidayDaysPerYear || 25;
-  return total;
-};
+export const minimumAnnualLeave = (workingDaysPerWeek: number): number =>
+  Math.ceil((workingDaysPerWeek / 5) * UK_STATUTORY_HOLIDAY_COUNT);
 
 /**
  * Calculate the number of days that the user is onsite

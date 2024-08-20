@@ -1,18 +1,43 @@
 import React from 'react';
-import Outputs from '@/src/components/outputs';
-import InputsButtons from './inputs';
-import { ScrollView } from 'react-native-gesture-handler';
-import { View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Inputs from './inputs';
+import Outputs from './outputs';
+import { Icon } from 'react-native-paper';
+import { useNavigation } from 'expo-router';
 
-const Spacer: React.FC = () => <View style={{ height: 20 }} />;
+const Tab = createBottomTabNavigator();
 
-export const HomeScreen: React.FC = () => {
+const HomeScreen: React.FC = () => {
+  const nav = useNavigation();
+  nav.setOptions({
+    title: 'Wage Calculator',
+  });
   return (
-    <ScrollView>
-      <InputsButtons />
-      <Spacer />
-      <Outputs />
-    </ScrollView>
+    <>
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Inputs"
+          component={Inputs}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Icon source="cog" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Outputs"
+          component={Outputs}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color, size }) => (
+              <Icon source="calculator" color={color} size={size} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </>
   );
 };
+
 export default HomeScreen;
