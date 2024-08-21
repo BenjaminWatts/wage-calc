@@ -9,11 +9,12 @@ import { useSelector } from 'react-redux';
 import * as r from '@/src/calcs/rounding';
 
 export const CommutingImpactHourlyWages: React.FC = () => {
-  const result = useCalculation();
-  const { notAdjusted } = result.hybridSplits;
   const currentInofficeDays = useSelector(
     (r: RootState) => r.userInputs.daysPerWeekInOffice,
   );
+  const result = useCalculation();
+  if (!result) return null;
+  const { notAdjusted } = result.hybridSplits;
 
   return (
     <Card>
@@ -77,12 +78,13 @@ const renderDescription = (currentSalary: number, equivalentSalary: number) => {
 };
 
 export const HybridSplitOutput: React.FC = () => {
-  const result = useCalculation();
-  const { adjusted } = result.hybridSplits;
   const daysInOffice = useSelector(
     (r: RootState) => r.userInputs.daysPerWeekInOffice,
   );
   const currentSalary = useSelector((r: RootState) => selectAnnualSalary(r));
+  const result = useCalculation();
+  if (!result) return null;
+  const { adjusted } = result.hybridSplits;
 
   return (
     <Card>

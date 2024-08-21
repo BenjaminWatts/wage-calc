@@ -1,5 +1,5 @@
 /// inputs for annual income
-import { List, Paragraph, TextInput } from 'react-native-paper';
+import { List, Paragraph } from 'react-native-paper';
 import * as s from '../../state/user-inputs';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '@/src/state/store';
@@ -7,45 +7,16 @@ import * as r from '@/src/calcs/rounding';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
 import React from 'react';
-import Slider from '@react-native-community/slider';
 import { SalaryAndPensionReset } from '../reset-buttons';
-
-interface SalaryInputProps {
-  label: string;
-  value?: number;
-  onChange: (value: number) => void;
-}
-
-const SalaryInput: React.FC<SalaryInputProps> = (p) => {
-  return (
-    <TextInput
-      label={p.label}
-      keyboardType="numeric"
-      value={p.value ? p.value.toString() : ''}
-      onChangeText={(v) => p.onChange(parseInt(v))}
-    />
-  );
-};
+import CostInput from '@/src/atoms/cost-input';
 
 const USER_LABEL = 'You';
-const PARTNER_LABEL = 'Your Partner';
 
 const UserSalary: React.FC = () => {
   const dispatch = useAppDispatch();
   const value = useSelector((r: RootState) => s.selectAnnualSalary(r));
   const onChange = (value: number) => dispatch(s.a.updateAnnualSalary(value));
-  return <SalaryInput label={USER_LABEL} value={value} onChange={onChange} />;
-};
-
-const UserPartnerSalary: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const value = useSelector((r: RootState) => s.selectPartnerAnnualIncome(r));
-  const onChange = (value: number) =>
-    dispatch(s.a.updatePartnerAnnualIncome(value));
-
-  return (
-    <SalaryInput label={PARTNER_LABEL} value={value} onChange={onChange} />
-  );
+  return <CostInput label={USER_LABEL} value={value} onChange={onChange} />;
 };
 
 interface PensionInputProps {
@@ -174,17 +145,7 @@ const SalaryInputs: React.FC = () => {
             gap: 10,
           }}
         >
-          <Paragraph>
-            Aside from your own salary which should be entered including the
-            value of any benefits (like private health insurance) you receive as
-            well as your partner's income.
-          </Paragraph>
           <UserSalary />
-          <Paragraph>
-            If you have children, the availability of Child Benefit (and tax
-            free and free childcare) depends on both your incomes.
-          </Paragraph>
-          <UserPartnerSalary />
         </View>
       </List.Accordion>
     </>
@@ -205,12 +166,5 @@ const PensionSalaryInputs: React.FC = () => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 10,
-    padding: 10,
-  },
-});
 
 export default PensionSalaryInputs;

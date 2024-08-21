@@ -111,17 +111,18 @@ const userInputs = createSlice({
     },
     updateHourlyHolidayChildcareCost: (
       state,
-      action: PayloadAction<{
+      {
+        payload,
+      }: PayloadAction<{
         index: number;
         hourlyHolidayChildcareCost: number;
       }>,
     ) => {
       state.children = state.children.map((c, i) =>
-        i === action.payload.index
+        i === payload.index
           ? {
               ...c,
-              hourlyHolidayChildcareCost:
-                action.payload.hourlyHolidayChildcareCost,
+              hourlyHolidayChildcareCost: payload.hourlyHolidayChildcareCost,
             }
           : c,
       );

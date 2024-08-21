@@ -7,6 +7,7 @@ import * as r from '@/src/calcs/rounding';
 
 const ContractorOutput: React.FC = () => {
   const result = useCalculation();
+  if (!result) return null;
   const contractorPremium = result.contractor;
   return (
     <Card>

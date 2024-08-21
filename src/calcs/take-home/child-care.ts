@@ -1,6 +1,10 @@
 import { TERM_WEEKS_PER_YEAR } from './constants';
 
 const TAXFREE_REBATE_LIMIT = 2000;
+const SCHOOL_DAY_LENGTH = 6.5;
+export const NO_CHILDCARE_COST_MINIMUM_AGE = 12;
+
+export const SCHOOL_AGE_YEARS = 5;
 
 /**
  * Calculate the number of hours of free childcare available for a child
@@ -12,9 +16,9 @@ export const hoursOfFreeChildcare = (c: Child, parentEligible: boolean) => {
   // if 9 months to 2 years, 15 hours
   if (c.years < 2) return 15;
   // if 2 to 4 years, 30 hours
-  if (c.years < 5) return 30;
-  // if school age - none
-  return 0;
+  if (c.years < SCHOOL_AGE_YEARS) return 30;
+  // if school age - school is free childcare
+  return SCHOOL_DAY_LENGTH * 5;
 };
 
 export const hourlyHolidayChildcareCost = (
@@ -52,9 +56,6 @@ export const calculateTaxRebate = (
  */
 export const child = (
   ui: {
-    // hourlyTermtimeChildcareCost: number;
-    // hourlyHolidayChildcareCost: number;
-    // inOfficeIncrementalChildcareCost: number;
     daysPerWeekInOffice: number;
     daysPerWeekOfWorking: number;
   },
@@ -63,6 +64,8 @@ export const child = (
   schoolHolidayExcessWeeks: number,
   parentEligible: boolean,
 ): number => {
+  if (child.years >= NO_CHILDCARE_COST_MINIMUM_AGE) return 0;
+
   let total = 0;
 
   const freeHours = hoursOfFreeChildcare(child, parentEligible);
@@ -106,6 +109,7 @@ export const calculateHolidayDaysPerYear = (
 ) => (holidayDaysPerYear || 25) * fteFraction(daysPerWeekOfWorking);
 
 const MAX_INCOME = 100000;
+const MIN_INCOME = 2380 * 12;
 
 /**
  * Determine whether parents are eligible for government support with childcare costs
@@ -118,14 +122,13 @@ export const calcParentEligible = (
 ): boolean => {
   let parentalIncomes: number[] = [annualSalary];
   if (partnerAnnualIncome) parentalIncomes.push(partnerAnnualIncome);
-  return Math.max(...parentalIncomes) < MAX_INCOME;
+  if (Math.max(...parentalIncomes) > MAX_INCOME) return false;
+  if (Math.min(...parentalIncomes) < MIN_INCOME) return false;
+  return true;
 };
 
 interface ChildUiOptions {
   children: Child[];
-  // hourlyTermtimeChildcareCost: number;
-  // hourlyHolidayChildcareCost: number;
-  // inOfficeIncrementalChildcareCost: number;
   daysPerWeekInOffice: number;
   hoursOfWorkPerDay: number;
   daysPerWeekOfWorking: number;

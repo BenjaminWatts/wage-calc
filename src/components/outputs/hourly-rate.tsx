@@ -27,27 +27,32 @@ const WithHourlyRateHeaderRight: React.FC<{
 
   const termsAccepted = useSelector(selectTermsAccepted);
   const result = useCalculation();
-  const rate = r.financial.hourly(result.takeHome.netHourlyPay);
   const nav = useNavigation();
   const onPress = useCalcs();
 
   React.useEffect(() => {
-    if (!termsAccepted) {
+    if (!result) {
       nav.setOptions({
-        headerRight: () => (
-          <NotAcceptedPrompt onPress={() => setVisible(true)} />
-        ),
+        headerRight: null,
       });
     } else {
-      nav.setOptions({
-        headerRight: () => (
-          <Button onPress={onPress} mode="text">
-            Take-home: {rate}
-          </Button>
-        ),
-      });
+      if (!termsAccepted) {
+        nav.setOptions({
+          headerRight: () => (
+            <NotAcceptedPrompt onPress={() => setVisible(true)} />
+          ),
+        });
+      } else {
+        nav.setOptions({
+          headerRight: () => (
+            <Button onPress={onPress} mode="text">
+              Take-home: {r.financial.hourly(result.takeHome.netHourlyPay)}
+            </Button>
+          ),
+        });
+      }
     }
-  }, [rate, termsAccepted]);
+  }, [result, termsAccepted]);
 
   return (
     <TermsModal

@@ -7,6 +7,7 @@ import * as r from '@/src/calcs/rounding';
 
 const SummaryOutputs: React.FC = () => {
   const result = useCalculation();
+  if (!result) return null;
   const { takeHome } = result;
 
   return (

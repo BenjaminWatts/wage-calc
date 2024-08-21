@@ -7,6 +7,8 @@ import * as r from '@/src/calcs/rounding';
 
 const TeacherOutput: React.FC = () => {
   const result = useCalculation();
+  if (!result) return null;
+
   const teacherSalary = result.teacher;
   return (
     <Card>

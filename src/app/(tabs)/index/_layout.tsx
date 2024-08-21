@@ -22,7 +22,7 @@ export const InputsStack = () => {
         }}
       />
       <Stack.Screen
-        name="children"
+        name="children/index"
         options={{
           headerShown: true,
           title: 'Children',

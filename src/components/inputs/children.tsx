@@ -10,6 +10,11 @@ import SliderWithLabels from '@/src/atoms/slider-with-labels';
 import { BIRTHDAY, SCHOOL } from '../icons';
 import CostInput from '@/src/atoms/cost-input';
 import { ChildrenReset, ChildReset } from '../reset-buttons';
+import {
+  NO_CHILDCARE_COST_MINIMUM_AGE,
+  SCHOOL_AGE_YEARS,
+} from '@/src/calcs/take-home/child-care';
+import ChildOutputs from '../outputs/child';
 
 const DeleteChildButton: React.FC<{
   index: number;
@@ -51,6 +56,32 @@ const CreateChildButton: React.FC = () => {
   );
 };
 
+const PARTNER_LABEL = 'Annual Salary';
+
+const UserPartnerSalary: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector((r: RootState) => s.selectPartnerAnnualIncome(r));
+  const onChange = (value: number) =>
+    dispatch(s.a.updatePartnerAnnualIncome(value));
+  return (
+    <Card>
+      <Card.Title title={`Your Partner`} />
+      <Card.Content
+        style={{
+          padding: 10,
+          gap: 10,
+        }}
+      >
+        <Paragraph>
+          In order to estimate how much child benefit, free and subsidised
+          childcare you will receive, we need to know your partner's annual
+          salary.
+        </Paragraph>
+        <CostInput label={PARTNER_LABEL} value={value} onChange={onChange} />
+      </Card.Content>
+    </Card>
+  );
+};
 /**
  * List of children - to be rendered on first screen
  */
@@ -86,6 +117,7 @@ export const ChildrenList: React.FC = () => {
           </List.Section>
         </Card.Content>
       </Card>
+      {data.length > 0 && <UserPartnerSalary />}
       <CreateChildButton />
       <ChildrenReset />
     </ScrollView>
@@ -142,8 +174,18 @@ const ChildAgeAccordion: React.FC<{ index: number }> = ({ index }) => {
   );
 };
 
+const renderTermtimeChildcareCostLabel = (years: number): string => {
+  if (years < SCHOOL_AGE_YEARS) {
+    return '£ Hourly Termtime Childcare Cost';
+  }
+  return '£ Hourly Wraparound Childcare Cost';
+};
+
 const HourlyTermtimeChildcareCost: React.FC<{ index: number }> = (p) => {
   const dispatch = useAppDispatch();
+  const age = useSelector(
+    (r: RootState) => r.userInputs.children[p.index].years,
+  );
   const onChange = (x: number) =>
     dispatch(
       s.a.updateHourlyTermtimeChildcareCost({
@@ -154,9 +196,13 @@ const HourlyTermtimeChildcareCost: React.FC<{ index: number }> = (p) => {
   const value = useSelector((r: RootState) =>
     s.selectHourlyTermtimeChildcareCost(r, p.index),
   );
+  if (age > NO_CHILDCARE_COST_MINIMUM_AGE) {
+    // no cost for children over 12
+    return null;
+  }
   return (
     <CostInput
-      label="£ Hourly Termtime Childcare Cost (when paid for i.e. outside of free hours)"
+      label={renderTermtimeChildcareCostLabel(age)}
       onChange={onChange}
       value={value}
     />
@@ -202,6 +248,7 @@ const ChildcareCostsAccordion: React.FC<{ index: number }> = ({ index }) => {
           gap: 10,
         }}
       >
+        <ChildOutputs index={index} />
         <HourlyTermtimeChildcareCost index={index} />
         <Paragraph>
           Please note, depending on the age of your child (and you/your
@@ -220,11 +267,12 @@ const ChildcareCostsAccordion: React.FC<{ index: number }> = ({ index }) => {
  * @param index - the index of the child to edit
  */
 export const EditChild: React.FC<{ index: number }> = ({ index }) => {
-  const [hide, setHide] = React.useState(false);
+  const child = useSelector((r: RootState) => r.userInputs.children[index]);
+  if (!child) return null;
   return (
     <View
       style={{
-        padding: 0,
+        padding: 10,
         gap: 10,
       }}
     >

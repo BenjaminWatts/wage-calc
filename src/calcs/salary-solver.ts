@@ -32,17 +32,10 @@ const salarySolver = (
 
   const increment = getIncrement(existing, requiredTakeHome);
 
-  // console.log(
-  //   `calculating salaryChange needed from ${existing.annualSalary} to move takehome by ${changeNeeded} from ${currentTakeHome} to ${requiredTakeHome} in increments of ${increment}`,
-  // );
-
   let annualSalary = existing.annualSalary;
   let count = 0;
 
-  // now we need to iterate to find the salary that gives us the required take-home pay
   while (count < COUNT_LIMIT) {
-    // console.log(`trying salary ${x} -- attempt ${count}`);
-
     const impliedTakeHome = calcTakeHome({
       ...existing,
       annualSalary,
@@ -51,15 +44,10 @@ const salarySolver = (
     const impliedChange = currentTakeHome - impliedTakeHome;
 
     if (Math.abs(impliedChange) > Math.abs(changeNeeded)) {
-      // console.log(`found solution.
-      //   To move takehome by ${changeNeeded} from ${currentTakeHome} to ${requiredTakeHome} we need to change salary by ${impliedChange} to ${annualSalary} in ${count} iterations
-
-      //   `);
       return annualSalary;
     }
 
     if (annualSalary <= 0) {
-      console.log('Salary is less than 0 -- not worth working at all');
       return 0;
     }
 

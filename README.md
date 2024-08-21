@@ -41,8 +41,13 @@ The main output will be:
 
 Current bugs
 
+1. School age children get free schooling.
 3. Helmet
 7. Bug Reporting Component
 9. Prevent innacurate information
 10. Try catch on the calculation - handle in components 
 12. Advertising
+13. Google tracker
+14. Sentry
+15. React Native Error Boundary
+

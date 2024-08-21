@@ -4,7 +4,7 @@ export const defaults = {
   salaryAndPension: {
     currentAge: 35,
     annualSalary: AVERAGE_INCOME,
-    partnerAnnualIncome: 0,
+    partnerAnnualIncome: undefined,
     daysPerWeekOfWorking: 5,
     employerPensionContributionPc: 0.03,
     employeePensionContributionPc: 0,

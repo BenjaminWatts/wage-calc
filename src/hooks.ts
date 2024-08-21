@@ -8,6 +8,13 @@ import calculate from './calcs';
  */
 export const useCalculation = () => {
   const ui = useSelector((state: RootState) => state.userInputs);
-  const result = React.useMemo(() => calculate(ui), [ui]);
+  const result = React.useMemo(() => {
+    try {
+      return calculate(ui);
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  }, [ui]);
   return result;
 };

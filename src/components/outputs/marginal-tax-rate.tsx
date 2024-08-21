@@ -7,6 +7,7 @@ import * as r from '@/src/calcs/rounding';
 
 const MarginalTaxRatesBonuses: React.FC = () => {
   const result = useCalculation();
+  if (!result) return null;
   const { marginalRate, total } = result.takeHome.tax;
 
   return (
