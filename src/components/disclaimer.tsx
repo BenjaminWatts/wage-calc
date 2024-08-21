@@ -106,8 +106,8 @@ export const TermsModal: React.FC<{
 }> = ({ display, children, cancel }) => {
   if (display) {
     return (
-      <View
-        style={{
+      <ScrollView
+        contentContainerStyle={{
           display: 'flex',
           gap: 15,
         }}
@@ -127,7 +127,7 @@ export const TermsModal: React.FC<{
         >
           <AcceptTermsCard cancel={cancel} />
         </View>
-      </View>
+      </ScrollView>
     );
   }
   return <>{children}</>;
