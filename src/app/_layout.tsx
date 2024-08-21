@@ -8,9 +8,10 @@ import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import { Provider } from 'react-redux';
-import store from '@/src/state/store';
+import store, { persistor } from '@/src/state/store';
 import ErrorBoundary from '../components/error-boundary';
 import { Helmet } from 'react-helmet';
+import { PersistGate } from 'redux-persist/integration/react';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,19 +24,21 @@ const MainStack: React.FC = () => {
         <title>CostofWork.app calculator</title>
       </Helmet>
       <Provider store={store}>
-        <ThemeProvider
-          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-        >
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="terms"
-              options={{
-                title: 'Terms and Conditions',
-              }}
-            />
-          </Stack>
-        </ThemeProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider
+            value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+          >
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="terms"
+                options={{
+                  title: 'Terms and Conditions',
+                }}
+              />
+            </Stack>
+          </ThemeProvider>
+        </PersistGate>{' '}
       </Provider>
     </ErrorBoundary>
   );
