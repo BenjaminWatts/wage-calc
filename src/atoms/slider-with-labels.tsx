@@ -1,4 +1,4 @@
-import { View, StyleSheet, useWindowDimensions } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
 import Slider from '@react-native-community/slider';
 import React from 'react';
@@ -17,7 +17,6 @@ interface SliderWithLabelsProps {
 const SliderWithLabels: React.FC<SliderWithLabelsProps> = (p) => {
   const offset = p.offset || 0;
   const [value, setValue] = React.useState(p.value + offset);
-  const screenWidth = useWindowDimensions();
 
   return (
     <View style={styles.sliderView}>
@@ -49,6 +48,10 @@ export default SliderWithLabels;
 
 const styles = StyleSheet.create({
   labelWrapper: {
+    height: 20,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '30%',
   },
   limitTextWrapper: {
@@ -56,6 +59,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     width: '50%',
+    height: 25,
   },
   sliderView: {
     gap: 5,
@@ -64,5 +68,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-around',
   },
 });

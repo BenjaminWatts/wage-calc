@@ -2,7 +2,13 @@ import { Stack } from 'expo-router';
 
 export const InputsStack = () => {
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerShown: true,
+        headerBackTitleVisible: false,
+      }}
+      initialRouteName="index"
+    >
       <Stack.Screen
         name="index"
         options={{

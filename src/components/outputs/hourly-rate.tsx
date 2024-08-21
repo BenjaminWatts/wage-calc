@@ -46,7 +46,7 @@ const WithHourlyRateHeaderRight: React.FC<{
         nav.setOptions({
           headerRight: () => (
             <Button onPress={onPress} mode="text">
-              Take-home: {r.financial.hourly(result.takeHome.netHourlyPay)}
+              {r.financial.hourly(result.takeHome.netHourlyPay)}
             </Button>
           ),
         });

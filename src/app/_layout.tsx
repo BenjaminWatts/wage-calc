@@ -18,6 +18,9 @@ SplashScreen.preventAutoHideAsync();
 const MainStack: React.FC = () => {
   const colorScheme = useColorScheme();
 
+  // hide the splash screen
+  SplashScreen.hideAsync();
+
   return (
     <ErrorBoundary>
       <Helmet>
@@ -28,7 +31,12 @@ const MainStack: React.FC = () => {
           <ThemeProvider
             value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
           >
-            <Stack>
+            <Stack
+              screenOptions={{
+                headerShown: true,
+              }}
+            >
+              <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen
                 name="terms"
@@ -38,7 +46,7 @@ const MainStack: React.FC = () => {
               />
             </Stack>
           </ThemeProvider>
-        </PersistGate>{' '}
+        </PersistGate>
       </Provider>
     </ErrorBoundary>
   );

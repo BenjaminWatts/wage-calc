@@ -77,7 +77,10 @@ const ChildOutputs: React.FC<ChildOutputsProps> = ({ index }) => {
     <View
       style={{
         gap: 10,
-        margin: 10,
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        // margin: 10,
       }}
     >
       <FreeHours child={child} parentEligible={parentEligible} />

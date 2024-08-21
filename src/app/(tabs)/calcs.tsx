@@ -4,7 +4,7 @@ import WithTerms from '@/src/components/disclaimer';
 
 const OutputsScreen: React.FC = () => (
   <WithTerms>
-    <Outputs />;
+    <Outputs />
   </WithTerms>
 );
 export default OutputsScreen;

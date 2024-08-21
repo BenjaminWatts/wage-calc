@@ -6,7 +6,7 @@ const ChildrenScreen: React.FC = () => {
   return (
     <WithHourlyRateHeaderRight>
       <PageHeader title="Children" />
-      <ChildrenList />;
+      <ChildrenList />
     </WithHourlyRateHeaderRight>
   );
 };

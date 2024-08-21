@@ -9,9 +9,10 @@ const MainTabLayout: React.FC = () => {
         tabBarActiveTintColor: 'blue',
         headerShown: false,
       }}
+      initialRouteName="inputs"
     >
       <Tabs.Screen
-        name="index"
+        name="inputs"
         options={{
           tabBarIcon: ({ color }) => (
             <FontAwesome size={28} name={INPUTS} color={color} />

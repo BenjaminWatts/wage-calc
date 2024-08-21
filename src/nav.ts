@@ -20,7 +20,7 @@ export const useUrl = (path: string) => {
 };
 
 // inputs routes
-const inputUrl = (path: string) => `/${path}`;
+const inputUrl = (path: string) => `inputs/${path}`;
 
 export const children = inputUrl('children');
 
