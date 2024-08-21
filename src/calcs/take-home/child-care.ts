@@ -10,6 +10,8 @@ export const SCHOOL_AGE_YEARS = 5;
  * Calculate the number of hours of free childcare available for a child
  */
 export const hoursOfFreeChildcare = (c: Child, parentEligible: boolean) => {
+  if (c.years >= SCHOOL_AGE_YEARS) return SCHOOL_DAY_LENGTH * 5;
+
   if (!parentEligible) return 0;
   // if below 9 months, no free childcare
   if (c.years === 0 && c.months < 9) return 0;
@@ -17,8 +19,8 @@ export const hoursOfFreeChildcare = (c: Child, parentEligible: boolean) => {
   if (c.years < 2) return 15;
   // if 2 to 4 years, 30 hours
   if (c.years < SCHOOL_AGE_YEARS) return 30;
-  // if school age - school is free childcare
-  return SCHOOL_DAY_LENGTH * 5;
+
+  return 0;
 };
 
 export const hourlyHolidayChildcareCost = (
@@ -71,16 +73,20 @@ export const child = (
   const freeHours = hoursOfFreeChildcare(child, parentEligible);
   const paidHours = calculatePaidHours(hoursPerWeek, freeHours);
 
-  total += calculateHourlyTermtimeCost(
+  const termTimeCost = calculateHourlyTermtimeCost(
     child.hourlyTermtimeChildcareCost,
     paidHours,
   );
 
-  total += hourlyHolidayChildcareCost(
+  total += termTimeCost;
+
+  const holidayCost = hourlyHolidayChildcareCost(
     child.hourlyHolidayChildcareCost,
     ui.daysPerWeekOfWorking,
     schoolHolidayExcessWeeks,
   );
+
+  total += holidayCost;
 
   const taxRebate = calculateTaxRebate(parentEligible, total);
 
