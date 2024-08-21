@@ -16,8 +16,12 @@ export default function Root({ children }: PropsWithChildren) {
 
         {/* Add favicon */}
 
-        <link rel="icon" type="image/png" href="favicon.png" />
-        <link rel="apple-touch-icon" href="icon.png" />
+        <link
+          rel="icon"
+          type="image/png"
+          href="https://costofwork.app/icon.png"
+        />
+        <link rel="apple-touch-icon" href="https://costofwork.app/icon.png" />
 
         <meta
           name="description"
@@ -34,7 +38,7 @@ export default function Root({ children }: PropsWithChildren) {
           property="og:description"
           content="Discover the true cost of working, including commuting, childcare, and more. Calculate your take-home pay for remote, hybrid, or on-site jobs."
         />
-        <meta property="og:image" content="icon.png" />
+        <meta property="og:image" content="https://costofwork.app/icon.png" />
         <meta property="og:url" content="https://costofwork.app" />
         <meta property="og:type" content="website" />
 
@@ -45,7 +49,7 @@ export default function Root({ children }: PropsWithChildren) {
           name="twitter:description"
           content="Calculate your true take-home pay, considering all work-related expenses."
         />
-        <meta name="twitter:image" content="icon.png" />
+        <meta name="twitter:image" content="https://costofwork.app/icon.png" />
 
         {/* Structured Data for Rich Snippets */}
         <script
