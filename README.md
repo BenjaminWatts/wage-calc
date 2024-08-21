@@ -41,6 +41,7 @@ The main output will be:
 
 Current bugs
 
+1. Check driving mileage
 3. Helmet
 7. Bug Reporting Component
 9. Prevent innacurate information
