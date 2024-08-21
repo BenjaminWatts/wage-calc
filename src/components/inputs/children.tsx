@@ -1,15 +1,14 @@
-// inputs to CRUD children
-
 import { RootState, useAppDispatch } from '@/src/state/store';
 import React from 'react';
 import { Button, Card, List, Paragraph } from 'react-native-paper';
 import * as s from '@/src/state/user-inputs';
 import { useSelector } from 'react-redux';
 import { useChild } from '@/src/nav';
-import Slider from '@react-native-community/slider';
-import { Text } from 'react-native-paper';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { child as defaultChild } from '@/src/state/defaults';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
+import { BIRTHDAY, SCHOOL } from '../icons';
+import CostInput from '@/src/atoms/cost-input';
 
 const DeleteChildButton: React.FC<{
   index: number;
@@ -34,7 +33,6 @@ const ChildListItem: React.FC<{ index: number }> = ({ index }) => {
 
 const CreateChildButton: React.FC = () => {
   const dispatch = useAppDispatch();
-  const defaultChild: Child = { years: 0, months: 0 };
   const existingCount = useSelector(
     (r: RootState) => r.userInputs.children.length,
   );
@@ -92,15 +90,18 @@ export const ChildrenList: React.FC = () => {
   );
 };
 
-/**
- * Edit a child - to be rendered on the child screen
- * @param index - the index of the child to edit
- */
-export const EditChild: React.FC<{ index: number }> = ({ index }) => {
+const ChildAgeAccordion: React.FC<{ index: number }> = ({ index }) => {
   const child = useSelector((r: RootState) => r.userInputs.children[index]);
   const dispatch = useAppDispatch();
+  const [expanded, setExpanded] = React.useState(true);
   return (
-    <>
+    <List.Accordion
+      title="Age"
+      id="age"
+      expanded={expanded}
+      left={(p) => <List.Icon {...p} icon={BIRTHDAY} />}
+      onPress={() => setExpanded(!expanded)}
+    >
       <SliderWithLabels
         value={child.years}
         minimumValue={0}
@@ -108,15 +109,16 @@ export const EditChild: React.FC<{ index: number }> = ({ index }) => {
         formatter={(x) => x.toFixed(0)}
         label="years"
         step={1}
+        offset={1}
         onValueChange={(years) =>
           dispatch(s.a.updateChild({ index, child: { ...child, years } }))
         }
       />
-      <Text>Years: {child.years}</Text>
       <SliderWithLabels
         value={child.months}
-        minimumValue={1}
+        minimumValue={0}
         maximumValue={12}
+        offset={1}
         formatter={(x) => x.toFixed(0)}
         label="months"
         step={1}
@@ -124,7 +126,97 @@ export const EditChild: React.FC<{ index: number }> = ({ index }) => {
           dispatch(s.a.updateChild({ index, child: { ...child, months } }))
         }
       />
-      <Text>Months: {child.months}</Text>
-    </>
+    </List.Accordion>
+  );
+};
+
+const HourlyTermtimeChildcareCost: React.FC<{ index: number }> = (p) => {
+  const dispatch = useAppDispatch();
+  const onChange = (x: number) =>
+    dispatch(
+      s.a.updateHourlyHolidayChildcareCost({
+        index: p.index,
+        hourlyHolidayChildcareCost: x,
+      }),
+    );
+  const value = useSelector((r: RootState) =>
+    s.selectHourlyTermtimeChildcareCost(r, p.index),
+  );
+  return (
+    <CostInput
+      label="£ Hourly Termtime Childcare Cost (when paid for i.e. outside of free hours)"
+      onChange={onChange}
+      value={value}
+    />
+  );
+};
+
+const HourlyHolidayChildcareCost: React.FC<{
+  index: number;
+}> = (p) => {
+  const dispatch = useAppDispatch();
+  const onChange = (x: number) =>
+    dispatch(
+      s.a.updateHourlyHolidayChildcareCost({
+        index: p.index,
+        hourlyHolidayChildcareCost: x,
+      }),
+    );
+  const value = useSelector((r: RootState) =>
+    s.selectHourlyHolidayChildcareCost(r, p.index),
+  );
+  return (
+    <CostInput
+      label="£ Hourly Holiday Childcare Cost"
+      onChange={onChange}
+      value={value || 0}
+    />
+  );
+};
+
+const ChildcareCostsAccordion: React.FC<{ index: number }> = ({ index }) => {
+  const [expanded, setExpanded] = React.useState(true);
+  return (
+    <List.Accordion
+      title="Childcare Costs"
+      id="childcare-costs"
+      expanded={expanded}
+      left={(p) => <List.Icon {...p} icon={SCHOOL} />}
+      onPress={() => setExpanded(!expanded)}
+    >
+      <View
+        style={{
+          padding: 0,
+          gap: 10,
+        }}
+      >
+        <HourlyTermtimeChildcareCost index={index} />
+        <Paragraph>
+          Please note, depending on the age of your child (and you/your
+          partner's income), we will take account of any free hours . The cost
+          above therefore needs to the cost you pay for any wraparound hours
+          which are in excess of any free hours.
+        </Paragraph>
+        <HourlyHolidayChildcareCost index={index} />
+      </View>
+    </List.Accordion>
+  );
+};
+
+/**
+ * Edit a child - to be rendered on the child screen
+ * @param index - the index of the child to edit
+ */
+export const EditChild: React.FC<{ index: number }> = ({ index }) => {
+  return (
+    <View
+      style={{
+        padding: 0,
+        gap: 10,
+      }}
+    >
+      <ChildAgeAccordion index={index} />
+      <ChildcareCostsAccordion index={index} />
+    </View>
   );
 };

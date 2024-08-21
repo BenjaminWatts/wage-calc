@@ -4,6 +4,7 @@ import * as n from '@/src/nav';
 import { Card, Icon, List, Paragraph } from 'react-native-paper';
 import * as i from '@/src/components/icons';
 import { ScrollView, View } from 'react-native';
+import { All } from '../reset-buttons';
 
 interface LinkedButtonProps {
   label: string;
@@ -36,14 +37,14 @@ const BUTTONS: LinkedButtonProps[] = [
     icon: i.WORKING_SCHEDULE,
   },
   {
-    label: 'Children',
-    href: n.children,
-    icon: i.CHILDREN,
-  },
-  {
     label: `Commuting Expenses`,
     href: n.commuting,
     icon: i.COMMUTING,
+  },
+  {
+    label: 'Children',
+    href: n.children,
+    icon: i.CHILDREN,
   },
 ];
 
@@ -76,6 +77,8 @@ export const Inputs: React.FC = () => (
         ))}
       </Card.Content>
     </Card>
+
+    <All />
   </ScrollView>
 );
 

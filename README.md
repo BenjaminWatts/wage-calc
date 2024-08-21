@@ -50,4 +50,4 @@ Current bugs
 8. Reset Buttons
 9. Prevent innacurate information
 10. Try catch on the calculation - handle in components 
-11. Disclaimer
+12. Advertising

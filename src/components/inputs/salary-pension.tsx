@@ -4,9 +4,10 @@ import * as s from '../../state/user-inputs';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '@/src/state/store';
 import * as r from '@/src/calcs/rounding';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
 import React from 'react';
+import Slider from '@react-native-community/slider';
 
 interface SalaryInputProps {
   label: string;
@@ -95,6 +96,23 @@ const EmployeePensionContributionInput: React.FC = () => {
   );
 };
 
+const AgeInput: React.FC = () => {
+  const currentAge = useSelector((r: RootState) => s.selectCurrentAge(r));
+  const minimumValue = 21;
+  const maximumValue = 65;
+  return (
+    <SliderWithLabels
+      label="years old"
+      value={currentAge}
+      minimumValue={minimumValue}
+      maximumValue={maximumValue}
+      step={1}
+      formatter={(x) => x.toString()}
+      onValueChange={(x) => {}}
+    />
+  );
+};
+
 const PensionInputs: React.FC = () => {
   const [expanded, setExpanded] = React.useState(true);
 
@@ -105,7 +123,12 @@ const PensionInputs: React.FC = () => {
       onPress={() => setExpanded(!expanded)}
       expanded={expanded}
     >
-      <View style={styles.container}>
+      <View
+        style={{
+          padding: 5,
+          gap: 10,
+        }}
+      >
         <Paragraph>
           The following inputs are for your pension contributions. We value
           these as part of your total package which we include in our
@@ -124,8 +147,11 @@ const PensionInputs: React.FC = () => {
           For the time being, these inputs are designed with a Direct
           Contribution (DC) Pension in mind, not a final salary (or career
           average) Direct Benefit pension of the sort found in the public
-          sector.
+          sector. However, in order to compare effectively how much you might
+          earn in your lifetime as a teacher (which has a public sector DC
+          pension), knowing your age is important.
         </Paragraph>
+        <AgeInput />
       </View>
     </List.Accordion>
   );
@@ -141,17 +167,24 @@ const SalaryInputs: React.FC = () => {
         expanded={expanded}
         onPress={() => setExpanded(!expanded)}
       >
-        <Paragraph>
-          Aside from your own salary which should be entered including the value
-          of any benefits (like private health insurance) you receive as well as
-          your partner's income.
-        </Paragraph>
-        <UserSalary />
-        <UserPartnerSalary />
-        <Paragraph>
-          If you have children, the availability of Child Benefit (and tax free
-          and free childcare) depends on both your incomes.
-        </Paragraph>
+        <View
+          style={{
+            padding: 5,
+            gap: 10,
+          }}
+        >
+          <Paragraph>
+            Aside from your own salary which should be entered including the
+            value of any benefits (like private health insurance) you receive as
+            well as your partner's income.
+          </Paragraph>
+          <UserSalary />
+          <Paragraph>
+            If you have children, the availability of Child Benefit (and tax
+            free and free childcare) depends on both your incomes.
+          </Paragraph>
+          <UserPartnerSalary />
+        </View>
       </List.Accordion>
     </>
   );
@@ -159,10 +192,15 @@ const SalaryInputs: React.FC = () => {
 
 const PensionSalaryInputs: React.FC = () => {
   return (
-    <>
+    <ScrollView
+      contentContainerStyle={{
+        gap: 10,
+        padding: 5,
+      }}
+    >
       <SalaryInputs />
       <PensionInputs />
-    </>
+    </ScrollView>
   );
 };
 

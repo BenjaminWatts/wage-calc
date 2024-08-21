@@ -7,3 +7,6 @@ export const SALARY_AND_PENSION = 'cash';
 export const WORKING_SCHEDULE = 'clock';
 export const CHILDREN = 'human-male-child';
 export const COMMUTING = 'train';
+export const SCHOOL = 'school';
+
+export const BIRTHDAY = 'cake';

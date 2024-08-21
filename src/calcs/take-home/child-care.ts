@@ -58,9 +58,9 @@ export const calculateTaxRebate = (
  */
 export const child = (
   ui: {
-    hourlyTermtimeChildcareCost: number;
-    hourlyHolidayChildcareCost: number;
-    inOfficeIncrementalChildcareCost: number;
+    // hourlyTermtimeChildcareCost: number;
+    // hourlyHolidayChildcareCost: number;
+    // inOfficeIncrementalChildcareCost: number;
     daysPerWeekInOffice: number;
     daysPerWeekOfWorking: number;
   },
@@ -74,27 +74,16 @@ export const child = (
   const freeHours = hoursOfFreeChildcare(child, parentEligible);
   const paidHours = calculatePaidHours(hoursPerWeek, freeHours);
 
-  if (ui.hourlyTermtimeChildcareCost) {
-    total += calculateHourlyTermtimeCost(
-      ui.hourlyTermtimeChildcareCost,
-      paidHours,
-    );
-  }
+  total += calculateHourlyTermtimeCost(
+    child.hourlyTermtimeChildcareCost,
+    paidHours,
+  );
 
-  if (ui.hourlyHolidayChildcareCost) {
-    total += hourlyHolidayChildcareCost(
-      ui.hourlyHolidayChildcareCost,
-      ui.daysPerWeekOfWorking,
-      schoolHolidayExcessWeeks,
-    );
-  }
-
-  if (ui.inOfficeIncrementalChildcareCost && ui.daysPerWeekInOffice) {
-    total += inOfficeIncrementalChildcareCost(
-      ui.inOfficeIncrementalChildcareCost,
-      ui.daysPerWeekInOffice,
-    );
-  }
+  total += hourlyHolidayChildcareCost(
+    child.hourlyHolidayChildcareCost,
+    ui.daysPerWeekOfWorking,
+    schoolHolidayExcessWeeks,
+  );
 
   const taxRebate = calculateTaxRebate(parentEligible, total);
 
@@ -107,7 +96,11 @@ export const child = (
 export const calcHoursPerWeek = (
   hoursOfWorkPerDay: number,
   daysPerWeekOfWorking: number,
-) => hoursOfWorkPerDay * daysPerWeekOfWorking;
+  daysPerWeekInOffice: number,
+  commuteDoorToDoorMinutes: number,
+) =>
+  hoursOfWorkPerDay * daysPerWeekOfWorking +
+  (daysPerWeekInOffice * commuteDoorToDoorMinutes * 60) / 60;
 
 export const fteFraction = (daysPerWeekOfWorking: number) => {
   return daysPerWeekOfWorking / 5;
@@ -145,6 +138,7 @@ interface ChildUiOptions {
   holidayDaysPerYear: number;
   annualSalary: number;
   partnerAnnualIncome?: number;
+  commuteDoorToDoorMinutes: number;
 }
 
 /**
@@ -155,6 +149,8 @@ const childcare = (ui: ChildUiOptions, schoolHolidayExcessWeeks: number) => {
   const hoursPerWeek = calcHoursPerWeek(
     ui.hoursOfWorkPerDay,
     ui.daysPerWeekOfWorking,
+    ui.daysPerWeekInOffice,
+    ui.commuteDoorToDoorMinutes,
   );
   const parentEligible = calcParentEligible(
     ui.annualSalary,

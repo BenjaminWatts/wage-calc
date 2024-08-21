@@ -1,9 +1,5 @@
-// a component with the terms and conditions of the app, which is displayed on initial startup and on demand
-// it needs to be able to comply with the rules of the various appstores
-// it needs to be a modal that is presented over the top of the app
-
 import React from 'react';
-import { Button, Card, Modal, Paragraph } from 'react-native-paper';
+import { Button, Card, Paragraph } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { selectTermsAccepted } from '../state/app';
 import { ScrollView, View } from 'react-native';
@@ -64,7 +60,9 @@ export const TermsContent: React.FC = () => {
   );
 };
 
-const AcceptTermsCard: React.FC = () => {
+export const AcceptTermsCard: React.FC<{
+  cancel?: () => void;
+}> = ({ cancel }) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -84,16 +82,18 @@ const AcceptTermsCard: React.FC = () => {
         >
           I Accept
         </Button>
+        {cancel && <Button onPress={cancel}>Cancel</Button>}
       </Card.Actions>
     </Card>
   );
 };
 
-const WithTerms: React.FC<{
+export const TermsModal: React.FC<{
+  display: boolean;
   children: React.ReactNode;
-}> = ({ children }) => {
-  const termsAccepted = useSelector(selectTermsAccepted);
-  if (!termsAccepted) {
+  cancel?: () => void;
+}> = ({ display, children, cancel }) => {
+  if (display) {
     return (
       <View
         style={{
@@ -114,12 +114,24 @@ const WithTerms: React.FC<{
             padding: 10,
           }}
         >
-          <AcceptTermsCard />
+          <AcceptTermsCard cancel={cancel} />
         </View>
       </View>
     );
   }
   return <>{children}</>;
+};
+
+const WithTerms: React.FC<{
+  children: React.ReactNode;
+  cancel?: () => void;
+}> = ({ children, cancel }) => {
+  const termsAccepted = useSelector(selectTermsAccepted);
+  return (
+    <TermsModal display={!termsAccepted} cancel={cancel}>
+      {children}
+    </TermsModal>
+  );
 };
 
 export default WithTerms;

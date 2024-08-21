@@ -1,45 +1,36 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { minimumAnnualLeave, workingDays } from '../calcs/take-home/days';
-
-interface UserInputsState extends UserInputs {}
+import * as d from './defaults';
 
 // initial values for the user inputs
 
-const AVERAGE_INCOME = 30000;
-const AVERAGE_CHILDCARE_COST_HOUR = 6.53;
-
-const defaults: UserInputsState = {
-  currentAge: 35,
-  annualSalary: AVERAGE_INCOME,
-  partnerAnnualIncome: 0,
-  daysPerWeekOfWorking: 5,
-  hoursOfWorkPerDay: 8,
-  employerPensionContributionPc: 3,
-  employeePensionContributionPc: 0,
-  employerSacrificingPension: true,
-  daysPerWeekInOffice: 3,
-  holidayDaysPerYear: 25,
-  children: [
-    { years: 4, months: 0 },
-    { years: 2, months: 0 },
-  ],
-  hourlyTermtimeChildcareCost: AVERAGE_CHILDCARE_COST_HOUR,
-  inOfficeIncrementalChildcareCost: AVERAGE_CHILDCARE_COST_HOUR,
-  hourlyHolidayChildcareCost: AVERAGE_CHILDCARE_COST_HOUR,
-  dailyDogWalkerCost: 10,
-  drivingDistancePerCommuteMiles: 10,
-  carFuelType: 'petrol',
-  commuteDoorToDoorMinutes: 30,
-  dailyParkingCost: 0,
-  dailyTrainBusTicketCost: 5,
-  flexiSeasonTicketCost: 0,
-};
-
 const userInputs = createSlice({
   name: 'userInputs',
-  initialState: defaults,
+  initialState: d.allDefaults,
   reducers: {
+    // reset actions
+
+    resetAll: () => d.allDefaults,
+    resetSalaryAndPension: (state) => {
+      state = { ...state, ...d.defaults.salaryAndPension };
+    },
+    resetWorkingSchedule: (state) => {
+      state = { ...state, ...d.defaults.workingSchedule };
+    },
+    resetChildren: (state) => {
+      state.children = [];
+    },
+    resetChild: (state, action: PayloadAction<number>) => {
+      state.children = state.children.map((_, i) =>
+        i !== action.payload ? _ : d.child,
+      );
+    },
+    resetCommuting: (state) => {
+      state = { ...state, ...d.defaults.commuting };
+    },
+
+    // update actions
     updateCurrentAge: (state, action: PayloadAction<number>) => {
       state.currentAge = action.payload;
     },
@@ -103,21 +94,37 @@ const userInputs = createSlice({
     },
     updateHourlyTermtimeChildcareCost: (
       state,
-      action: PayloadAction<number>,
+      action: PayloadAction<{
+        index: number;
+        hourlyTermtimeChildcareCost: number;
+      }>,
     ) => {
-      state.hourlyTermtimeChildcareCost = action.payload;
-    },
-    updateInOfficeIncrementalChildcareCost: (
-      state,
-      action: PayloadAction<number>,
-    ) => {
-      state.inOfficeIncrementalChildcareCost = action.payload;
+      state.children = state.children.map((c, i) =>
+        i === action.payload.index
+          ? {
+              ...c,
+              hourlyTermtimeChildcareCost:
+                action.payload.hourlyTermtimeChildcareCost,
+            }
+          : c,
+      );
     },
     updateHourlyHolidayChildcareCost: (
       state,
-      action: PayloadAction<number>,
+      action: PayloadAction<{
+        index: number;
+        hourlyHolidayChildcareCost: number;
+      }>,
     ) => {
-      state.hourlyHolidayChildcareCost = action.payload;
+      state.children = state.children.map((c, i) =>
+        i === action.payload.index
+          ? {
+              ...c,
+              hourlyHolidayChildcareCost:
+                action.payload.hourlyHolidayChildcareCost,
+            }
+          : c,
+      );
     },
     updateDailyDogWalkerCost: (state, action: PayloadAction<number>) => {
       state.dailyDogWalkerCost = action.payload;
@@ -137,12 +144,7 @@ const userInputs = createSlice({
     ) => {
       state.drivingDistancePerCommuteMiles = action.payload;
     },
-    updateCarFuelType: (
-      state,
-      action: PayloadAction<'petrol' | 'diesel' | 'electric'>,
-    ) => {
-      state.carFuelType = action.payload;
-    },
+
     updateCommuteDoorToDoorMinutes: (state, action: PayloadAction<number>) => {
       state.commuteDoorToDoorMinutes = action.payload;
     },
@@ -179,18 +181,23 @@ export const selectHolidayDaysPerYear = (state: RootState) =>
 export const selectChildren = (state: RootState) => state.userInputs.children;
 export const selectPartnerAnnualIncome = (state: RootState) =>
   state.userInputs.partnerAnnualIncome;
-export const selectHourlyTermtimeChildcareCost = (state: RootState) =>
-  state.userInputs.hourlyTermtimeChildcareCost;
-export const selectInOfficeIncrementalChildcareCost = (state: RootState) =>
-  state.userInputs.inOfficeIncrementalChildcareCost;
-export const selectHourlyHolidayChildcareCost = (state: RootState) =>
-  state.userInputs.hourlyHolidayChildcareCost;
+
+export const selectHourlyTermtimeChildcareCost = (
+  state: RootState,
+  index: number,
+) => state.userInputs.children[index].hourlyTermtimeChildcareCost;
+
+export const selectHourlyHolidayChildcareCost = (
+  state: RootState,
+  index: number,
+) => state.userInputs.children[index].hourlyHolidayChildcareCost;
+
 export const selectDailyDogWalkerCost = (state: RootState) =>
   state.userInputs.dailyDogWalkerCost;
 export const selectDrivingDistancePerCommuteMiles = (state: RootState) =>
   state.userInputs.drivingDistancePerCommuteMiles;
-export const selectCarFuelType = (state: RootState) =>
-  state.userInputs.carFuelType;
+// export const selectCarFuelType = (state: RootState) =>
+//   state.userInputs.carFuelType;
 export const selectCommuteDoorToDoorMinutes = (state: RootState) =>
   state.userInputs.commuteDoorToDoorMinutes;
 export const selectDailyParkingCost = (state: RootState) =>

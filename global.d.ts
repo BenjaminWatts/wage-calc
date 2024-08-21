@@ -2,6 +2,8 @@
 type Child = {
   years: number;
   months: number;
+  hourlyTermtimeChildcareCost: number;
+  hourlyHolidayChildcareCost: number;
 };
 
 type UserInputs = {
@@ -17,12 +19,9 @@ type UserInputs = {
   hoursOfWorkPerDay: number;
   // children and childcare inputs
   children: Child[];
-  hourlyTermtimeChildcareCost: number;
-  inOfficeIncrementalChildcareCost: number;
-  hourlyHolidayChildcareCost: number;
   // transport inputs
   drivingDistancePerCommuteMiles: number;
-  carFuelType: 'petrol' | 'diesel' | 'electric';
+  // carFuelType: 'petrol' | 'diesel' | 'electric';
   commuteDoorToDoorMinutes: number;
   dailyParkingCost: number;
   dailyTrainBusTicketCost: number;

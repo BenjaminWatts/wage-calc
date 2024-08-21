@@ -4,6 +4,7 @@ import { List, Paragraph, TextInput, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import * as s from '@/src/state/user-inputs';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import CostInput from '@/src/atoms/cost-input';
 
 // inputs for transport including drivingDistancePerCommuteMiles, carFuelType, commuteDoorToDoorMinutes, dailyParkingCost, dailyTrainBusTicketCost, flexiSeasonTicketCost, seasonTicketCost
 
@@ -204,28 +205,6 @@ const TimeInputs: React.FC = () => {
       </Paragraph>
       <CommuteDoorToDoorMinutes />
     </List.Accordion>
-  );
-};
-
-interface CostInputProps {
-  label: string;
-  value?: number;
-  onChange: (value: number) => void;
-}
-
-const CostInput: React.FC<CostInputProps> = ({ label, value, onChange }) => {
-  return (
-    <TextInput
-      label={label}
-      value={value ? value.toString() : ''}
-      onChangeText={(text) => {
-        const number = parseFloat(text);
-        if (!isNaN(number)) {
-          onChange(number);
-        }
-      }}
-      keyboardType="numeric"
-    />
   );
 };
 
