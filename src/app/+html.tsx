@@ -5,14 +5,14 @@ export default function Root({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <head>
+        <meta property="og:title" content="Cost of Work Calculator" />
+
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
-
-        <title>Cost of Work Calculator -- Commuting, Children and Taxes </title>
 
         {/* Add favicon */}
 
@@ -30,7 +30,6 @@ export default function Root({ children }: PropsWithChildren) {
         <meta name="author" content="kilowatts.io" />
 
         {/* Open Graph for Social Media */}
-        <meta property="og:title" content="Cost of Work Calculator" />
         <meta
           property="og:description"
           content="Discover the true cost of working, including commuting, childcare, and more. Calculate your take-home pay for remote, hybrid, or on-site jobs."

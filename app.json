@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "wage-calc",
-    "slug": "wage-calc",
+    "name": "CostOfWork.app",
+    "slug": "CostOfWork",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon":  "./public/icon.png",
@@ -25,6 +25,8 @@
       "bundler": "metro",
       "output": "static",
       "favicon":  "./public/icon.png",
+      "shortName": "CostOfWork",
+      "title": "CostOfWork.app"
     },
     "plugins": [
       "expo-router"
