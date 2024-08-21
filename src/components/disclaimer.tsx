@@ -46,7 +46,11 @@ const Privacy: React.FC = () => {
         <Paragraph>
           All the information entered in this app stays on your device / inside
           your browser. None is sent to any server. This app does not use any
-          third-party services that may collect your data.
+          third-party services with the intention of collecting your data.
+        </Paragraph>
+        <Paragraph>
+          This app uses Sentry to collect error reports. This is to help the app
+          developers to fix bugs.
         </Paragraph>
       </Card.Content>
     </Card>
