@@ -46,7 +46,7 @@ const Outputs: React.FC = () => (
     </OutputExpandableAccordion>
 
     <OutputExpandableAccordion
-      title="Marginal tax rates and payrises/bonuses"
+      title="Marginal tax rate"
       iconSource="crown"
       initialExpanded={false}
     >
@@ -54,7 +54,7 @@ const Outputs: React.FC = () => (
     </OutputExpandableAccordion>
 
     <OutputExpandableAccordion
-      title="Ask for a payrise or fewer days in the office?"
+      title="Hybrid Split"
       iconSource="car"
       initialExpanded={false}
     >
@@ -62,7 +62,7 @@ const Outputs: React.FC = () => (
     </OutputExpandableAccordion>
 
     <OutputExpandableAccordion
-      title="Should you become a contractor/freelancer?"
+      title="Become a freelancer?"
       iconSource="bank"
       initialExpanded={false}
     >
@@ -70,7 +70,7 @@ const Outputs: React.FC = () => (
     </OutputExpandableAccordion>
 
     <OutputExpandableAccordion
-      title="Is it worth becoming a teacher?"
+      title="Become a teacher?"
       iconSource="school"
       initialExpanded={false}
     >
