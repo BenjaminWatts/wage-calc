@@ -1,10 +1,6 @@
 // calculate the costs associated with working onsite
 
-const COST_PER_MILE = {
-  electric: 0.05,
-  petrol: 0.12,
-  diesel: 0.14,
-};
+const COST_PER_MILE = 45;
 
 const FLEXI_SEASON_TICKET_DAYS_PER_MONTH = 8;
 const MONTHS_IN_YEAR = 12;
@@ -90,17 +86,16 @@ export const annualPublicTransportCosts = (
   return Math.min(...options);
 };
 
+export const dailyDrivingCosts = (uI: UserInputs): number => {
+  const mileageCosts = uI.drivingDistancePerCommuteMiles || 0 * COST_PER_MILE;
+  const parkingCosts = uI.dailyParkingCost || 0;
+  return mileageCosts + parkingCosts;
+};
+
 export const annualDrivingCosts = (
   uI: UserInputs,
   onsiteDays: number,
-): number => {
-  if (!uI.carFuelType) return 0;
-  const costPerMile = COST_PER_MILE[uI.carFuelType];
-  const mileageCosts = uI.drivingDistancePerCommuteMiles || 0 * costPerMile;
-
-  const parkingCosts = uI.dailyParkingCost || 0;
-  return (mileageCosts + parkingCosts) * onsiteDays;
-};
+): number => onsiteDays * dailyDrivingCosts(uI);
 
 export const annualMealsDrycleaningDogCosts = (
   uI: UserInputs,
@@ -133,10 +128,42 @@ export const annualOutfitCosts = (uI: UserInputs): number => {
   return uI.outfitCost * uI.daysPerWeekInOffice;
 };
 
-const onsiteCosts = (userInputs: UserInputs, onsiteDays: number): number =>
-  annualPublicTransportCosts(userInputs, onsiteDays) +
-  annualDrivingCosts(userInputs, onsiteDays) +
-  annualMealsDrycleaningDogCosts(userInputs, onsiteDays) +
-  annualOutfitCosts(userInputs);
+export const estimateWorkingWeeks = (uI: UserInputs): number => {
+  const nonHolidayWeeksFraction =
+    uI.holidayDaysPerYear / (52 * uI.daysPerWeekOfWorking);
 
+  const workingWeeks = nonHolidayWeeksFraction * 52;
+  return workingWeeks;
+};
+
+export const estimateOvernightCosts = (
+  uI: UserInputs,
+  workingWeeks: number,
+): number => {
+  const hotelAndDinnerCost = uI.overnightHotelCost || 0;
+  const nightsPerWeek = Math.max(0, uI.daysPerWeekInOffice - 1);
+
+  const weeklyHotelCosts = hotelAndDinnerCost * nightsPerWeek;
+
+  return weeklyHotelCosts * workingWeeks;
+};
+
+export const onsiteCosts = (
+  uI: UserInputs,
+  onsiteDays: number,
+  hasOvernights: boolean,
+): number => {
+  let total = 0;
+  if (hasOvernights) {
+    const workingWeeks = estimateWorkingWeeks(uI);
+    total += estimateOvernightCosts(uI, workingWeeks);
+    total += uI.dailyTrainBusTicketCost * workingWeeks;
+    total += dailyDrivingCosts(uI) * workingWeeks;
+  } else {
+    total += annualPublicTransportCosts(uI, onsiteDays);
+  }
+  total += annualOutfitCosts(uI);
+  total += annualMealsDrycleaningDogCosts(uI, onsiteDays);
+  return total;
+};
 export default onsiteCosts;

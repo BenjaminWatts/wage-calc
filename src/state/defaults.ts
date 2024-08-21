@@ -23,6 +23,7 @@ export const defaults = {
     dailyParkingCost: 0,
     dailyTrainBusTicketCost: 5,
     flexiSeasonTicketCost: 0,
+    overnightHotelCost: 0,
   },
 };
 export default defaults;

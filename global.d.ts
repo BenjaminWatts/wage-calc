@@ -27,6 +27,7 @@ type UserInputs = {
   dailyTrainBusTicketCost: number;
   flexiSeasonTicketCost?: number;
   seasonTicketCost?: number;
+  overnightHotelCost: number;
   // food/clothing/pet inputs
   dailyBreakfastCoffeeCost?: number;
   dailyLunchCost?: number;
@@ -71,4 +72,5 @@ interface CalculationResult {
   takeHome: ScenarioResult;
   hybridSplits: HybridSplitResult;
   teacher: number;
+  contractor: number;
 }

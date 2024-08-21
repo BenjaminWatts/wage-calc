@@ -16,12 +16,13 @@ interface SliderWithLabelsProps {
 
 const SliderWithLabels: React.FC<SliderWithLabelsProps> = (p) => {
   const offset = p.offset || 0;
+  const [value, setValue] = React.useState(p.value + offset);
   const screenWidth = useWindowDimensions();
 
   return (
     <View style={styles.sliderView}>
       <View style={styles.labelWrapper}>
-        <Text>{`${p.formatter(p.value - offset)} ${p.label}`}</Text>
+        <Text>{`${p.formatter(value - offset)} ${p.label}`}</Text>
       </View>
       <View style={styles.limitTextWrapper}>
         <Text>{p.formatter(p.minimumValue)}</Text>
@@ -34,21 +35,16 @@ const SliderWithLabels: React.FC<SliderWithLabelsProps> = (p) => {
       >
         <Slider
           style={{ width: '100%' }}
-          value={p.value + offset}
+          value={value}
           step={p.step}
-          onValueChange={p.onValueChange}
+          onValueChange={setValue}
+          onSlidingComplete={(value) => p.onValueChange(value - offset)}
           minimumValue={p.minimumValue + offset}
           maximumValue={p.maximumValue + offset}
         />
       </View>
       <View style={styles.limitTextWrapper}>
-        <Text
-        // style={{
-        //   textAlign: 'right',
-        // }}
-        >
-          {p.formatter(p.maximumValue)}
-        </Text>
+        <Text>{p.formatter(p.maximumValue)}</Text>
       </View>
     </View>
   );

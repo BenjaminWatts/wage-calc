@@ -22,8 +22,8 @@ const userInputs = createSlice({
       state.children = [];
     },
     resetChild: (state, action: PayloadAction<number>) => {
-      state.children = state.children.map((_, i) =>
-        i !== action.payload ? _ : d.child,
+      state.children = state.children.map((existing, i) =>
+        i !== action.payload ? existing : d.child,
       );
     },
     resetCommuting: (state) => {
@@ -144,6 +144,10 @@ const userInputs = createSlice({
     ) => {
       state.drivingDistancePerCommuteMiles = action.payload;
     },
+    // hotel
+    updateOvernightHotelCost: (state, action: PayloadAction<number>) => {
+      state.overnightHotelCost = action.payload;
+    },
 
     updateCommuteDoorToDoorMinutes: (state, action: PayloadAction<number>) => {
       state.commuteDoorToDoorMinutes = action.payload;
@@ -181,6 +185,8 @@ export const selectHolidayDaysPerYear = (state: RootState) =>
 export const selectChildren = (state: RootState) => state.userInputs.children;
 export const selectPartnerAnnualIncome = (state: RootState) =>
   state.userInputs.partnerAnnualIncome;
+export const selectOvernightHotelCost = (state: RootState) =>
+  state.userInputs.overnightHotelCost;
 
 export const selectHourlyTermtimeChildcareCost = (
   state: RootState,

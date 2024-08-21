@@ -8,6 +8,7 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
 import React from 'react';
 import Slider from '@react-native-community/slider';
+import { SalaryAndPensionReset } from '../reset-buttons';
 
 interface SalaryInputProps {
   label: string;
@@ -200,6 +201,7 @@ const PensionSalaryInputs: React.FC = () => {
     >
       <SalaryInputs />
       <PensionInputs />
+      <SalaryAndPensionReset />
     </ScrollView>
   );
 };

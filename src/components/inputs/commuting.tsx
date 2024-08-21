@@ -3,8 +3,9 @@ import React from 'react';
 import { List, Paragraph, TextInput, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import * as s from '@/src/state/user-inputs';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import CostInput from '@/src/atoms/cost-input';
+import { CommutingReset } from '../reset-buttons';
 
 // inputs for transport including drivingDistancePerCommuteMiles, carFuelType, commuteDoorToDoorMinutes, dailyParkingCost, dailyTrainBusTicketCost, flexiSeasonTicketCost, seasonTicketCost
 
@@ -15,12 +16,7 @@ type NumericInputProps = {
   onChange: (value: number) => void;
 };
 
-const NumericInput = ({
-  minimumValue,
-  label,
-  value,
-  onChange,
-}: NumericInputProps) => {
+const NumericInput = ({ label, value, onChange }: NumericInputProps) => {
   const [currentValue, setCurrentValue] = React.useState(
     value && value.toString(),
   );
@@ -179,12 +175,7 @@ const CommuteDoorToDoorMinutes: React.FC = () => {
       minimumValue={0}
       label="Commute door to door (minutes)"
       value={value}
-      onChange={(value) =>
-        dispatch({
-          type: 'userInputs/setCommuteDoorToDoorMinutes',
-          payload: value,
-        })
-      }
+      onChange={(value) => dispatch(s.a.updateCommuteDoorToDoorMinutes(value))}
     />
   );
 };
@@ -251,6 +242,31 @@ const DryCleaningCostPerDay: React.FC = () => {
   );
 };
 
+const HotelCosts: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.userInputs.overnightHotelCost,
+  );
+  const onChange = (value: number) =>
+    dispatch(s.a.updateOvernightHotelCost(value));
+  return (
+    <>
+      <CostInput
+        label="Overnight hotel (and dinner) cost"
+        value={value}
+        onChange={onChange}
+      />
+      <Paragraph>
+        This will assume that you have to spend (n-1) nights in a hotel close to
+        your place of work, where n is the number of days you work in the
+        office. So if you work 3 days in the office (and for example these were
+        Mon, Tues, Wed), you would spend 2 nights in a hotel. It will also knock
+        out Driving and Public Transport costs for those days.
+      </Paragraph>
+    </>
+  );
+};
+
 const IncidentalCosts: React.FC = () => {
   const [expanded, setExpanded] = React.useState(true);
 
@@ -274,6 +290,7 @@ const IncidentalCosts: React.FC = () => {
       <DailyBreakfastCoffeeCost />
       <DailyLunchCost />
       <DryCleaningCostPerDay />
+      <HotelCosts />
     </List.Accordion>
   );
 };
@@ -285,11 +302,12 @@ const CommutingInputs: React.FC = () => {
       <PublicTransportCosts />
       <IncidentalCosts />
       <TimeInputs />
+      <CommutingReset />
     </ScrollView>
   );
 };
 const styles = StyleSheet.create({
-  container: { gap: 10 },
+  container: { gap: 10, padding: 10 },
 });
 
 export default CommutingInputs;

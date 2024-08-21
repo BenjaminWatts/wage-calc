@@ -5,12 +5,14 @@
  */
 export const annualCommuteHours = (
   ui: {
-    commuteDoorToDoorMinutes?: number;
+    commuteDoorToDoorMinutes: number;
   },
   onsiteDays: number,
+  hasOvernights: boolean,
+  workingWeeks: number,
 ) => {
-  if (!ui.commuteDoorToDoorMinutes) return 0;
-  return (ui.commuteDoorToDoorMinutes / 60) * onsiteDays;
+  const commuteHours = (2 * ui.commuteDoorToDoorMinutes) / 60;
+  return (hasOvernights ? workingWeeks : onsiteDays) * commuteHours;
 };
 
 const DEFAULT_HOURS_PER_DAY = 8;
@@ -37,11 +39,15 @@ export const annualWorkingHours = (
  */
 export const workingHours = (
   ui: {
-    hoursOfWorkPerDay?: number;
-    commuteDoorToDoorMinutes?: number;
+    hoursOfWorkPerDay: number;
+    commuteDoorToDoorMinutes: number;
   },
   workingDays: number,
   onsiteDays: number,
-) => annualWorkingHours(ui, workingDays) + annualCommuteHours(ui, onsiteDays);
+  hasOvernights: boolean,
+  workingWeeks: number,
+) =>
+  annualWorkingHours(ui, workingDays) +
+  annualCommuteHours(ui, onsiteDays, hasOvernights, workingWeeks);
 
 export default workingHours;

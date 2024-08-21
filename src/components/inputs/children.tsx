@@ -9,6 +9,7 @@ import { child as defaultChild } from '@/src/state/defaults';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
 import { BIRTHDAY, SCHOOL } from '../icons';
 import CostInput from '@/src/atoms/cost-input';
+import { ChildrenReset, ChildReset } from '../reset-buttons';
 
 const DeleteChildButton: React.FC<{
   index: number;
@@ -86,6 +87,7 @@ export const ChildrenList: React.FC = () => {
         </Card.Content>
       </Card>
       <CreateChildButton />
+      <ChildrenReset />
     </ScrollView>
   );
 };
@@ -111,7 +113,12 @@ const ChildAgeAccordion: React.FC<{ index: number }> = ({ index }) => {
         step={1}
         offset={1}
         onValueChange={(years) =>
-          dispatch(s.a.updateChild({ index, child: { ...child, years } }))
+          dispatch(
+            s.a.updateChild({
+              index,
+              child: { ...child, years: Math.round(years) },
+            }),
+          )
         }
       />
       <SliderWithLabels
@@ -123,7 +130,12 @@ const ChildAgeAccordion: React.FC<{ index: number }> = ({ index }) => {
         label="months"
         step={1}
         onValueChange={(months) =>
-          dispatch(s.a.updateChild({ index, child: { ...child, months } }))
+          dispatch(
+            s.a.updateChild({
+              index,
+              child: { ...child, months: Math.round(months) },
+            }),
+          )
         }
       />
     </List.Accordion>
@@ -134,9 +146,9 @@ const HourlyTermtimeChildcareCost: React.FC<{ index: number }> = (p) => {
   const dispatch = useAppDispatch();
   const onChange = (x: number) =>
     dispatch(
-      s.a.updateHourlyHolidayChildcareCost({
+      s.a.updateHourlyTermtimeChildcareCost({
         index: p.index,
-        hourlyHolidayChildcareCost: x,
+        hourlyTermtimeChildcareCost: x,
       }),
     );
   const value = useSelector((r: RootState) =>
@@ -208,6 +220,7 @@ const ChildcareCostsAccordion: React.FC<{ index: number }> = ({ index }) => {
  * @param index - the index of the child to edit
  */
 export const EditChild: React.FC<{ index: number }> = ({ index }) => {
+  const [hide, setHide] = React.useState(false);
   return (
     <View
       style={{
@@ -217,6 +230,7 @@ export const EditChild: React.FC<{ index: number }> = ({ index }) => {
     >
       <ChildAgeAccordion index={index} />
       <ChildcareCostsAccordion index={index} />
+      <ChildReset index={index} />
     </View>
   );
 };

@@ -26,6 +26,13 @@ const TermsAndConditions: React.FC = () => {
           childcare support rules) for which the calculations in this app are
           not tailored.
         </Paragraph>
+        <Paragraph>
+          The app takes account of Chid Benefit, Tax-Free and Free Childcare.
+          However, it takes no account of other aspects of the benefit system,
+          especially Universal Credit, Housing Benefit, Council Tax Support.
+          These benefits have some particularly high claw-back (or marginal tax
+          rates) and this app is unlikely to be accurate.
+        </Paragraph>
       </Card.Content>
     </Card>
   );

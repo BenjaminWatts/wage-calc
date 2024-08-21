@@ -6,6 +6,7 @@ import { minimumAnnualLeave, workingDays } from '@/src/calcs/take-home/days';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
 import { List } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
+import { WorkingScheduleReset } from '../reset-buttons';
 
 const DaysSlider: React.FC<{
   label: string;
@@ -168,6 +169,7 @@ const WorkingsScheduleInputs: React.FC = () => {
       <WeeklySchedule />
       <HybridSplit />
       <HolidayAccordian />
+      <WorkingScheduleReset />
     </View>
   );
 };

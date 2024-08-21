@@ -7,17 +7,22 @@ interface CostInputProps {
   onChange: (value: number) => void;
 }
 
-const CostInput: React.FC<CostInputProps> = ({ label, value, onChange }) => {
+const parseValue = (x?: number) => (x ? x.toFixed(2) : '');
+
+const CostInput: React.FC<CostInputProps> = (p) => {
+  const [value, onChangeText] = React.useState(parseValue(p.value));
+  const update = () => p.onChange(parseFloat(value));
+  React.useEffect(() => {
+    onChangeText(parseValue(p.value));
+  }, [p.value]);
   return (
     <TextInput
-      label={label}
+      label={p.label}
       value={value ? value.toString() : ''}
-      onChangeText={(text) => {
-        const number = parseFloat(text);
-        if (!isNaN(number)) {
-          onChange(number);
-        }
-      }}
+      onChangeText={onChangeText}
+      onSubmitEditing={update}
+      onEndEditing={update}
+      onBlur={update}
       keyboardType="numeric"
     />
   );

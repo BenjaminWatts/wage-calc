@@ -1,7 +1,7 @@
 import childcare from './child-care';
 import * as days from './days';
+import estimateonsiteCosts, { estimateWorkingWeeks } from './onsite-costs';
 import tax from './tax';
-import workingCosts from './onsite-costs';
 import workingHours from './working-hours';
 
 const calcTakeHomePay = (
@@ -22,10 +22,23 @@ const calcNetHourlyPay = (takeHomePay: number, hours: number): number =>
 const calcTakeHome = (ui: UserInputs): ScenarioResult => {
   const workingDays = days.workingDays(ui);
   const onsiteDays = days.onsiteDays(ui, workingDays);
-  const hours = workingHours(ui, workingDays, onsiteDays);
+
+  const hasOvernights = ui.overnightHotelCost > 0;
+  const workingWeeks = estimateWorkingWeeks(ui);
+
+  const hours = workingHours(
+    ui,
+    workingDays,
+    onsiteDays,
+    hasOvernights,
+    workingWeeks,
+  );
+
   const schoolHolidayExcessWeeks = days.schoolHolidayExcess(workingDays);
   const childcareTotal = childcare(ui, schoolHolidayExcessWeeks);
-  const onsiteCosts = workingCosts(ui, onsiteDays);
+
+  const onsiteCosts = estimateonsiteCosts(ui, onsiteDays, hasOvernights);
+
   const taxTotal = tax(ui);
 
   const takeHomePay = calcTakeHomePay(

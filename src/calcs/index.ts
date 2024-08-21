@@ -1,3 +1,4 @@
+import calculateContractorEquivalent from './contractor-equivalent';
 import { calculateHybridSplit } from './hybrid-split';
 import calcTakeHome from './take-home';
 import calculateTeacherEquivalent from './teacher-equivalent';
@@ -14,6 +15,7 @@ const calculate = (uI: UserInputs): CalculationResult => {
     takeHome,
     hybridSplits: calculateHybridSplit(uI, takeHome),
     teacher: calculateTeacherEquivalent(uI, takeHome),
+    contractor: calculateContractorEquivalent(uI, takeHome),
   };
 };
 

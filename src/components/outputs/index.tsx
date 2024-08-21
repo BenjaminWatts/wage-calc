@@ -5,6 +5,7 @@ import TeacherOutput from './teacher';
 import SummaryOutputs from './summary';
 import { View, ScrollView } from 'react-native';
 import MarginalTaxRatesBonuses from './marginal-tax-rate';
+import ContractorOutput from './contractor';
 
 const iconSize = 32;
 
@@ -58,6 +59,14 @@ const Outputs: React.FC = () => (
       initialExpanded={false}
     >
       <HybridSplitOutput />
+    </OutputExpandableAccordion>
+
+    <OutputExpandableAccordion
+      title="Should you become a contractor/freelancer?"
+      iconSource="bank"
+      initialExpanded={false}
+    >
+      <ContractorOutput />
     </OutputExpandableAccordion>
 
     <OutputExpandableAccordion

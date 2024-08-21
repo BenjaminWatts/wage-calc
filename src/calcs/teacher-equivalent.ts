@@ -51,8 +51,6 @@ const toTeacher = (nonTeacher: UserInputs): UserInputs => {
     // reduce the hours of work per day
     hoursOfWorkPerDay: 32.5 / 5,
     // assume that there's no real wraparound care needed
-    inOfficeIncrementalChildcareCost: 0,
-    hourlyHolidayChildcareCost: 0,
     holidayDaysPerYear: SCHOOL_HOLIDAY_DAYS,
     // knock out the private sector pension
     employeePensionContributionPc: 0,

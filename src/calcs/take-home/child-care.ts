@@ -23,12 +23,6 @@ export const hourlyHolidayChildcareCost = (
   holidayWeeks: number,
 ) => hourlyHolidayChildcareCost * daysPerWeekOfWorking * holidayWeeks;
 
-const inOfficeIncrementalChildcareCost = (
-  inOfficeIncrementalChildcareCost: number,
-  daysPerWeekInOffice: number,
-) =>
-  inOfficeIncrementalChildcareCost * daysPerWeekInOffice * TERM_WEEKS_PER_YEAR;
-
 const INCOME_TAX_REBATE = 0.25;
 
 export const calculatePaidHours = (hoursPerWeek: number, freeHours: number) =>
@@ -129,9 +123,9 @@ export const calcParentEligible = (
 
 interface ChildUiOptions {
   children: Child[];
-  hourlyTermtimeChildcareCost: number;
-  hourlyHolidayChildcareCost: number;
-  inOfficeIncrementalChildcareCost: number;
+  // hourlyTermtimeChildcareCost: number;
+  // hourlyHolidayChildcareCost: number;
+  // inOfficeIncrementalChildcareCost: number;
   daysPerWeekInOffice: number;
   hoursOfWorkPerDay: number;
   daysPerWeekOfWorking: number;
