@@ -27,12 +27,7 @@ const SliderWithLabels: React.FC<SliderWithLabelsProps> = (p) => {
       <View style={styles.limitTextWrapper}>
         <Text>{p.formatter(p.minimumValue)}</Text>
       </View>
-      <View
-        style={{
-          ...styles.slider,
-          width: screenWidth.width - styles.labelWrapper.width - 140,
-        }}
-      >
+      <View style={styles.slider}>
         <Slider
           style={{ width: '100%' }}
           value={value}
@@ -54,12 +49,14 @@ export default SliderWithLabels;
 
 const styles = StyleSheet.create({
   labelWrapper: {
-    width: 250,
+    width: '30%',
   },
   limitTextWrapper: {
     width: 40,
   },
-  slider: {},
+  slider: {
+    width: '50%',
+  },
   sliderView: {
     gap: 5,
     height: 40,

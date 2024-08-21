@@ -4,7 +4,7 @@ import * as s from '../../state/user-inputs';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '@/src/state/store';
 import * as r from '@/src/calcs/rounding';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
 import React from 'react';
 import { SalaryAndPensionReset } from '../reset-buttons';

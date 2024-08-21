@@ -1,9 +1,9 @@
 {
-  "redirects": [
+  "redirects": [],
+  "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/",
-      "statusCode": 307
+      "destination": "/"
     }
   ]
 }
