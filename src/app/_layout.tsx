@@ -9,7 +9,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/src/hooks/useColorScheme';
 import { Provider } from 'react-redux';
 import store from '@/src/state/store';
-import WithTerms from '../components/disclaimer';
+import ErrorBoundary from '../components/error-boundary';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,19 +17,23 @@ const MainStack: React.FC = () => {
   const colorScheme = useColorScheme();
 
   return (
-    <Provider store={store}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="terms"
-            options={{
-              title: 'Terms and Conditions',
-            }}
-          />
-        </Stack>
-      </ThemeProvider>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="terms"
+              options={{
+                title: 'Terms and Conditions',
+              }}
+            />
+          </Stack>
+        </ThemeProvider>
+      </Provider>
+    </ErrorBoundary>
   );
 };
 
