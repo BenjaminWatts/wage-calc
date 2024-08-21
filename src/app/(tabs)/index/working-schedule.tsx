@@ -5,7 +5,7 @@ import WithHourlyRateHeaderRight from '@/src/components/outputs/hourly-rate';
 const HoursScreen = () => {
   return (
     <WithHourlyRateHeaderRight>
-      <WorkingsScheduleInputs />;
+      <WorkingsScheduleInputs />
     </WithHourlyRateHeaderRight>
   );
 };

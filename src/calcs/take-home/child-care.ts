@@ -90,7 +90,9 @@ export const child = (
 
   const taxRebate = calculateTaxRebate(parentEligible, total);
 
-  return total - taxRebate;
+  const netChildCost = total - taxRebate;
+
+  return netChildCost;
 };
 
 /**
@@ -101,9 +103,12 @@ export const calcHoursPerWeek = (
   daysPerWeekOfWorking: number,
   daysPerWeekInOffice: number,
   commuteDoorToDoorMinutes: number,
-) =>
-  hoursOfWorkPerDay * daysPerWeekOfWorking +
-  (daysPerWeekInOffice * commuteDoorToDoorMinutes * 60) / 60;
+) => {
+  const commuteHoursPerDay = 2 * (commuteDoorToDoorMinutes / 60);
+  const commuteHoursWeek = commuteHoursPerDay * daysPerWeekInOffice;
+  const workHoursWeek = hoursOfWorkPerDay * daysPerWeekOfWorking;
+  return workHoursWeek + commuteHoursWeek;
+};
 
 export const fteFraction = (daysPerWeekOfWorking: number) => {
   return daysPerWeekOfWorking / 5;
