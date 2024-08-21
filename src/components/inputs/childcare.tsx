@@ -54,7 +54,9 @@ const HourlyHolidayChildcareCost: React.FC = () => {
   return <CostInput onChange={onChange} value={value || 0} />;
 };
 
-const ChildcareCostInputs: React.FC = () => {
+interface ChildcareCostInputsProps {}
+
+const ChildcareCostInputs: React.FC<ChildcareCostInputsProps> = (p) => {
   return (
     <>
       <HourlyTermtimeChildcareCost />

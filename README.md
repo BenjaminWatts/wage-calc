@@ -42,5 +42,12 @@ The main output will be:
 Current bugs
 
 1. Overnight/hotel stays
-2. Tabs routing
 3. Helmet
+4. Link Wraparound Childcare to Commuting
+5. Add Contractor Calculation
+6. Title Capitalistion
+7. Bug Reporting Component
+8. Reset Buttons
+9. Prevent innacurate information
+10. Try catch on the calculation - handle in components 
+11. Disclaimer

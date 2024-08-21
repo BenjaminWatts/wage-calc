@@ -18,7 +18,7 @@ const defaults: UserInputsState = {
   employerPensionContributionPc: 3,
   employeePensionContributionPc: 0,
   employerSacrificingPension: true,
-  daysPerWeekInOffice: 5,
+  daysPerWeekInOffice: 3,
   holidayDaysPerYear: 25,
   children: [
     { years: 4, months: 0 },

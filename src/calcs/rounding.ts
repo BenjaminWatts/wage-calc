@@ -12,6 +12,7 @@ export const round = (value: number, decimalPlaces: number) => {
 
 export const financial = {
   annual: (value: number) => `£${round(value, 0).toLocaleString()}`,
+  pennies: (value: number) => `£${round(value, 2).toLocaleString()}`,
   hourly: (value: number) => `£${round(value, 2).toLocaleString()}/hour`,
 };
 

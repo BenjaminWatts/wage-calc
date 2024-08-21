@@ -6,14 +6,40 @@ export const InputsStack = () => {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Your Situation',
-          // headerShown: false,
+          title: 'Cost of Working Calculator',
         }}
       />
-      <Stack.Screen name="salary" />
-      <Stack.Screen name="working-schedule" />
-      <Stack.Screen name="children" />
-      <Stack.Screen name="child" />
+      <Stack.Screen
+        name="salary"
+        options={{
+          title: 'Salary and Pension',
+        }}
+      />
+      <Stack.Screen
+        name="working-schedule"
+        options={{
+          title: 'Working Schedule',
+        }}
+      />
+      <Stack.Screen
+        name="children"
+        options={{
+          headerShown: true,
+          title: 'Children',
+        }}
+      />
+      <Stack.Screen
+        name="children/[index]"
+        options={{
+          title: 'Child',
+        }}
+      />
+      <Stack.Screen
+        name="commuting"
+        options={{
+          title: 'Commuting Expenses',
+        }}
+      />
     </Stack>
   );
 };

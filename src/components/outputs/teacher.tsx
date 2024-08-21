@@ -16,8 +16,8 @@ const TeacherOutput: React.FC = () => {
           could earn a similar amount over your lifetime.
         </Paragraph>
         <Paragraph>
-          Working shorter working hours and and taking longer holidays, you
-          could dramatically cut your childcare costs.
+          With shorter working hours and and taking longer holidays, you could
+          dramatically cut your childcare costs.
         </Paragraph>
         <Paragraph>
           The teacher pension scheme is also incredibly generous. We've factored

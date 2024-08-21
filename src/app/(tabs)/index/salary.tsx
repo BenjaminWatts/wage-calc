@@ -1,13 +1,12 @@
 import PensionSalaryInputs from '@/src/components/inputs/salary-pension';
-import { PageHeader } from '@/src/nav';
+import WithHourlyRateHeaderRight from '@/src/components/outputs/hourly-rate';
 import React from 'react';
 
 const SalaryScreen: React.FC = () => {
   return (
-    <>
-      <PageHeader title="Salary and Pension" />
+    <WithHourlyRateHeaderRight>
       <PensionSalaryInputs />
-    </>
+    </WithHourlyRateHeaderRight>
   );
 };
 

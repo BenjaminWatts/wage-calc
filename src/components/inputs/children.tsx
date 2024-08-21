@@ -2,12 +2,14 @@
 
 import { RootState, useAppDispatch } from '@/src/state/store';
 import React from 'react';
-import { Button, List } from 'react-native-paper';
+import { Button, Card, List, Paragraph } from 'react-native-paper';
 import * as s from '@/src/state/user-inputs';
 import { useSelector } from 'react-redux';
 import { useChild } from '@/src/nav';
 import Slider from '@react-native-community/slider';
 import { Text } from 'react-native-paper';
+import { ScrollView } from 'react-native';
+import SliderWithLabels from '@/src/atoms/slider-with-labels';
 
 const DeleteChildButton: React.FC<{
   index: number;
@@ -41,7 +43,6 @@ const CreateChildButton: React.FC = () => {
     <Button
       icon={'plus'}
       onPress={() => {
-        1;
         dispatch(s.a.addChild(defaultChild));
         useChildHook();
       }}
@@ -57,14 +58,37 @@ const CreateChildButton: React.FC = () => {
 export const ChildrenList: React.FC = () => {
   const data = useSelector((r: RootState) => r.userInputs.children);
   return (
-    <>
-      <List.Section title="Children">
-        {data.map((c: Child, i: number) => (
-          <ChildListItem key={i} index={i} />
-        ))}
-      </List.Section>
+    <ScrollView
+      contentContainerStyle={{
+        gap: 10,
+        padding: 10,
+      }}
+    >
+      <Card>
+        <Card.Content>
+          <Paragraph>
+            To work out the cost of childcare for you, including Government
+            support, we need to know the number and ages of your children.
+          </Paragraph>
+        </Card.Content>
+      </Card>
+      <Card>
+        <Card.Content>
+          <List.Section>
+            {data.length === 0 && (
+              <Paragraph>
+                You haven't added any children yet. Please add all children
+                under the age of 18
+              </Paragraph>
+            )}
+            {data.map((c: Child, i: number) => (
+              <ChildListItem key={i} index={i} />
+            ))}
+          </List.Section>
+        </Card.Content>
+      </Card>
       <CreateChildButton />
-    </>
+    </ScrollView>
   );
 };
 
@@ -77,20 +101,24 @@ export const EditChild: React.FC<{ index: number }> = ({ index }) => {
   const dispatch = useAppDispatch();
   return (
     <>
-      <Slider
+      <SliderWithLabels
         value={child.years}
         minimumValue={0}
         maximumValue={17}
+        formatter={(x) => x.toFixed(0)}
+        label="years"
         step={1}
         onValueChange={(years) =>
           dispatch(s.a.updateChild({ index, child: { ...child, years } }))
         }
       />
       <Text>Years: {child.years}</Text>
-      <Slider
+      <SliderWithLabels
         value={child.months}
         minimumValue={1}
         maximumValue={12}
+        formatter={(x) => x.toFixed(0)}
+        label="months"
         step={1}
         onValueChange={(months) =>
           dispatch(s.a.updateChild({ index, child: { ...child, months } }))

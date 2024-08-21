@@ -20,13 +20,13 @@ export const useUrl = (path: string) => {
 };
 
 // inputs routes
-const inputUrl = (path: string) => `index/${path}`;
+const inputUrl = (path: string) => `/${path}`;
 
 export const children = inputUrl('children');
 
 export const useChildren = () => useUrl(children);
 
-const child = (index: number) => inputUrl(`child/${index}`);
+const child = (index: number) => inputUrl(`children/${index}`);
 
 export const useChild = (index: number) => useUrl(child(index));
 
@@ -46,3 +46,7 @@ export const useSalary = () => useUrl(salary);
 export const commuting = inputUrl('commuting');
 
 export const useCommuting = () => useUrl(commuting);
+
+export const calcs = '/calcs';
+
+export const useCalcs = () => useUrl(calcs);

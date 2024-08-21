@@ -3,7 +3,7 @@ import { Icon, List } from 'react-native-paper';
 import { HybridSplitOutput } from './hybrid-split';
 import TeacherOutput from './teacher';
 import SummaryOutputs from './summary';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import MarginalTaxRatesBonuses from './marginal-tax-rate';
 
 const iconSize = 32;

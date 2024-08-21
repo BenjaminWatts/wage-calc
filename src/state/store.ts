@@ -1,10 +1,12 @@
 import { configureStore, createReducer } from '@reduxjs/toolkit';
 import userInputs from './user-inputs';
 import { useDispatch } from 'react-redux';
+import app from './app';
 
 const store = configureStore({
   reducer: {
     userInputs: userInputs.reducer,
+    app: app.reducer,
   },
 });
 

@@ -13,7 +13,7 @@ const MarginalTaxRatesBonuses: React.FC = () => {
     <Card>
       <Card.Content>
         <Paragraph>
-          In your current situation, we have calculated that you pay a total of
+          In your current situation, we have calculated that you pay a total of{' '}
           {r.financial.annual(total)} in tax. This includes the standard Income
           Tax (and National Insurance) you pay on your salary, but also includes
           any penalties from the Government to the help you get with raising
@@ -29,7 +29,7 @@ const MarginalTaxRatesBonuses: React.FC = () => {
         <Paragraph>
           Crunching the numbers, we have calculated that your marginal tax rate
           is {r.percentage(marginalRate)}. So, if you get a payrise or bonus of
-          £1, you will keep {r.financial.annual(1 - marginalRate)} after tax.
+          £1, you will keep {r.financial.pennies(1 - marginalRate)} after tax.
         </Paragraph>
       </Card.Content>
     </Card>

@@ -43,15 +43,20 @@ export const CommutingImpactHourlyWages: React.FC = () => {
 
 const renderTitle = (index: number, daysInOffice: number) => {
   const delta = index - daysInOffice;
+  const newDaysInOffice = index;
   if (delta === 0) {
-    return `If you were to work ${index + 1} days in the office`;
+    return `If you were to work ${newDaysInOffice} days in the office`;
   }
   if (delta < 0) {
-    return `If you were to work ${-delta} fewer days in the office i.e. just ${
-      index + 1
-    } days`;
+    if (newDaysInOffice === 0) {
+      return 'If you were to go fully remote';
+    }
+    const dayText = newDaysInOffice === 1 ? 'day' : 'days';
+    return `If you were to work ${-delta} fewer days in the office, i.e. just ${newDaysInOffice} ${dayText}`;
   }
-  return `If you work ${Math.abs(delta)} more days in the office`;
+  return `If you were to work ${Math.abs(
+    delta,
+  )} more days in the office, i.e. ${newDaysInOffice} days in total`;
 };
 
 const renderDescription = (currentSalary: number, equivalentSalary: number) => {
@@ -83,11 +88,30 @@ export const HybridSplitOutput: React.FC = () => {
     <Card>
       <Card.Content>
         <Paragraph>
-          If you were to work a different number of days in the office, this is
-          how it would impact your take home pay:
+          If you were to work fewer days in the office, this is how it would
+          impact your take home pay:
         </Paragraph>
         <List.Section>
           {adjusted.map((a, index) => {
+            if (index >= daysInOffice) return null;
+            return (
+              <List.Item
+                key={index}
+                title={renderTitle(index, daysInOffice)}
+                description={renderDescription(currentSalary, a)}
+              />
+            );
+          })}
+        </List.Section>
+      </Card.Content>
+      <Card.Content>
+        <Paragraph>
+          If you were to work more days in the office, this is how it would
+          impact your take home pay:
+        </Paragraph>
+        <List.Section>
+          {adjusted.map((a, index) => {
+            if (index <= daysInOffice) return null;
             return (
               <List.Item
                 key={index}
