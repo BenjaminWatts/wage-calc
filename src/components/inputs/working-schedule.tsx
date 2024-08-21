@@ -54,7 +54,6 @@ const PerWeekInOffice: React.FC = () => {
     s.selectDaysPerWeekOfWorking(r),
   );
   const value = useSelector((r: RootState) => s.selectDaysPerWeekInOffice(r));
-  console.log(value);
 
   return (
     <DaysSlider
