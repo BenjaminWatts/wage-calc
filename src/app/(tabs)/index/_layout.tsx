@@ -6,7 +6,7 @@ export const InputsStack = () => {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Cost of Working Calculator',
+          title: 'Cost Of Work',
         }}
       />
       <Stack.Screen
