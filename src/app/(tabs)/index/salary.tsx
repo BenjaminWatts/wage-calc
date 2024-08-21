@@ -1,4 +1,4 @@
-import PensionSalaryInputs from '@/src/components/form-inputs/salary-pension';
+import PensionSalaryInputs from '@/src/components/inputs/salary-pension';
 import { PageHeader } from '@/src/nav';
 import React from 'react';
 

@@ -4,6 +4,7 @@ import { HybridSplitOutput } from './hybrid-split';
 import TeacherOutput from './teacher';
 import SummaryOutputs from './summary';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import MarginalTaxRatesBonuses from './marginal-tax-rate';
 
 const iconSize = 32;
 
@@ -44,21 +45,20 @@ const Outputs: React.FC = () => (
     </OutputExpandableAccordion>
 
     <OutputExpandableAccordion
+      title="Marginal tax rates and payrises/bonuses"
+      iconSource="crown"
+      initialExpanded={false}
+    >
+      <MarginalTaxRatesBonuses />
+    </OutputExpandableAccordion>
+
+    <OutputExpandableAccordion
       title="Ask for a payrise or fewer days in the office?"
       iconSource="car"
       initialExpanded={false}
     >
       <HybridSplitOutput />
     </OutputExpandableAccordion>
-
-    {/* <Spacer />
-    <OutputExpandableAccordion
-      title="Impact of commuting on your hourly take home pay"
-      iconSource="car"
-      initialExpanded={false}
-    >
-      <CommutingImpactHourlyWages />
-    </OutputExpandableAccordion> */}
 
     <OutputExpandableAccordion
       title="Is it worth becoming a teacher?"
@@ -70,13 +70,5 @@ const Outputs: React.FC = () => (
     <Spacer />
   </ScrollView>
 );
-
-const styles = StyleSheet.create({
-  view: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 15,
-  },
-});
 
 export default Outputs;

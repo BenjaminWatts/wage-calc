@@ -1,9 +1,9 @@
-import { EditChild } from '@/src/components/form-inputs/children';
+import { EditChild } from '@/src/components/inputs/children';
 import { useChildIndex } from '@/src/nav';
 
-const Child = () => {
+const ChildScreen = () => {
   const index = useChildIndex();
   return <EditChild index={index} />;
 };
 
-export default Child;
+export default ChildScreen;

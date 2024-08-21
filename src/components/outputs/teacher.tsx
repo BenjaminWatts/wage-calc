@@ -1,11 +1,8 @@
 // a component that renders and explains the teacher equivalent salary, along with the assumiptions we have made
 
 import { useCalculation } from '@/src/hooks';
-import { RootState } from '@/src/state/store';
-import { selectAnnualSalary } from '@/src/state/user-inputs';
 import React from 'react';
-import { Card, Paragraph, Title } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import { Card, Paragraph } from 'react-native-paper';
 import * as r from '@/src/calcs/rounding';
 
 const TeacherOutput: React.FC = () => {

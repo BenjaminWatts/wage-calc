@@ -207,11 +207,104 @@ const TimeInputs: React.FC = () => {
   );
 };
 
-const TransportInputs: React.FC = () => {
+interface CostInputProps {
+  label: string;
+  value?: number;
+  onChange: (value: number) => void;
+}
+
+const CostInput: React.FC<CostInputProps> = ({ label, value, onChange }) => {
+  return (
+    <TextInput
+      label={label}
+      value={value ? value.toString() : ''}
+      onChangeText={(text) => {
+        const number = parseFloat(text);
+        if (!isNaN(number)) {
+          onChange(number);
+        }
+      }}
+      keyboardType="numeric"
+    />
+  );
+};
+
+const DailyBreakfastCoffeeCost: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.userInputs.dailyBreakfastCoffeeCost,
+  );
+  const onChange = (value: number) =>
+    dispatch(s.a.updateDailyBreakfastCoffeeCost(value));
+  return (
+    <CostInput
+      label="Daily breakfast coffee cost"
+      value={value}
+      onChange={onChange}
+    />
+  );
+};
+
+const DailyLunchCost: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.userInputs.dailyLunchCost,
+  );
+  const onChange = (value: number) => dispatch(s.a.updateDailyLunchCost(value));
+  return (
+    <CostInput label="Daily lunch cost" value={value} onChange={onChange} />
+  );
+};
+
+const DryCleaningCostPerDay: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const value = useSelector(
+    (state: RootState) => state.userInputs.dryCleaningCostPerDay,
+  );
+  const onChange = (value: number) =>
+    dispatch(s.a.updateDryCleaningCostPerDay(value));
+  return (
+    <CostInput
+      label="Dry cleaning cost per day"
+      value={value}
+      onChange={onChange}
+    />
+  );
+};
+
+const IncidentalCosts: React.FC = () => {
+  const [expanded, setExpanded] = React.useState(true);
+
+  return (
+    <List.Accordion
+      title="Incidental Commuting Costs"
+      expanded={expanded}
+      onPress={() => setExpanded(!expanded)}
+      left={(props) => <List.Icon {...props} icon="receipt" />}
+    >
+      <Paragraph>
+        There are often other incidental costs to commuting in an office that
+        you wouldn't face working from home, such as having (or finding just way
+        more convenient) to buy breakfast/coffee/lunch out, having to maintain a
+        bigger wardrobe, dry cleaning and paying a dog walker.
+      </Paragraph>
+      <Paragraph>
+        These costs can add up, and can eat significantly into your take-home
+        pay.
+      </Paragraph>
+      <DailyBreakfastCoffeeCost />
+      <DailyLunchCost />
+      <DryCleaningCostPerDay />
+    </List.Accordion>
+  );
+};
+
+const CommutingInputs: React.FC = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <DrivingCosts />
       <PublicTransportCosts />
+      <IncidentalCosts />
       <TimeInputs />
     </ScrollView>
   );
@@ -220,4 +313,4 @@ const styles = StyleSheet.create({
   container: { gap: 10 },
 });
 
-export default TransportInputs;
+export default CommutingInputs;

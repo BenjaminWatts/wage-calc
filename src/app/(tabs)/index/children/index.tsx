@@ -1,7 +1,7 @@
-import { ChildrenList } from '@/src/components/form-inputs/children';
+import { ChildrenList } from '@/src/components/inputs/children';
 import { PageHeader } from '@/src/nav';
 
-const Children = () => {
+const ChildrenScreen: React.FC = () => {
   return (
     <>
       <PageHeader title="Children" />
@@ -10,4 +10,4 @@ const Children = () => {
   );
 };
 
-export default Children;
+export default ChildrenScreen;

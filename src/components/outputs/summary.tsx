@@ -2,18 +2,16 @@
 
 import { useCalculation } from '@/src/hooks';
 import React from 'react';
-import { Card, Title, Paragraph } from 'react-native-paper';
+import { Card, Paragraph } from 'react-native-paper';
 import * as r from '@/src/calcs/rounding';
 
 const SummaryOutputs: React.FC = () => {
   const result = useCalculation();
   const { takeHome } = result;
-  // render a summary of the outputs
 
   return (
     <Card>
       <Card.Content>
-        {/* <Title>Current Take Home Income</Title> */}
         <Paragraph>
           Your current take home income is{' '}
           {r.financial.annual(takeHome.takeHomeTotal)}. This is the total you

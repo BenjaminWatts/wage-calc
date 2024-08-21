@@ -18,7 +18,6 @@ export const CommutingImpactHourlyWages: React.FC = () => {
   return (
     <Card>
       <Card.Content>
-        {/* <Title>Impact of In-Office Days</Title> */}
         <Paragraph>
           You currently spent {currentInofficeDays} days in the office.
         </Paragraph>
@@ -78,7 +77,6 @@ export const HybridSplitOutput: React.FC = () => {
   const daysInOffice = useSelector(
     (r: RootState) => r.userInputs.daysPerWeekInOffice,
   );
-  const takeHome = result.takeHome;
   const currentSalary = useSelector((r: RootState) => selectAnnualSalary(r));
 
   return (

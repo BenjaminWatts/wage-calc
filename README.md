@@ -39,10 +39,8 @@ The main output will be:
 3. Teacher salary required to have same takehome pay for 0-5 days in office
 4. TBC - self-employed/freelancer day-rate equivalent
 
-
-
-
 Current bugs
 
-2. Adjusted salary for nethybrid doesn't seem to be varying
-3. Teacher salary seems high - maybe salary solver is ending too early.
+1. Overnight/hotel stays
+2. Tabs routing
+3. Helmet
