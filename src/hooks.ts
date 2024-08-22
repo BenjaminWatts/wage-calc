@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './state/store';
 import React from 'react';
 import calculate from './calcs';
+import { captureException } from './utils/sentry';
 
 /**
  * A hook that extracts the user-input and calculates an updated output
@@ -12,7 +13,7 @@ export const useCalculation = () => {
     try {
       return calculate(ui);
     } catch (e) {
-      console.error(e);
+      captureException(e as Error);
       return null;
     }
   }, [ui]);

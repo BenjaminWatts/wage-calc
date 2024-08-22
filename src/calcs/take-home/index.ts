@@ -1,3 +1,4 @@
+import estimateDcPensionValue from '../dc-pension';
 import childcare from './child-care';
 import * as days from './days';
 import estimateonsiteCosts, { estimateWorkingWeeks } from './onsite-costs';
@@ -41,12 +42,15 @@ const calcTakeHome = (ui: UserInputs): ScenarioResult => {
 
   const taxTotal = tax(ui);
 
-  const takeHomePay = calcTakeHomePay(
-    ui.annualSalary,
-    taxTotal.total,
-    onsiteCosts,
-    childcareTotal,
-  );
+  const dcPension = estimateDcPensionValue(ui);
+
+  const takeHomePay =
+    calcTakeHomePay(
+      ui.annualSalary,
+      taxTotal.total,
+      onsiteCosts,
+      childcareTotal,
+    ) + dcPension;
 
   return {
     takeHomeTotal: takeHomePay,

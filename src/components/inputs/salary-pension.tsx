@@ -28,7 +28,7 @@ interface PensionInputProps {
 const PensionInput: React.FC<PensionInputProps> = (p) => (
   <SliderWithLabels
     label={p.label}
-    maximumValue={0.5}
+    maximumValue={0.2}
     minimumValue={0.001}
     formatter={r.percentage}
     onValueChange={p.onChange}

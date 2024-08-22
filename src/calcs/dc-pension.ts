@@ -12,10 +12,7 @@ import calculateNIEmployee from './take-home/tax/ni-employee';
 export const estimateDirectEmployerPensionContribution = (
   employerPensionContributionPc: number,
   annualSalary: number,
-) => {
-  const pc = employerPensionContributionPc || 0;
-  return annualSalary * pc;
-};
+) => annualSalary * employerPensionContributionPc;
 
 const EMPLOYER_NI_RATE = 0.138;
 const SECONDARY_THRESHOLD = 9100; // this is the level employers start paying NICs
@@ -71,8 +68,8 @@ export const estimateEmployeePensionValue = (uI: {
   annualSalary: number;
   employerSacrificingPension: boolean;
 }): number => {
-  const pc = uI.employeePensionContributionPc || 0;
-  const grossSacrifiedValue = uI.annualSalary * pc;
+  const grossSacrifiedValue =
+    uI.annualSalary * uI.employeePensionContributionPc;
   const employeeIncomeTaxSavings = estimateEmployeeIncomeTaxSavings(
     uI.annualSalary,
     grossSacrifiedValue,
