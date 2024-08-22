@@ -4,11 +4,11 @@
     "slug": "CostOfWork",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon":  "./public/icon.png",
+    "icon": "./public/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image":  "./public/icon.png",
+      "image": "./public/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,12 +24,20 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon":  "./public/icon.png",
+      "favicon": "./public/icon.png",
       "shortName": "CostOfWork",
       "title": "CostOfWork.app"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "project": "cost-of-work",
+          "organization": "kilowattsio"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
