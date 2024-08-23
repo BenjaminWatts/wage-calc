@@ -1,8 +1,6 @@
-// redirect to /inputs
-
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Image, View } from 'react-native';
+import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { Button, Card, Paragraph } from 'react-native-paper';
 
 const HomeScreen: React.FC = () => {
@@ -33,10 +31,26 @@ const HomeScreen: React.FC = () => {
         <Card.Content>
           <Paragraph>Welcome to the CostofWork.app calculator.</Paragraph>
         </Card.Content>
+        <View style={{ height: 10 }} />
+
         <Card.Actions>
-          <Button onPress={() => nav.replace('/inputs')}>Get started</Button>
+          <Button
+            // make super prominent
+            mode="contained"
+            style={{ width: '100%' }}
+            onPress={() => nav.replace('/inputs')}
+          >
+            Get started
+          </Button>
         </Card.Actions>
       </Card>
+
+      {/* Move Privacy Policy button here to make it more discrete */}
+      <TouchableOpacity onPress={() => nav.push('/terms')}>
+        <Text style={{ fontSize: 12, color: 'gray', marginTop: 20 }}>
+          Privacy Policy / Terms and Conditions
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
