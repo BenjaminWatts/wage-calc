@@ -47,6 +47,7 @@ Current bugs
 9. Prevent innacurate information
 12. Advertising
 13. Google tracker
-14. Sentry
-15. React Native Error Boundary
+
+
+1. Privacy Policy
 
