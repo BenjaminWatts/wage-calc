@@ -6,6 +6,7 @@ import SummaryOutputs from './summary';
 import { View, ScrollView } from 'react-native';
 import MarginalTaxRatesBonuses from './marginal-tax-rate';
 import ContractorOutput from './contractor';
+import PrivacyButton from '@/src/atoms/privacy-button';
 
 const iconSize = 32;
 
@@ -76,6 +77,10 @@ const Outputs: React.FC = () => (
     >
       <TeacherOutput />
     </OutputExpandableAccordion>
+    <Spacer />
+
+    <PrivacyButton />
+
     <Spacer />
   </ScrollView>
 );

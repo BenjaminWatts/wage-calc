@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { Button, Card, Paragraph } from 'react-native-paper';
+import PrivacyButton from '../atoms/privacy-button';
 
 const HomeScreen: React.FC = () => {
   const nav = useRouter();
@@ -45,12 +46,7 @@ const HomeScreen: React.FC = () => {
         </Card.Actions>
       </Card>
 
-      {/* Move Privacy Policy button here to make it more discrete */}
-      <TouchableOpacity onPress={() => nav.push('/terms')}>
-        <Text style={{ fontSize: 12, color: 'gray', marginTop: 20 }}>
-          Privacy Policy / Terms and Conditions
-        </Text>
-      </TouchableOpacity>
+      <PrivacyButton />
     </View>
   );
 };

@@ -5,6 +5,7 @@ import { Card, Icon, List, Paragraph } from 'react-native-paper';
 import * as i from '@/src/components/icons';
 import { ScrollView, View } from 'react-native';
 import { All } from '../reset-buttons';
+import PrivacyButton from '@/src/atoms/privacy-button';
 
 interface LinkedButtonProps {
   label: string;
@@ -79,6 +80,9 @@ export const Inputs: React.FC = () => (
     </Card>
 
     <All />
+
+    <View style={{ height: 20 }} />
+    <PrivacyButton />
   </ScrollView>
 );
 
