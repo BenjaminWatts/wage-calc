@@ -1,13 +1,14 @@
 // analyse what teacher salary would be required, to result in the same take-home pay as a teacher with a given salary and childcare costs
-import { BASIC_RATE_INCOMETAX } from './constants';
+import {
+  ACCRUED_PENSION_PER_YEAR,
+  BASIC_RATE_INCOMETAX,
+  DISCOUNT_RATE,
+  TEACHER_RETIREMENT_AGE,
+  TEACHER_RETIREMENT_LENGTH_YEARS,
+} from './constants';
 import salarySolver from './salary-solver';
 import calcTakeHome from './take-home';
 import { SCHOOL_HOLIDAY_DAYS } from './take-home/constants';
-
-const RETIREMENT_AGE = 65;
-const RETIREMENT_LENGTH_YEARS = 23;
-const ACCRUED_PENSION_PER_YEAR = 1 / 57;
-const DISCOUNT_RATE = 0.03;
 
 /**
  * Estimate the net present value of the teacher's pension
@@ -18,11 +19,34 @@ export const estimateNPVOfTeacherPension = (
   currentAge: number,
   annualPension: number,
 ) => {
-  const yearsUntilRetirement = RETIREMENT_AGE - currentAge;
-  const pensionValue =
-    annualPension / Math.pow(1 + DISCOUNT_RATE, yearsUntilRetirement);
-  return pensionValue;
+  let total = 0;
+  // for each of year of retirement add discounted total
+  for (let i = 0; i < TEACHER_RETIREMENT_LENGTH_YEARS; i++) {
+    total += annualPension / Math.pow(1 + DISCOUNT_RATE, i);
+  }
+  // now discount back to the present day
+  const yearsUntilRetirement = Math.max(0, TEACHER_RETIREMENT_AGE - currentAge);
+  const currentNpv = total * (1 + DISCOUNT_RATE);
 };
+
+export const estimatePensionNPV = (
+  annualPensionAfterTax: number,
+  currentAge: number,
+) => {
+  const npv = estimateNPVOfTeacherPension(currentAge, annualPensionAfterTax);
+  return npv;
+};
+
+/**
+ * Estimate the pension afforded by one year of service
+ * NOTE _ THIS IS NOT WHAT WILL BE RECEIVED IN ONE YEAR IN RETIREMENT UNLESS TEACHER ONLY WORKS FOR ONE YEAR
+ * @param annualSalary
+ */
+export const estimateAnnualPension = (annualSalary: number) =>
+  annualSalary *
+  ACCRUED_PENSION_PER_YEAR *
+  TEACHER_RETIREMENT_LENGTH_YEARS *
+  (1 - BASIC_RATE_INCOMETAX);
 
 /**
  * Estimate the value of a teacher's pension based on their annual salary
@@ -33,12 +57,8 @@ export const estimateTeacherPensionValue = (
   annualSalary: number,
   currentAge: number,
 ) => {
-  const annualPensionBeforeTax =
-    annualSalary * ACCRUED_PENSION_PER_YEAR * RETIREMENT_LENGTH_YEARS;
-  const annualPensionAfterTax =
-    annualPensionBeforeTax * (1 - BASIC_RATE_INCOMETAX);
-  const npv = estimateNPVOfTeacherPension(currentAge, annualPensionAfterTax);
-  return npv;
+  const annualPensionAfterTax = estimateAnnualPension(annualSalary);
+  return estimatePensionNPV(annualPensionAfterTax, currentAge);
 };
 
 /**
@@ -64,6 +84,9 @@ const toTeacher = (nonTeacher: UserInputs): UserInputs => {
     dailyTrainBusTicketCost: 0,
     flexiSeasonTicketCost: 0,
     seasonTicketCost: 0,
+    // assume teachers get free breakfast and lunch
+    dailyBreakfastCoffeeCost: 0,
+    dailyLunchCost: 0,
   };
   return teacher;
 };

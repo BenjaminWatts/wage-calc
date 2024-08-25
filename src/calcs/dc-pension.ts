@@ -1,6 +1,10 @@
 // evaluate the value of the pension arrangements of a job
 
-import { BASIC_RATE_INCOMETAX } from './constants';
+import {
+  BASIC_RATE_INCOMETAX,
+  EMPLOYER_NI_RATE,
+  EMPLOYER_NI_THRESHOLD,
+} from './constants';
 import calculateAnnualIncomeTax from './take-home/tax/income-tax';
 import calculateNIEmployee from './take-home/tax/ni-employee';
 
@@ -14,9 +18,6 @@ export const estimateDirectEmployerPensionContribution = (
   annualSalary: number,
 ) => annualSalary * employerPensionContributionPc;
 
-const EMPLOYER_NI_RATE = 0.138;
-const SECONDARY_THRESHOLD = 9100; // this is the level employers start paying NICs
-
 /**
  * Esimate the saving in employer's national insurance contributions due to the pension contribution. This assumes the employer passes on the saving to the employee.
  * @param annualSalary - the annual salary before pension contributions
@@ -27,7 +28,7 @@ export const estimateEmployerKickback = (
   grossSacrifiedValue: number,
 ) => {
   if (grossSacrifiedValue <= 0) return 0;
-  const salaryAboveThreshold = annualSalary - SECONDARY_THRESHOLD;
+  const salaryAboveThreshold = annualSalary - EMPLOYER_NI_THRESHOLD;
   if (salaryAboveThreshold <= 0) return 0;
   const salarySaved = Math.min(salaryAboveThreshold, grossSacrifiedValue);
   return salarySaved * EMPLOYER_NI_RATE;

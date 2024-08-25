@@ -1,9 +1,9 @@
+import {
+  UK_STATUTORY_HOLIDAY_COUNT,
+  WEEKS_IN_YEAR,
+  UK_BANK_HOLIDAY_COUNT,
+} from '../constants';
 import { SCHOOL_WORKING_DAYS } from './constants';
-
-const DAYS_IN_YEAR = 365;
-const WEEKS_IN_YEAR = DAYS_IN_YEAR / 7;
-const UK_BANK_HOLIDAY_COUNT = 8;
-const UK_STATUTORY_HOLIDAY_COUNT = 28;
 
 /**
  * Calculate the annual leave days

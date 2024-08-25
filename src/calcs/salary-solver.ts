@@ -1,6 +1,5 @@
+import { SALARY_SOLVER_INCREMENT } from './constants';
 import calcTakeHome from './take-home';
-
-const INCREMENT = 250;
 
 /**
  * Determine the increment to use when adjusting the salary
@@ -10,8 +9,8 @@ const INCREMENT = 250;
  */
 const getIncrement = (existing: UserInputs, requiredTakeHome: number) =>
   calcTakeHome(existing).takeHomeTotal < requiredTakeHome
-    ? INCREMENT
-    : -INCREMENT;
+    ? SALARY_SOLVER_INCREMENT
+    : -SALARY_SOLVER_INCREMENT;
 
 const COUNT_LIMIT = 5000;
 
@@ -41,13 +40,16 @@ const salarySolver = (
       annualSalary,
     }).takeHomeTotal;
 
+    // work out the current implied change
     const impliedChange = currentTakeHome - impliedTakeHome;
 
     if (Math.abs(impliedChange) > Math.abs(changeNeeded)) {
+      // if enough change has been achieved, return the new result
       return annualSalary;
     }
 
     if (annualSalary <= 0) {
+      // if the salary falls so low that it hits zero, stop the process
       return 0;
     }
 
@@ -55,6 +57,7 @@ const salarySolver = (
     count += 1;
   }
 
+  // prevent an endless loop
   throw new Error('No solution found');
 };
 

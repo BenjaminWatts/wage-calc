@@ -1,3 +1,5 @@
+import { DEFAULT_HOURS_PER_DAY } from '../constants';
+
 /**
  * Calculate the total working hours per year.
  * @param ui The user inputs
@@ -15,8 +17,6 @@ export const annualCommuteHours = (
   return (hasOvernights ? workingWeeks : onsiteDays) * commuteHours;
 };
 
-const DEFAULT_HOURS_PER_DAY = 8;
-
 /**
  * Calculate the total working hours per year.
  * @param ui The user inputs
@@ -27,10 +27,7 @@ export const annualWorkingHours = (
     hoursOfWorkPerDay?: number;
   },
   workingDays: number,
-) => {
-  const hoursPerDay = ui.hoursOfWorkPerDay || DEFAULT_HOURS_PER_DAY;
-  return hoursPerDay * workingDays;
-};
+) => ui.hoursOfWorkPerDay || DEFAULT_HOURS_PER_DAY * workingDays;
 
 /**
  * Calculate the total working hours per year, including commute.

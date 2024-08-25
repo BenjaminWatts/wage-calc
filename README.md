@@ -40,6 +40,7 @@ The main output will be:
 4. TBC - self-employed/freelancer day-rate equivalent
 
 Current bugs
+1. Check layout and text wrapping on smaller screen devices
 
 1. Check driving mileage
 3. Helmet
@@ -49,5 +50,11 @@ Current bugs
 13. Google tracker
 
 
-1. Privacy Policy
 
+
+
+
+# Icons 
+
+https://progressier.com/pwa-icons-and-ios-splash-screen-generator
+https://www.fanstudio.co.uk/appicon/

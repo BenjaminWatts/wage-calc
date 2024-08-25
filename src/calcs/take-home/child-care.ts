@@ -1,24 +1,23 @@
+import * as c from '../constants';
 import { TERM_WEEKS_PER_YEAR } from './constants';
-
-const TAXFREE_REBATE_LIMIT = 2000;
-const SCHOOL_DAY_LENGTH = 6.5;
-export const NO_CHILDCARE_COST_MINIMUM_AGE = 12;
-
-export const SCHOOL_AGE_YEARS = 5;
 
 /**
  * Calculate the number of hours of free childcare available for a child
+ * @param Child
  */
-export const hoursOfFreeChildcare = (c: Child, parentEligible: boolean) => {
-  if (c.years >= SCHOOL_AGE_YEARS) return SCHOOL_DAY_LENGTH * 5;
+export const hoursOfFreeChildcare = (
+  { years, months }: Child,
+  parentEligible: boolean,
+) => {
+  if (years >= c.SCHOOL_AGE_YEARS) return c.SCHOOL_WEEK_LENGTH;
 
   if (!parentEligible) return 0;
   // if below 9 months, no free childcare
-  if (c.years === 0 && c.months < 9) return 0;
+  if (years === 0 && months < 9) return 0;
   // if 9 months to 2 years, 15 hours
-  if (c.years < 2) return 15;
+  if (years < 2) return 15;
   // if 2 to 4 years, 30 hours
-  if (c.years < SCHOOL_AGE_YEARS) return 30;
+  if (years < c.SCHOOL_AGE_YEARS) return 30;
 
   return 0;
 };
@@ -29,10 +28,8 @@ export const hourlyHolidayChildcareCost = (
   holidayWeeks: number,
 ) => hourlyHolidayChildcareCost * daysPerWeekOfWorking * holidayWeeks;
 
-const INCOME_TAX_REBATE = 0.25;
-
 export const calculatePaidHours = (hoursPerWeek: number, freeHours: number) =>
-  hoursPerWeek - freeHours;
+  Math.max(0, hoursPerWeek - freeHours);
 
 export const calculateHourlyTermtimeCost = (
   hourlyTermtimeChildcareCost: number,
@@ -44,7 +41,10 @@ export const calculateTaxRebate = (
   totalCost: number,
 ) => {
   return parentEligible
-    ? Math.min(totalCost * INCOME_TAX_REBATE, TAXFREE_REBATE_LIMIT)
+    ? Math.min(
+        totalCost * c.INCOME_TAX_REBATE,
+        c.TAXFREE_REBATE_LIMIT_PER_CHILD_ANNUAL,
+      )
     : 0;
 };
 
@@ -66,7 +66,7 @@ export const child = (
   schoolHolidayExcessWeeks: number,
   parentEligible: boolean,
 ): number => {
-  if (child.years >= NO_CHILDCARE_COST_MINIMUM_AGE) return 0;
+  if (child.years >= c.NO_CHILDCARE_COST_MINIMUM_AGE) return 0;
 
   let total = 0;
 
@@ -95,29 +95,45 @@ export const child = (
   return netChildCost;
 };
 
-/**
- * Calculate the number of hours of childcare required each week
- */
+export const calcCommuteHoursPerDay = (commuteDoorToDoorMinutes: number) =>
+  2 * (commuteDoorToDoorMinutes / 60);
+
+export const calcCommuteHoursPerWeek = (
+  commuteDoorToDoorMinutes: number,
+  daysPerWeekInOffice: number,
+) => calcCommuteHoursPerDay(commuteDoorToDoorMinutes) * daysPerWeekInOffice;
+
+export const calcWorkHoursPerWeek = (
+  hoursOfWorkPerDay: number,
+  daysPerWeekOfWorking: number,
+) => hoursOfWorkPerDay * daysPerWeekOfWorking;
+
 export const calcHoursPerWeek = (
   hoursOfWorkPerDay: number,
   daysPerWeekOfWorking: number,
   daysPerWeekInOffice: number,
   commuteDoorToDoorMinutes: number,
-) => {
-  const commuteHoursPerDay = 2 * (commuteDoorToDoorMinutes / 60);
-  const commuteHoursWeek = commuteHoursPerDay * daysPerWeekInOffice;
-  const workHoursWeek = hoursOfWorkPerDay * daysPerWeekOfWorking;
-  return workHoursWeek + commuteHoursWeek;
-};
+) =>
+  calcCommuteHoursPerWeek(commuteDoorToDoorMinutes, daysPerWeekInOffice) +
+  calcWorkHoursPerWeek(hoursOfWorkPerDay, daysPerWeekOfWorking);
 
-export const fteFraction = (daysPerWeekOfWorking: number) => {
-  return daysPerWeekOfWorking / 5;
-};
+/**
+ * Calculates the FTE fraction relative to the standard assumption of 5 working days per week
+ * @param daysPerWeekOfWorking - days of work per week
+ */
+export const fteFraction = (daysPerWeekOfWorking: number) =>
+  Math.max(0, Math.min(daysPerWeekOfWorking / 5, 1));
 
+/**
+ * Calculate paid holiday days per year, accounting for the FTE fraction
+ * @param holidayDaysPerYear - as FTE equivalnt
+ * @param daysPerWeekOfWorking
+ *
+ */
 export const calculateHolidayDaysPerYear = (
   holidayDaysPerYear: number,
   daysPerWeekOfWorking: number,
-) => (holidayDaysPerYear || 25) * fteFraction(daysPerWeekOfWorking);
+) => holidayDaysPerYear * fteFraction(daysPerWeekOfWorking);
 
 const MAX_INCOME = 100000;
 const MIN_INCOME = 2380 * 12;

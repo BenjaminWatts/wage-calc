@@ -1,7 +1,8 @@
-import { View, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import { View, StyleSheet, useWindowDimensions } from 'react-native';
+import { Card, Text } from 'react-native-paper';
 import Slider from '@react-native-community/slider';
 import React from 'react';
+import { INPUT } from '@/src/utils/breakpoints';
 
 interface SliderWithLabelsProps {
   label: string;
@@ -14,60 +15,87 @@ interface SliderWithLabelsProps {
   offset?: number;
 }
 
+const useSmallScreen = () => {
+  const { width } = useWindowDimensions();
+  const isSmallScreen = width < INPUT;
+  return isSmallScreen;
+};
+
 const SliderWithLabels: React.FC<SliderWithLabelsProps> = (p) => {
+  const isSmallScreen = useSmallScreen();
   const offset = p.offset || 0;
   const [value, setValue] = React.useState(p.value + offset);
 
   return (
-    <View style={styles.sliderView}>
-      <View style={styles.labelWrapper}>
-        <Text>{`${p.formatter(value - offset)} ${p.label}`}</Text>
-      </View>
-      <View style={styles.limitTextWrapper}>
-        <Text>{p.formatter(p.minimumValue)}</Text>
-      </View>
-      <View style={styles.slider}>
-        <Slider
-          style={{ width: '100%' }}
-          value={value}
-          step={p.step}
-          onValueChange={setValue}
-          onSlidingComplete={(value) => p.onValueChange(value - offset)}
-          minimumValue={p.minimumValue + offset}
-          maximumValue={p.maximumValue + offset}
-        />
-      </View>
-      <View style={styles.limitTextWrapper}>
-        <Text>{p.formatter(p.maximumValue)}</Text>
-      </View>
-    </View>
+    <Card>
+      <Card.Content
+        style={{
+          ...styles.sliderView,
+        }}
+      >
+        <View style={styles.labelWrapper}>
+          <Text style={styles.labelText}>{`${p.formatter(value - offset)} ${
+            p.label
+          }`}</Text>
+        </View>
+        <View style={styles.sliderAndLabels}>
+          <View style={styles.limitTextWrapper}>
+            <Text>{p.formatter(p.minimumValue)}</Text>
+          </View>
+          <Slider
+            style={styles.slider}
+            value={value}
+            step={p.step}
+            onValueChange={setValue}
+            onSlidingComplete={(value) => p.onValueChange(value - offset)}
+            minimumValue={p.minimumValue + offset}
+            maximumValue={p.maximumValue + offset}
+          />
+          <View style={styles.limitTextWrapper}>
+            <Text>{p.formatter(p.maximumValue)}</Text>
+          </View>
+        </View>
+      </Card.Content>
+    </Card>
   );
 };
 
 export default SliderWithLabels;
 
 const styles = StyleSheet.create({
-  labelWrapper: {
-    height: 20,
+  sliderAndLabels: {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
-    width: '30%',
-  },
-  limitTextWrapper: {
-    width: 40,
+    justifyContent: 'space-between',
+    width: '66%',
+    gap: 5,
   },
   slider: {
-    width: '50%',
-    height: 25,
+    flex: 1,
   },
   sliderView: {
-    gap: 5,
+    gap: 10,
     height: 40,
     paddingVertical: 25,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+  },
+  labelWrapper: {
+    height: 'auto',
+    width: '33%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  labelText: {
+    fontSize: 14,
+    flexWrap: 'wrap',
+  },
+  limitTextWrapper: {
+    maxWidth: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

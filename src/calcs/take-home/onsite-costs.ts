@@ -1,15 +1,12 @@
 // calculate the costs associated with working onsite
 
-const COST_PER_MILE = 45;
-
-const FLEXI_SEASON_TICKET_DAYS_PER_MONTH = 8;
-const MONTHS_IN_YEAR = 12;
-const FLEXI_DAYS_YEAR = FLEXI_SEASON_TICKET_DAYS_PER_MONTH * MONTHS_IN_YEAR;
-
-const SEASON_TICKET_DAYS_YEAR = 52 * 5;
-
-const DEFAULT_SEASON_TICKET_DISCOUNT = 0.25; // relative to daily ticket costs
-const DEFAULT_FLEXI_SEASON_TICKET_DISCOUNT = 0.2; // a 20% discount relative to the annual season ticket
+import {
+  SEASON_TICKET_DAYS_YEAR,
+  DEFAULT_SEASON_TICKET_DISCOUNT,
+  DEFAULT_FLEXI_SEASON_TICKET_DISCOUNT,
+  FLEXI_DAYS_YEAR,
+  COST_PER_MILE,
+} from '../constants';
 
 /**
  * Estimate the cost of a season ticket. If the season ticket cost is provided, return that. Otherwise, calculate the cost based on the daily ticket cost
