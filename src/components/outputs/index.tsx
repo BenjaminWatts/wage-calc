@@ -7,6 +7,7 @@ import { View, ScrollView } from 'react-native';
 import MarginalTaxRatesBonuses from './marginal-tax-rate';
 import ContractorOutput from './contractor';
 import PrivacyButton from '@/src/atoms/privacy-button';
+import ListAccordion from '@/src/atoms/accordion';
 
 const iconSize = 32;
 
@@ -18,16 +19,14 @@ const OutputExpandableAccordion: React.FC<{
   initialExpanded: boolean;
   children: React.ReactNode;
 }> = ({ title, iconSource, initialExpanded, children }) => {
-  const [expanded, setExpanded] = React.useState(initialExpanded);
   return (
-    <List.Accordion
+    <ListAccordion
       title={title}
-      left={(p) => <Icon {...p} source={iconSource} size={iconSize} />}
-      onPress={() => setExpanded(!expanded)}
-      expanded={expanded}
+      icon={iconSource}
+      iniitalExpanded={initialExpanded}
     >
       {children}
-    </List.Accordion>
+    </ListAccordion>
   );
 };
 
@@ -39,7 +38,7 @@ const Outputs: React.FC = () => (
     }}
   >
     <OutputExpandableAccordion
-      title="Your Current Income"
+      title="Status quo"
       iconSource="currency-gbp"
       initialExpanded={true}
     >
@@ -63,7 +62,7 @@ const Outputs: React.FC = () => (
     </OutputExpandableAccordion>
 
     <OutputExpandableAccordion
-      title="Become a freelancer?"
+      title="Go freelance?"
       iconSource="bank"
       initialExpanded={false}
     >
@@ -71,7 +70,7 @@ const Outputs: React.FC = () => (
     </OutputExpandableAccordion>
 
     <OutputExpandableAccordion
-      title="Become a teacher?"
+      title="Teach?"
       iconSource="school"
       initialExpanded={false}
     >

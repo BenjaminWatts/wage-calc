@@ -28,7 +28,7 @@ const LinkedButtonComponent: React.FC<LinkedButtonProps> = (p) => {
 
 const BUTTONS: LinkedButtonProps[] = [
   {
-    label: `Salary and Pension`,
+    label: `Salary/Pension`,
     href: n.salary,
     icon: i.SALARY_AND_PENSION,
   },
@@ -38,7 +38,7 @@ const BUTTONS: LinkedButtonProps[] = [
     icon: i.WORKING_SCHEDULE,
   },
   {
-    label: `Commuting Expenses`,
+    label: `Commuting`,
     href: n.commuting,
     icon: i.COMMUTING,
   },
@@ -57,7 +57,11 @@ export const Inputs: React.FC = () => (
     }}
   >
     <Card>
-      <Card.Content>
+      <Card.Content
+        style={{
+          backgroundColor: 'white',
+        }}
+      >
         <Paragraph>
           To work out your cost of working, we need to understand how much you
           (and your family) earn. We also need to understand your costs of
@@ -67,7 +71,11 @@ export const Inputs: React.FC = () => (
     </Card>
 
     <Card>
-      <Card.Content>
+      <Card.Content
+        style={{
+          backgroundColor: 'white',
+        }}
+      >
         {BUTTONS.map(({ label, href, icon }) => (
           <LinkedButtonComponent
             key={label}

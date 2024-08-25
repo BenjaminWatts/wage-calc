@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput } from 'react-native-paper';
+import { TextInput, Text } from 'react-native-paper';
 
 interface CostInputProps {
   label: string;
@@ -24,6 +24,7 @@ const CostInput: React.FC<CostInputProps> = (p) => {
       onEndEditing={update}
       onBlur={update}
       keyboardType="numeric"
+      style={{ minHeight: 30 }}
     />
   );
 };

@@ -1,14 +1,16 @@
 /// a card that renders the entitlement we believe a child has to tax-free and free childcare
 
 import {
+  SCHOOL_AGE_YEARS,
+  NO_CHILDCARE_COST_MINIMUM_AGE,
+} from '@/src/calcs/constants';
+import {
   calcParentEligible,
   hoursOfFreeChildcare,
-  NO_CHILDCARE_COST_MINIMUM_AGE,
-  SCHOOL_AGE_YEARS,
 } from '@/src/calcs/take-home/child-care';
 import { RootState } from '@/src/state/store';
-import { View } from 'react-native';
-import { Paragraph } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { Card, Paragraph } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 
 interface ChildOutputsProps {
@@ -74,18 +76,16 @@ const ChildOutputs: React.FC<ChildOutputsProps> = ({ index }) => {
   );
   if (!termsAccepted) return null;
   return (
-    <View
-      style={{
-        gap: 10,
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        // margin: 10,
-      }}
-    >
-      <FreeHours child={child} parentEligible={parentEligible} />
-      <TaxfreeEligibility child={child} parentEligible={parentEligible} />
-    </View>
+    <Card>
+      <Card.Content
+        style={{
+          backgroundColor: 'white',
+        }}
+      >
+        <FreeHours child={child} parentEligible={parentEligible} />
+        <TaxfreeEligibility child={child} parentEligible={parentEligible} />
+      </Card.Content>
+    </Card>
   );
 };
 

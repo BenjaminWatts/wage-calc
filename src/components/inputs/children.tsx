@@ -4,24 +4,28 @@ import { Button, Card, List, Paragraph } from 'react-native-paper';
 import * as s from '@/src/state/user-inputs';
 import { useSelector } from 'react-redux';
 import { useChild } from '@/src/nav';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import { child as defaultChild } from '@/src/state/defaults';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
-import { BIRTHDAY, SCHOOL } from '../icons';
+import { BIRTHDAY, DELETE, SCHOOL } from '../icons';
 import CostInput from '@/src/atoms/cost-input';
 import { ChildrenReset, ChildReset } from '../reset-buttons';
-import {
-  NO_CHILDCARE_COST_MINIMUM_AGE,
-  SCHOOL_AGE_YEARS,
-} from '@/src/calcs/take-home/child-care';
+
 import ChildOutputs from '../outputs/child';
+import {
+  SCHOOL_AGE_YEARS,
+  NO_CHILDCARE_COST_MINIMUM_AGE,
+} from '@/src/calcs/constants';
+import ListAccordion from '@/src/atoms/accordion';
 
 const DeleteChildButton: React.FC<{
   index: number;
 }> = ({ index }) => {
   const dispatch = useAppDispatch();
   return (
-    <Button onPress={() => dispatch(s.a.removeChild(index))}>Delete</Button>
+    <Button onPress={() => dispatch(s.a.removeChild(index))} icon={DELETE}>
+      Delete
+    </Button>
   );
 };
 
@@ -66,12 +70,7 @@ const UserPartnerSalary: React.FC = () => {
   return (
     <Card>
       <Card.Title title={`Your Partner`} />
-      <Card.Content
-        style={{
-          padding: 10,
-          gap: 10,
-        }}
-      >
+      <Card.Content style={styles.container}>
         <Paragraph>
           In order to estimate how much child benefit, free and subsidised
           childcare you will receive, we need to know your partner's annual
@@ -88,12 +87,7 @@ const UserPartnerSalary: React.FC = () => {
 export const ChildrenList: React.FC = () => {
   const data = useSelector((r: RootState) => r.userInputs.children);
   return (
-    <ScrollView
-      contentContainerStyle={{
-        gap: 10,
-        padding: 10,
-      }}
-    >
+    <ScrollView contentContainerStyle={styles.container}>
       <Card>
         <Card.Content>
           <Paragraph>
@@ -127,50 +121,45 @@ export const ChildrenList: React.FC = () => {
 const ChildAgeAccordion: React.FC<{ index: number }> = ({ index }) => {
   const child = useSelector((r: RootState) => r.userInputs.children[index]);
   const dispatch = useAppDispatch();
-  const [expanded, setExpanded] = React.useState(true);
   return (
-    <List.Accordion
-      title="Age"
-      id="age"
-      expanded={expanded}
-      left={(p) => <List.Icon {...p} icon={BIRTHDAY} />}
-      onPress={() => setExpanded(!expanded)}
-    >
-      <SliderWithLabels
-        value={child.years}
-        minimumValue={0}
-        maximumValue={17}
-        formatter={(x) => x.toFixed(0)}
-        label="years"
-        step={1}
-        offset={1}
-        onValueChange={(years) =>
-          dispatch(
-            s.a.updateChild({
-              index,
-              child: { ...child, years: Math.round(years) },
-            }),
-          )
-        }
-      />
-      <SliderWithLabels
-        value={child.months}
-        minimumValue={0}
-        maximumValue={12}
-        offset={1}
-        formatter={(x) => x.toFixed(0)}
-        label="months"
-        step={1}
-        onValueChange={(months) =>
-          dispatch(
-            s.a.updateChild({
-              index,
-              child: { ...child, months: Math.round(months) },
-            }),
-          )
-        }
-      />
-    </List.Accordion>
+    <ListAccordion title="Age" icon={BIRTHDAY}>
+      <View style={styles.container}>
+        <SliderWithLabels
+          value={child.years}
+          minimumValue={0}
+          maximumValue={17}
+          formatter={(x) => x.toFixed(0)}
+          label="years"
+          step={1}
+          offset={1}
+          onValueChange={(years) =>
+            dispatch(
+              s.a.updateChild({
+                index,
+                child: { ...child, years: Math.round(years) },
+              }),
+            )
+          }
+        />
+        <SliderWithLabels
+          value={child.months}
+          minimumValue={0}
+          maximumValue={12}
+          offset={1}
+          formatter={(x) => x.toFixed(0)}
+          label="months"
+          step={1}
+          onValueChange={(months) =>
+            dispatch(
+              s.a.updateChild({
+                index,
+                child: { ...child, months: Math.round(months) },
+              }),
+            )
+          }
+        />
+      </View>
+    </ListAccordion>
   );
 };
 
@@ -233,32 +222,22 @@ const HourlyHolidayChildcareCost: React.FC<{
 };
 
 const ChildcareCostsAccordion: React.FC<{ index: number }> = ({ index }) => {
-  const [expanded, setExpanded] = React.useState(true);
   return (
-    <List.Accordion
-      title="Childcare Costs"
-      id="childcare-costs"
-      expanded={expanded}
-      left={(p) => <List.Icon {...p} icon={SCHOOL} />}
-      onPress={() => setExpanded(!expanded)}
-    >
-      <View
-        style={{
-          padding: 0,
-          gap: 10,
-        }}
-      >
-        <ChildOutputs index={index} />
-        <HourlyTermtimeChildcareCost index={index} />
-        <Paragraph>
-          Please note, depending on the age of your child (and you/your
-          partner's income), we will take account of any free hours . The cost
-          above therefore needs to the cost you pay for any wraparound hours
-          which are in excess of any free hours.
-        </Paragraph>
-        <HourlyHolidayChildcareCost index={index} />
-      </View>
-    </List.Accordion>
+    <ListAccordion title="Childcare Costs" icon={SCHOOL}>
+      <Card>
+        <Card.Content>
+          <ChildOutputs index={index} />
+          <HourlyTermtimeChildcareCost index={index} />
+          <Paragraph>
+            Please note, depending on the age of your child (and you/your
+            partner's income), we will take account of any free hours . The cost
+            above therefore needs to the cost you pay for any wraparound hours
+            which are in excess of any free hours.
+          </Paragraph>
+          <HourlyHolidayChildcareCost index={index} />
+        </Card.Content>
+      </Card>
+    </ListAccordion>
   );
 };
 
@@ -270,15 +249,19 @@ export const EditChild: React.FC<{ index: number }> = ({ index }) => {
   const child = useSelector((r: RootState) => r.userInputs.children[index]);
   if (!child) return null;
   return (
-    <View
-      style={{
-        padding: 10,
-        gap: 10,
-      }}
-    >
+    <ScrollView contentContainerStyle={styles.container}>
       <ChildAgeAccordion index={index} />
       <ChildcareCostsAccordion index={index} />
       <ChildReset index={index} />
-    </View>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    gap: 10,
+    width: '100%',
+    display: 'flex',
+    padding: 5,
+  },
+});

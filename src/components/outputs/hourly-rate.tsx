@@ -9,13 +9,16 @@ import { useCalcs } from '@/src/nav';
 import { useSelector } from 'react-redux';
 import { selectTermsAccepted } from '@/src/state/app';
 import { TermsModal } from '../disclaimer';
+import { useWindowDimensions } from 'react-native';
+import { CALCULATE_NOW_TEXT } from '@/src/utils/breakpoints';
 
 const NotAcceptedPrompt: React.FC<{
   onPress: () => void;
 }> = ({ onPress }) => {
+  const { width } = useWindowDimensions();
   return (
     <Button icon={'calculator'} onPress={onPress}>
-      Calculate Now
+      {''}
     </Button>
   );
 };

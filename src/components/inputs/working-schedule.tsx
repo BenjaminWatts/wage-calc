@@ -4,9 +4,10 @@ import { RootState, useAppDispatch } from '@/src/state/store';
 import { useSelector } from 'react-redux';
 import { minimumAnnualLeave, workingDays } from '@/src/calcs/take-home/days';
 import SliderWithLabels from '@/src/atoms/slider-with-labels';
-import { List } from 'react-native-paper';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { WorkingScheduleReset } from '../reset-buttons';
+import ListAccordion from '@/src/atoms/accordion';
+import { HOLIDAY, HOME, WORKING_SCHEDULE } from '../icons';
 
 const DaysSlider: React.FC<{
   label: string;
@@ -114,62 +115,46 @@ const HoursWorkPerDayInput: React.FC = (p) => {
 };
 
 const WeeklySchedule: React.FC = () => {
-  const [expanded, setExpanded] = React.useState(true);
   return (
-    <List.Accordion
+    <ListAccordion
       title="Weekly Routine"
-      expanded={expanded}
-      left={(p) => <List.Icon {...p} icon="calendar-week" />}
-      onPress={() => setExpanded(!expanded)}
+      icon={WORKING_SCHEDULE}
+      hideCard={true}
     >
       <View style={styles.accordionContent}>
         <HoursWorkPerDayInput />
         <PerWeekOfWorking />
       </View>
-    </List.Accordion>
+    </ListAccordion>
   );
 };
 
 const HybridSplit: React.FC = () => {
-  const [expanded, setExpanded] = React.useState(true);
   return (
-    <List.Accordion
-      title="In Office versus Home Split"
-      expanded={expanded}
-      left={(p) => <List.Icon {...p} icon="home" />}
-      onPress={() => setExpanded(!expanded)}
-    >
+    <ListAccordion title="Hybrid split" icon={HOME} hideCard={true}>
       <View style={styles.accordionContent}>
         <PerWeekInOffice />
       </View>
-    </List.Accordion>
+    </ListAccordion>
   );
 };
 
 const HolidayAccordian: React.FC = () => {
-  const [expanded, setExpanded] = React.useState(true);
   return (
-    <List.Accordion
-      title="Holiday/Leave"
-      expanded={expanded}
-      left={(p) => <List.Icon {...p} icon="beach" />}
-      onPress={() => setExpanded(!expanded)}
-    >
-      <View style={styles.accordionContent}>
-        <HolidayDaysPerYear />
-      </View>
-    </List.Accordion>
+    <ListAccordion title="Holiday/Leave" icon={HOLIDAY} hideCard={true}>
+      <HolidayDaysPerYear />
+    </ListAccordion>
   );
 };
 
 const WorkingsScheduleInputs: React.FC = () => {
   return (
-    <View style={styles.view}>
+    <ScrollView contentContainerStyle={styles.view}>
       <WeeklySchedule />
       <HybridSplit />
       <HolidayAccordian />
       <WorkingScheduleReset />
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -181,7 +166,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   accordionContent: {
-    padding: 10,
+    paddingVertical: 10,
+    gap: 10,
+    width: '100%',
   },
 });
 

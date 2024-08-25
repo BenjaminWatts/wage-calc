@@ -1,11 +1,13 @@
 import { RootState, useAppDispatch } from '@/src/state/store';
 import React from 'react';
-import { List, Paragraph, TextInput, Text } from 'react-native-paper';
+import { List, Paragraph, TextInput, Text, Card } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import * as s from '@/src/state/user-inputs';
 import { StyleSheet, ScrollView } from 'react-native';
 import CostInput from '@/src/atoms/cost-input';
 import { CommutingReset } from '../reset-buttons';
+import ListAccordion from '@/src/atoms/accordion';
+import { COMMUTING, DRIVING, EXPENSES, TIME } from '../icons';
 
 // inputs for transport including drivingDistancePerCommuteMiles, carFuelType, commuteDoorToDoorMinutes, dailyParkingCost, dailyTrainBusTicketCost, flexiSeasonTicketCost, seasonTicketCost
 
@@ -64,24 +66,16 @@ const DailyParkingCost: React.FC = () => {
   );
 };
 
-const DrivingCosts: React.FC = () => {
-  const [expanded, setExpanded] = React.useState(true);
-  return (
-    <List.Accordion
-      title="Driving Costs"
-      expanded={expanded}
-      onPress={() => setExpanded(!expanded)}
-      left={(props) => <List.Icon {...props} icon="car" />}
-    >
-      <Paragraph>
-        If driving is part of your commute, please enter the costs associated.
-        If not, please leave these fields blank.
-      </Paragraph>
-      <DrivingDistancePerCommuteMiles />
-      <DailyParkingCost />
-    </List.Accordion>
-  );
-};
+const DrivingCosts: React.FC = () => (
+  <ListAccordion title="Driving Costs" icon={DRIVING}>
+    <Paragraph>
+      If driving is part of your commute, please enter the costs associated. If
+      not, please leave these fields blank.
+    </Paragraph>
+    <DrivingDistancePerCommuteMiles />
+    <DailyParkingCost />
+  </ListAccordion>
+);
 
 //dailyTrainBusTicketCost
 const DailyTrainBusTicketCost: React.FC = () => {
@@ -137,15 +131,8 @@ const SeasonTicketCost: React.FC = () => {
 };
 
 const PublicTransportCosts: React.FC = () => {
-  const [expanded, setExpanded] = React.useState(true);
   return (
-    <List.Accordion
-      expanded={expanded}
-      onPress={() => setExpanded(!expanded)}
-      left={(p) => <List.Icon {...p} icon="bus" />}
-      title="Public Transport Costs"
-      id="public-transport-costs"
-    >
+    <ListAccordion icon={COMMUTING} title="Public Transport Costs">
       <Paragraph>
         Please enter the cost of commuting by public transport. If public
         transport is only part of the commute, then enter driving costs
@@ -161,7 +148,7 @@ const PublicTransportCosts: React.FC = () => {
       </Paragraph>
       <FlexiSeasonTicketCost />
       <SeasonTicketCost />
-    </List.Accordion>
+    </ListAccordion>
   );
 };
 
@@ -181,21 +168,15 @@ const CommuteDoorToDoorMinutes: React.FC = () => {
 };
 
 const TimeInputs: React.FC = () => {
-  const [expanded, setExpanded] = React.useState(true);
   return (
-    <List.Accordion
-      title="Time Inputs"
-      expanded={expanded}
-      onPress={() => setExpanded(!expanded)}
-      left={(props) => <List.Icon {...props} icon="clock" />}
-    >
+    <ListAccordion title="Time Inputs" icon={TIME}>
       <Paragraph>
         In order to more accurately calculate how much you earn per hour,
         including the time you spend commuting, we need to know how long your
         commute is. on days that you work in the office.
       </Paragraph>
       <CommuteDoorToDoorMinutes />
-    </List.Accordion>
+    </ListAccordion>
   );
 };
 
@@ -268,15 +249,8 @@ const HotelCosts: React.FC = () => {
 };
 
 const IncidentalCosts: React.FC = () => {
-  const [expanded, setExpanded] = React.useState(true);
-
   return (
-    <List.Accordion
-      title="Incidental Commuting Costs"
-      expanded={expanded}
-      onPress={() => setExpanded(!expanded)}
-      left={(props) => <List.Icon {...props} icon="receipt" />}
-    >
+    <ListAccordion title="Incidental Commuting Costs" icon={EXPENSES}>
       <Paragraph>
         There are often other incidental costs to commuting in an office that
         you wouldn't face working from home, such as having (or finding just way
@@ -291,7 +265,7 @@ const IncidentalCosts: React.FC = () => {
       <DailyLunchCost />
       <DryCleaningCostPerDay />
       <HotelCosts />
-    </List.Accordion>
+    </ListAccordion>
   );
 };
 
@@ -307,7 +281,7 @@ const CommutingInputs: React.FC = () => {
   );
 };
 const styles = StyleSheet.create({
-  container: { gap: 10, padding: 10 },
+  container: { gap: 10 },
 });
 
 export default CommutingInputs;

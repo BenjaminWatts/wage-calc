@@ -22,7 +22,6 @@ const useSmallScreen = () => {
 };
 
 const SliderWithLabels: React.FC<SliderWithLabelsProps> = (p) => {
-  const isSmallScreen = useSmallScreen();
   const offset = p.offset || 0;
   const [value, setValue] = React.useState(p.value + offset);
 
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
   },
   sliderView: {
     gap: 10,
-    height: 40,
+    minHeight: 40,
     paddingVertical: 25,
     display: 'flex',
     flexDirection: 'row',

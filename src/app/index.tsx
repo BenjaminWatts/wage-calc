@@ -28,9 +28,9 @@ const HomeScreen: React.FC = () => {
         </Card.Content>
       </Card>
       <Card>
-        <Card.Title title="CostofWork.app calculator" />
+        <Card.Title title="Cost of Work" />
         <Card.Content>
-          <Paragraph>Welcome to the CostofWork.app calculator.</Paragraph>
+          <Paragraph>Welcome to the Cost of Work calculator.</Paragraph>
         </Card.Content>
         <View style={{ height: 10 }} />
 

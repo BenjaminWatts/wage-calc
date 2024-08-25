@@ -7,6 +7,7 @@ import React from 'react';
 import { Card, List, Paragraph } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import * as r from '@/src/calcs/rounding';
+import { View } from 'react-native';
 
 export const CommutingImpactHourlyWages: React.FC = () => {
   const currentInofficeDays = useSelector(
@@ -77,6 +78,32 @@ const renderDescription = (currentSalary: number, equivalentSalary: number) => {
   )} and maintain your current take home pay`;
 };
 
+const OptionCard: React.FC<{
+  title: string;
+  description: string;
+}> = ({ title, description }) => (
+  <Card>
+    <Card.Content>
+      <Paragraph
+        style={{
+          fontWeight: 'bold',
+        }}
+      >
+        {title}
+      </Paragraph>
+      <Paragraph>{description}</Paragraph>
+    </Card.Content>
+  </Card>
+);
+
+const OptionWrapper: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => (
+  <View style={{ gap: 10, marginVertical: 10, display: 'flex' }}>
+    {children}
+  </View>
+);
+
 export const HybridSplitOutput: React.FC = () => {
   const daysInOffice = useSelector(
     (r: RootState) => r.userInputs.daysPerWeekInOffice,
@@ -87,43 +114,39 @@ export const HybridSplitOutput: React.FC = () => {
   const { adjusted } = result.hybridSplits;
 
   return (
-    <Card>
-      <Card.Content>
-        <Paragraph>
-          If you were to work fewer days in the office, this is how it would
-          impact your take home pay:
-        </Paragraph>
-        <List.Section>
-          {adjusted.map((a, index) => {
-            if (index >= daysInOffice) return null;
-            return (
-              <List.Item
-                key={index}
-                title={renderTitle(index, daysInOffice)}
-                description={renderDescription(currentSalary, a)}
-              />
-            );
-          })}
-        </List.Section>
-      </Card.Content>
-      <Card.Content>
-        <Paragraph>
-          If you were to work more days in the office, this is how it would
-          impact your take home pay:
-        </Paragraph>
-        <List.Section>
-          {adjusted.map((a, index) => {
-            if (index <= daysInOffice) return null;
-            return (
-              <List.Item
-                key={index}
-                title={renderTitle(index, daysInOffice)}
-                description={renderDescription(currentSalary, a)}
-              />
-            );
-          })}
-        </List.Section>
-      </Card.Content>
-    </Card>
+    <>
+      <Paragraph>
+        If you were to work fewer days in the office, this is how it would
+        impact your take home pay:
+      </Paragraph>
+      <OptionWrapper>
+        {adjusted.map((a, index) => {
+          if (index >= daysInOffice) return null;
+          const title = renderTitle(index, daysInOffice);
+          const description = renderDescription(currentSalary, a);
+          return (
+            <OptionCard key={index} title={title} description={description} />
+          );
+        })}
+      </OptionWrapper>
+      {/* </List.Section> */}
+
+      <Paragraph>
+        If you were to work more days in the office, this is how it would impact
+        your take home pay:
+      </Paragraph>
+      <OptionWrapper>
+        {adjusted.map((a, index) => {
+          if (index <= daysInOffice) return null;
+          return (
+            <OptionCard
+              key={index}
+              title={renderTitle(index, daysInOffice)}
+              description={renderDescription(currentSalary, a)}
+            />
+          );
+        })}
+      </OptionWrapper>
+    </>
   );
 };
