@@ -10,7 +10,7 @@ const ListAccordion: React.FC<{
   iniitalExpanded?: boolean;
   hideCard?: boolean;
 }> = (p) => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(p.iniitalExpanded ?? false);
   return (
     <>
       <List.Accordion
