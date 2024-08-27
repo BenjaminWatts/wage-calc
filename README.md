@@ -52,6 +52,7 @@ Current bugs
 
 # Expo
 
+`eas update --channel preview`
 `eas build --profile preview`
 
 
