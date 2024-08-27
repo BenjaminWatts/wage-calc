@@ -50,7 +50,9 @@ Current bugs
 13. Google tracker
 
 
+# Expo
 
+`eas build --profile preview`
 
 
 
