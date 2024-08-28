@@ -14,7 +14,8 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.benjaminwatts.CostOfWork"
+      "bundleIdentifier": "com.benjaminwatts.CostOfWork",
+      "jsEngine": "jsc"
     },
     "android": {
       "adaptiveIcon": {

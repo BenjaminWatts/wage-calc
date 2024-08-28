@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Image, View, Text, TouchableOpacity } from 'react-native';
+import { Image, View } from 'react-native';
 import { Button, Card, Paragraph } from 'react-native-paper';
 import PrivacyButton from '../atoms/privacy-button';
 

@@ -1,5 +1,6 @@
 // a component with a List.Accordion that expands and has content
 import { Card, IconButton, List } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
 import React from 'react';
 import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 
@@ -23,7 +24,9 @@ const ListAccordion: React.FC<{
             <>{p.children}</>
           ) : (
             <Card>
-              <Card.Content>{p.children}</Card.Content>
+              <Card.Content>
+                <View style={styles.container}>{p.children}</View>
+              </Card.Content>
             </Card>
           )}
         </>
@@ -31,5 +34,16 @@ const ListAccordion: React.FC<{
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 0,
+    gap: 10,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+});
 
 export default ListAccordion;
