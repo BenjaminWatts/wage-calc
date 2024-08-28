@@ -24,10 +24,10 @@ export const annualCommuteHours = (
  */
 export const annualWorkingHours = (
   ui: {
-    hoursOfWorkPerDay?: number;
+    hoursOfWorkPerDay: number;
   },
   workingDays: number,
-) => ui.hoursOfWorkPerDay || DEFAULT_HOURS_PER_DAY * workingDays;
+) => ui.hoursOfWorkPerDay * workingDays;
 
 /**
  * Calculate the total working hours per year, including commute.
