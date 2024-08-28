@@ -54,6 +54,18 @@ Current bugs
 
 `eas update --channel preview`
 `eas build --profile preview`
+`eas submit --profile preview --platform ios --path build-1724791067480.ipa`
+
+# Screenshots
+
+To launch an iOS device with each required screen size:
+
+# iPhone 14 Pro Max (6.7-inch)
+xcrun simctl boot "iPhone 14 Pro Max"
+npx expo run:ios --device "iPhone 14 Pro Max"
+
+# 5.5 inch display - runs on iOS 16.4
+xcrun simctl boot "iPhone 8 Plus"
 
 
 
