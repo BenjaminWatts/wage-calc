@@ -76,16 +76,10 @@ const ChildOutputs: React.FC<ChildOutputsProps> = ({ index }) => {
   );
   if (!termsAccepted) return null;
   return (
-    <Card>
-      <Card.Content
-        style={{
-          backgroundColor: 'white',
-        }}
-      >
-        <FreeHours child={child} parentEligible={parentEligible} />
-        <TaxfreeEligibility child={child} parentEligible={parentEligible} />
-      </Card.Content>
-    </Card>
+    <View style={{ gap: 10, display: 'flex', flex: 1 }}>
+      <FreeHours child={child} parentEligible={parentEligible} />
+      <TaxfreeEligibility child={child} parentEligible={parentEligible} />
+    </View>
   );
 };
 
