@@ -75,10 +75,33 @@ export default function Root({ children }: PropsWithChildren) {
 
         {/* Smart App Banner */}
         <meta name="apple-itunes-app" content={`app-id=${6670214363}`} />
-        {/* <meta
-          name="google-play-app"
-          content={`app-id=com.benjaminwatts.CostOfWork`}
-        /> */}
+
+        <link rel="stylesheet" href="smartbanner.css" />
+        <script src="smartbanner.js" />
+
+        <meta name="smartbanner:enabled-platforms" content="android" />
+        <meta name="smartbanner:show" content="true" />
+
+        <meta name="smartbanner:title" content="Cost of Work" />
+        <meta name="smartbanner:author" content="kilowatts.io Limited" />
+        <meta name="smartbanner:price" content="" />
+        {/* <meta name="smartbanner:price-suffix-apple" content=" - On the App Store"> */}
+        <meta
+          name="smartbanner:price-suffix-google"
+          content="from Google Play"
+        />
+        {/* <meta name="smartbanner:icon-apple" content="https://url/to/apple-store-icon.png"> */}
+        <meta
+          name="smartbanner:icon-google"
+          content="https://costofwork.app/icon-192.png"
+        />
+        <meta name="smartbanner:button" content="Download" />
+        {/* <meta name="smartbanner:button-url-apple" content="https://ios/application-url"> */}
+        <meta
+          name="smartbanner:button-url-google"
+          content="https://play.google.com/store/apps/details?id=com.benjaminwatts.CostOfWork"
+        />
+        <meta name="smartbanner:close-label" content="Close" />
 
         <ScrollViewStyleReset />
 
