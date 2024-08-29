@@ -14,6 +14,7 @@
   align-items: center;
   padding: 0 16px;
   box-sizing: border-box; /* Include padding in the element's width and height */
+  z-index: 1000; /* Make sure it's on top of everything */
 }
 
 .smartbanner__exit {
