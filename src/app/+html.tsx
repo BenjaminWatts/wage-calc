@@ -51,6 +51,8 @@ export default function Root({ children }: PropsWithChildren) {
         />
         <meta name="twitter:image" content="https://costofwork.app/icon.png" />
 
+        <link rel="manifest" href="/manifest.json" />
+
         {/* Structured Data for Rich Snippets */}
         <script
           type="application/ld+json"
@@ -70,6 +72,13 @@ export default function Root({ children }: PropsWithChildren) {
             }),
           }}
         />
+
+        {/* Smart App Banner */}
+        <meta name="apple-itunes-app" content={`app-id=${6670214363}`} />
+        {/* <meta
+          name="google-play-app"
+          content={`app-id=com.benjaminwatts.CostOfWork`}
+        /> */}
 
         <ScrollViewStyleReset />
 

@@ -56,6 +56,10 @@ Current bugs
 `eas build --profile preview`
 `eas submit --profile preview --platform ios --path build-1724791067480.ipa`
 
+`eas build --profile production --platform ios --local`
+`eas build --profile production --platform android --local`
+
+
 # Screenshots
 
 To launch an iOS device with each required screen size:
