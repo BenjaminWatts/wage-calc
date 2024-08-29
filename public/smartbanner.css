@@ -1,0 +1,122 @@
+.smartbanner {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 600px; /* Maximum width to prevent it from being too wide */
+  height: 84px;
+  background: #ffffff; /* Paper-like white background */
+  font-family: 'Roboto', sans-serif; /* Use Roboto, the default Material Design font */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Paper-like shadow */
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  box-sizing: border-box; /* Include padding in the element's width and height */
+}
+
+.smartbanner__exit {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: rgba(0, 0, 0, 0.08); /* Slightly dark background */
+  color: rgba(0, 0, 0, 0.54); /* Icon color matching Material Design */
+  cursor: pointer;
+}
+
+.smartbanner__exit::before, .smartbanner__exit::after {
+  position: absolute;
+  width: 2px;
+  height: 16px;
+  background: currentColor;
+  content: "";
+}
+
+.smartbanner__exit::before {
+  transform: rotate(45deg);
+}
+
+.smartbanner__exit::after {
+  transform: rotate(-45deg);
+}
+
+.smartbanner__icon {
+  margin-left: 56px;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px; /* Material Design recommends rounded corners */
+  background-size: cover;
+}
+
+.smartbanner__info {
+  margin-left: 16px;
+  flex-grow: 1;
+  color: rgba(0, 0, 0, 0.87); /* High-emphasis text color */
+}
+
+.smartbanner__info__title {
+  font-size: 16px;
+  font-weight: 500; /* Medium weight */
+  color: rgba(0, 0, 0, 0.87); /* Primary text color */
+  margin-bottom: 4px;
+}
+
+.smartbanner__info__author, .smartbanner__info__price {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54); /* Secondary text color */
+}
+
+.smartbanner__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: #6200ea; /* Paper primary color */
+  color: #ffffff; /* White text */
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 4px; /* Subtle rounding on buttons */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.smartbanner__button:hover {
+  background-color: #3700b3; /* Darken on hover */
+}
+
+.smartbanner.smartbanner--android {
+  background: #ffffff; /* Paper-like white background */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Paper-like shadow */
+}
+
+.smartbanner.smartbanner--android .smartbanner__exit {
+  background-color: rgba(0, 0, 0, 0.08); /* Slightly dark background */
+  color: rgba(0, 0, 0, 0.54); /* Icon color matching Material Design */
+}
+
+.smartbanner.smartbanner--android .smartbanner__info {
+  color: rgba(0, 0, 0, 0.87); /* High-emphasis text color */
+}
+
+.smartbanner.smartbanner--android .smartbanner__info__title {
+  font-weight: 500; /* Medium weight */
+}
+
+.smartbanner.smartbanner--android .smartbanner__button {
+  background-color: #6200ea; /* Paper primary color */
+  color: #ffffff; /* White text */
+}
+
+.smartbanner.smartbanner--android .smartbanner__button:hover {
+  background-color: #3700b3; /* Darken on hover */
+}
+
+/*# sourceMappingURL=smartbanner.css.map */
