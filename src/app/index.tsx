@@ -1,10 +1,54 @@
-// hello world
-
+import { useRouter } from 'expo-router';
 import React from 'react';
-import {Text} from 'react-native';
+import { Image, View } from 'react-native';
+import { Button, Card, Paragraph } from 'react-native-paper';
+import PrivacyButton from '../atoms/privacy-button';
 
-export const App = () => {  
-    return <Text>Hello World</Text>
-}
+const HomeScreen: React.FC = () => {
+  const nav = useRouter();
+  return (
+    <View
+      style={{
+        flex: 1,
+        padding: 16,
+        gap: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Card>
+        <Card.Content>
+          <Image
+            source={require('../../assets/images/icon.png')}
+            style={{
+              height: 200,
+              width: 200,
+            }}
+          />
+        </Card.Content>
+      </Card>
+      <Card>
+        <Card.Title title="Cost of Work" />
+        <Card.Content>
+          <Paragraph>Welcome to the Cost of Work calculator.</Paragraph>
+        </Card.Content>
+        <View style={{ height: 10 }} />
 
-export default App;
+        <Card.Actions>
+          <Button
+            // make super prominent
+            mode="contained"
+            style={{ width: '100%' }}
+            onPress={() => nav.replace('/inputs')}
+          >
+            Get started
+          </Button>
+        </Card.Actions>
+      </Card>
+
+      <PrivacyButton />
+    </View>
+  );
+};
+
+export default HomeScreen;
