@@ -1,0 +1,28 @@
+version: 1
+backend:
+    phases:
+        build:
+            commands:
+                - 'echo "Build Backend"'
+
+frontend:
+    phases:
+        preBuild:
+            commands:
+                - 'nvm install 22'
+                - 'nvm use 22'
+                - 'npm install --silent --global expo-cli'
+                - 'npm install --force'
+        build:
+            commands:
+                - 'npx expo export -p web'
+    
+    artifacts:
+        baseDirectory: dist
+        files:
+            - '**/*'
+
+    cache:
+        paths:
+            - '.npm/**/*'
+            - '$(npm root --global)/**/*'
